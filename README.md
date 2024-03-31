@@ -1,6 +1,12 @@
 # Toolkits
 
 ### 1. XAML Converters
+1. StringConverters
+2. ObjectConverters
+3. MediaConverters
+4. EnumerableConverters
+5. BooleanConverters
+6. **CompositeConverter**
 
 ``` XAML
 <Window.Resources>
@@ -23,10 +29,6 @@
 
 
 
-``` csharp
-
-```
-
 ### 2. Animation
 
 ``` XAML
@@ -46,7 +48,30 @@
 ```
 
 
+### 3. Popup
+
+``` XAML
+<AdornerDecorator 
+    PopupManager.ContainerName="MainPopupContainer"
+    PopupManager.IsMainContainer="True">
+    <Button
+        Width="100"
+        Height="20"
+        Click="Button_Click"
+        Content="Open Popup" />
+</AdornerDecorator>
+```
+
+
 
 ``` csharp
+private async void Button_Click(object sender, RoutedEventArgs e)
+{
+    PopupManager popupManager = new PopupManager();
 
+    for (int i = 0; i < 5; i++)
+    {
+        var resu = await popupManager.PopupAsync(() => new PopupView());
+    }
+}
 ```

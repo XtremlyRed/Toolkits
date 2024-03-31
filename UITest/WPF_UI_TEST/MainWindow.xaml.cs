@@ -23,16 +23,13 @@ namespace WPF_UI_TEST
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
             PopupManager popupManager = new PopupManager();
 
             for (int i = 0; i < 5; i++)
             {
-                ThreadPool.QueueUserWorkItem(async o =>
-                {
-                    var resu = await popupManager.PopupAsync(() => new PopupView());
-                });
+                var resu = await popupManager.PopupAsync(() => new PopupView());
             }
         }
     }
