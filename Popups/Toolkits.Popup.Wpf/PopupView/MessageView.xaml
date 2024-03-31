@@ -1,0 +1,195 @@
+﻿<general:PopupMessageViewBase
+    x:Class="Toolkits.Popup.MessageView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:general="clr-namespace:Toolkits.Popup"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    FocusManager.IsFocusScope="True"
+    FontFamily="Microsoft YaHei" x:ClassModifier="internal"
+    Style="{x:Null}"
+    mc:Ignorable="d">
+
+
+    <Grid
+        x:Name="Container"
+        Width="auto"
+        Height="auto"
+        MinHeight="180"
+        MaxWidth="582"
+        MaxHeight="360"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        Background="{x:Null}"
+        SnapsToDevicePixels="True"
+        Style="{x:Null}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+            <RowDefinition Height="80" />
+        </Grid.RowDefinitions>
+
+        <Border
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Background="{Binding Background}"
+            CornerRadius="5,5,0,0"
+            SnapsToDevicePixels="True" />
+
+        <TextBlock
+            x:Name="TitleBox"
+            Margin="20,18,0,0"
+            FontSize="17"
+            FontWeight="Black"
+            Foreground="{Binding Foreground}"
+            Style="{x:Null}"
+            Text="" />
+
+        <Grid
+            Grid.Row="1"
+            Margin="19,15,20,15"
+            ClipToBounds="True"
+            Style="{x:Null}">
+
+            <ScrollViewer Margin="-16" Style="{x:Null}">
+
+
+                <TextBox
+                    x:Name="MessageBox"
+                    Margin="16"
+                    Padding="0,0,015,0"
+                    AcceptsReturn="True"
+                    Background="{x:Null}"
+                    BorderBrush="{x:Null}"
+                    BorderThickness="0"
+                    ContextMenu="{x:Null}"
+                    Cursor="Arrow"
+                    FontSize="13"
+                    Foreground="{Binding Foreground}"
+                    IsReadOnly="True"
+                    ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                    Style="{x:Null}"
+                    TextAlignment="Left"
+                    TextBlock.LineHeight="25"
+                    TextWrapping="Wrap" />
+            </ScrollViewer>
+
+        </Grid>
+
+        <Border
+            Grid.Row="2"
+            Background="{Binding OperationAreaBrush}"
+            BorderBrush="{x:Null}"
+            BorderThickness="0"
+            CornerRadius="0,0,5,5"
+            SnapsToDevicePixels="True"
+            Style="{x:Null}">
+
+            <ItemsControl
+                x:Name="ButtonBoxs"
+                Margin="27,0,27,0"
+                VerticalAlignment="Center"
+                Style="{x:Null}">
+                <ItemsControl.Resources>
+                    <Style x:Key="_BtnKey" TargetType="Button">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+
+                                    <Border
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="3"
+                                        SnapsToDevicePixels="True">
+
+                                        <TextBlock
+                                            Margin="{TemplateBinding Padding}"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            FontSize="13"
+                                            LineHeight="auto"
+                                            Style="{x:Null}"
+                                            Text="{TemplateBinding Content}" />
+                                    </Border>
+
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Trigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation
+                                                            Storyboard.TargetProperty="Opacity"
+                                                            To="0.7"
+                                                            Duration="0:0:0.1" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </Trigger.EnterActions>
+                                            <Trigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" Duration="0:0:0.2" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </Trigger.ExitActions>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ItemsControl.Resources>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid
+                            x:Name="Btn_Container"
+                            Loaded="Btn_Container_Loaded"
+                            Rows="1"
+                            Style="{x:Null}" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button
+                            Height="28"
+                            MinWidth="120"
+                            MaxWidth="150"
+                            Margin="5,0"
+                            Padding="10,0"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Background="{Binding DataContext.Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=1, AncestorType=ItemsControl}}"
+                            BorderBrush="{x:Null}"
+                            BorderThickness="0"
+                            Click="Click"
+                            Content="{Binding}"
+                            Cursor="Hand"
+                            Foreground="{Binding DataContext.Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=1, AncestorType=ItemsControl}}"
+                            Loaded="Button_Loaded"
+                            Opacity="1"
+                            Style="{StaticResource _BtnKey}" />
+
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+        </Border>
+
+
+
+        <Rectangle
+            Grid.Row="0"
+            Grid.RowSpan="3"
+            RadiusX="5"
+            RadiusY="5"
+            SnapsToDevicePixels="True"
+            Stroke="{Binding BorderBrush}"
+            StrokeThickness="1" />
+    </Grid>
+
+
+
+</general:PopupMessageViewBase>

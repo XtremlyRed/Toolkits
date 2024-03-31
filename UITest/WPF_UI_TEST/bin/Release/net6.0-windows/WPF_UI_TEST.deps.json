@@ -1,0 +1,72 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "WPF_UI_TEST/1.0.0": {
+        "dependencies": {
+          "Toolkits.Animation.Wpf": "1.0.0",
+          "Toolkits.Popup.Wpf": "1.0.0"
+        },
+        "runtime": {
+          "WPF_UI_TEST.dll": {}
+        }
+      },
+      "Toolkits.Animation.Wpf/1.0.0": {
+        "runtime": {
+          "Toolkits.Animation.Wpf.dll": {}
+        }
+      },
+      "Toolkits.Core/1.0.0": {
+        "runtime": {
+          "Toolkits.Core.dll": {}
+        }
+      },
+      "Toolkits.Popup.Core/1.0.0": {
+        "runtime": {
+          "Toolkits.Popup.Core.dll": {}
+        }
+      },
+      "Toolkits.Popup.Wpf/1.0.0": {
+        "dependencies": {
+          "Toolkits.Animation.Wpf": "1.0.0",
+          "Toolkits.Core": "1.0.0",
+          "Toolkits.Popup.Core": "1.0.0"
+        },
+        "runtime": {
+          "Toolkits.Popup.Wpf.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "WPF_UI_TEST/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Toolkits.Animation.Wpf/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Toolkits.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Toolkits.Popup.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Toolkits.Popup.Wpf/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

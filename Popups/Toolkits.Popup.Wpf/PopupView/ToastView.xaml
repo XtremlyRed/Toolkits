@@ -1,0 +1,109 @@
+﻿<general:PopupToastViewBase
+    x:Class="Toolkits.Popup.ToastView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:general="clr-namespace:Toolkits.Popup"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Width="320"
+    Height="auto" x:ClassModifier="internal"
+    MinHeight="60"
+    Margin="5,5,5,0"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    Style="{x:Null}"
+    mc:Ignorable="d">
+
+
+    <Grid Margin="0,0" Style="{x:Null}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="25" />
+        </Grid.ColumnDefinitions>
+
+        <Border
+            Grid.Row="0"
+            Grid.RowSpan="3"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Background="{Binding Background}"
+            CornerRadius="6"
+            SnapsToDevicePixels="True"
+            Style="{x:Null}" />
+
+        <Border
+            Grid.Row="0"
+            Grid.Column="1"
+            Width="10"
+            Height="10"
+            Margin="7"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Background="Transparent"
+            Cursor="Hand"
+            PreviewMouseDown="ClosePopupClick"
+            PreviewMouseUp="ClosePopupClick"
+            Style="{x:Null}">
+            <Path
+                Width="10"
+                Height="10"
+                Data="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"
+                Fill="OrangeRed"
+                SnapsToDevicePixels="True"
+                Stretch="Fill"
+                StrokeThickness="0.5"
+                Style="{x:Null}" />
+        </Border>
+
+
+        <TextBlock
+            x:Name="TitleBox"
+            Margin="7,8,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            FontSize="14"
+            FontWeight="Black"
+            Foreground="{Binding Foreground}"
+            Style="{x:Null}"
+            Text="" />
+
+        <Grid
+            Grid.Row="1"
+            Grid.RowSpan="2"
+            Margin="9,8,0,0"
+            ClipToBounds="True"
+            Style="{x:Null}">
+
+            <TextBlock
+                x:Name="MessageBox"
+                Background="{x:Null}"
+                ContextMenu="{x:Null}"
+                Cursor="Arrow"
+                FontSize="12"
+                Foreground="{Binding Foreground}"
+                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                Style="{x:Null}"
+                TextAlignment="Left"
+                TextBlock.LineHeight="21"
+                TextTrimming="CharacterEllipsis"
+                TextWrapping="WrapWithOverflow" />
+        </Grid>
+
+        <Rectangle
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            RadiusX="5"
+            RadiusY="5"
+            SnapsToDevicePixels="True"
+            Stroke="{Binding BorderBrush}"
+            StrokeThickness="1" />
+    </Grid>
+</general:PopupToastViewBase>
