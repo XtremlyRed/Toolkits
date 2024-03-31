@@ -26,3 +26,27 @@
 ``` csharp
 
 ```
+
+### 2. Animation
+
+``` XAML
+<Grid> 
+    <Button
+        Width="100"
+        Height="25"
+        Animation.FadeFrom="{FadeFrom From=0,
+                                      Duration=0:0:1}"
+        Animation.ScaleXFrom="{ScaleXFrom From=-200,
+                                          Duration=0:0:1}"
+        Animation.ScaleYFrom="{ScaleYFrom From=-200,
+                                          Duration=0:0:1}"
+        Click="Button_Click"
+        Content="Close" /> 
+</Grid>
+```
+
+
+
+``` csharp
+
+```
