@@ -1,0 +1,67 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.34707.107
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Converters", "Converters", "{00B3E6E8-252F-4225-AD65-8E24B4F90715}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".solutionItems", ".solutionItems", "{3AB576FC-BD0B-4FB1-B1B3-5EDE0C27FE1D}"
+	ProjectSection(SolutionItems) = preProject
+		GlobalCompileSettings.Targets = GlobalCompileSettings.Targets
+		LICENSE = LICENSE
+		README.md = README.md
+		Toolkits.snk = Toolkits.snk
+	EndProjectSection
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Toolkits.Converter", "Converters\Toolkits.Converter\Toolkits.Converter.shproj", "{EBD17EC9-7F1E-49A7-9B6D-2AAA571247FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toolkits.Converter.Wpf", "Converters\Toolkits.Converter.Wpf\Toolkits.Converter.Wpf.csproj", "{3682A138-912C-42C8-96C3-73DB0C14E3F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toolkits.Converter.Avalonia", "Converters\Toolkits.Converter.Avalonia\Toolkits.Converter.Avalonia.csproj", "{44947AA8-86B2-40D5-9B79-314D2FA2CC9A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toolkits.Converter.MAUI", "Converters\Toolkits.Converter.MAUI\Toolkits.Converter.MAUI.csproj", "{A7745745-4E5F-4061-AE50-971F2A03EC88}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toolkits.Core", "Toolkits.Core\Toolkits.Core.csproj", "{4EB17102-D750-45A9-AEE4-3633451BE843}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3682A138-912C-42C8-96C3-73DB0C14E3F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3682A138-912C-42C8-96C3-73DB0C14E3F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3682A138-912C-42C8-96C3-73DB0C14E3F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3682A138-912C-42C8-96C3-73DB0C14E3F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44947AA8-86B2-40D5-9B79-314D2FA2CC9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44947AA8-86B2-40D5-9B79-314D2FA2CC9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44947AA8-86B2-40D5-9B79-314D2FA2CC9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44947AA8-86B2-40D5-9B79-314D2FA2CC9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7745745-4E5F-4061-AE50-971F2A03EC88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7745745-4E5F-4061-AE50-971F2A03EC88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7745745-4E5F-4061-AE50-971F2A03EC88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7745745-4E5F-4061-AE50-971F2A03EC88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EB17102-D750-45A9-AEE4-3633451BE843}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EB17102-D750-45A9-AEE4-3633451BE843}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EB17102-D750-45A9-AEE4-3633451BE843}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EB17102-D750-45A9-AEE4-3633451BE843}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EBD17EC9-7F1E-49A7-9B6D-2AAA571247FA} = {00B3E6E8-252F-4225-AD65-8E24B4F90715}
+		{3682A138-912C-42C8-96C3-73DB0C14E3F9} = {00B3E6E8-252F-4225-AD65-8E24B4F90715}
+		{44947AA8-86B2-40D5-9B79-314D2FA2CC9A} = {00B3E6E8-252F-4225-AD65-8E24B4F90715}
+		{A7745745-4E5F-4061-AE50-971F2A03EC88} = {00B3E6E8-252F-4225-AD65-8E24B4F90715}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B45F90B8-3B2E-4915-8430-B929DFB383FC}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Converters\Toolkits.Converter\Toolkits.Converter.projitems*{3682a138-912c-42c8-96c3-73db0c14e3f9}*SharedItemsImports = 5
+		Converters\Toolkits.Converter\Toolkits.Converter.projitems*{44947aa8-86b2-40d5-9b79-314d2fa2cc9a}*SharedItemsImports = 5
+		Converters\Toolkits.Converter\Toolkits.Converter.projitems*{a7745745-4e5f-4061-ae50-971f2a03ec88}*SharedItemsImports = 5
+		Converters\Toolkits.Converter\Toolkits.Converter.projitems*{ebd17ec9-7f1e-49a7-9b6d-2aaa571247fa}*SharedItemsImports = 13
+	EndGlobalSection
+EndGlobal

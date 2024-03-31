@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>
+			net451;
+			net48;
+			netcoreapp3.1;
+			net6.0-windows;
+			net7.0-windows;
+			net8.0-windows;
+		</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<LangVersion>11</LangVersion>
+		<Description>some commonly used extension methods for classes, such as enumerable, string, task, etc</Description>
+	</PropertyGroup>
+
+
+	<ItemGroup Condition=" $(TargetFramework.StartsWith('net451')) ">
+		<PackageReference Include="System.ValueTuple" Version="4.5.0" />
+	</ItemGroup>
+
+
+
+	<Import Project="$(SolutionDir)\GlobalCompileSettings.Targets" />
+
+
+
+
+
+
+
+</Project>
+

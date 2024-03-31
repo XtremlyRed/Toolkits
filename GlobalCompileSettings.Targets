@@ -1,0 +1,47 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<PropertyGroup Label="Globals">
+		<SccProjectName>SAK</SccProjectName>
+		<SccProvider>SAK</SccProvider>
+		<SccAuxPath>SAK</SccAuxPath>
+		<SccLocalPath>SAK</SccLocalPath>
+		<Platforms>AnyCPU</Platforms>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="$(SolutionDir)\LICENSE" Pack="true" PackagePath="" />
+		<None Include="$(SolutionDir)\README.md" Pack="true" PackagePath="" />
+	</ItemGroup>
+
+	<PropertyGroup>
+		<Version>1.0.00</Version> 
+		<LangVersion>11.0</LangVersion>
+		<PackageProjectUrl>https://github.com/xtremlyred/Toolkits</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/xtremlyred/Toolkits</RepositoryUrl>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
+		<OutputPath>$(SolutionDir)\bin\$(Platform)\$(Configuration)</OutputPath>
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<SignAssembly>True</SignAssembly>
+		<AssemblyOriginatorKeyFile>$(SolutionDir)\Toolkits.snk</AssemblyOriginatorKeyFile>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)'=='Release'">
+
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+
+	</PropertyGroup>
+ 
+	<!--usage-->
+	<!--Uninstall the project that requires synchronized path generation, edit the project file, and add the following code snippet at the bottom of the project file-->
+	<!--<Import Project="$(SolutionDir)\GlobalCompileSettings.Targets" />-->
+
+</Project>

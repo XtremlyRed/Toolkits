@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<TargetFramework>net7.0</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<LangVersion>11</LangVersion>
+		<Description>avalonia converters</Description>
+		<DefineConstants>$(DefineConstants);___AVALONIA___</DefineConstants>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Avalonia" Version="11.0.10" />
+
+		<!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+		<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.10" />
+	</ItemGroup>
+
+	<Import Project="..\Toolkits.Converter\Toolkits.Converter.projitems" Label="Shared" />
+
+
+	<Import Project="$(SolutionDir)\GlobalCompileSettings.Targets" />
+
+
+
+
+</Project>
