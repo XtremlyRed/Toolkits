@@ -4,10 +4,10 @@
 		<TargetFrameworks>
 			net451;
 			net48;
-			netcoreapp3.1;
-			net6.0-windows;
-			net7.0-windows;
-			net8.0-windows;
+			netcoreapp3.1; 
+			net6.0;
+			net7.0;
+			net8.0;
 		</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
@@ -21,6 +21,7 @@
 	</ItemGroup>
 
 
+ 
 
 	<Import Project="$(SolutionDir)\GlobalCompileSettings.Targets" />
 

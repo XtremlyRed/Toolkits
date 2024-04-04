@@ -4,17 +4,15 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Markup;
 
 namespace Toolkits;
 
 #if ___AVALONIA___
-
-
 using global::Avalonia.Markup.Xaml;
-
 #endif
-
+#if ___WPF___
+using System.Windows.Markup;
+#endif
 #if ___WPF___ || ___AVALONIA___
 
 

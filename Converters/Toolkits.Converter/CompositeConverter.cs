@@ -6,10 +6,10 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Markup;
 #if ___WPF___
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Markup;
 #endif
 #if ___AVALONIA___
 using global::Avalonia;
