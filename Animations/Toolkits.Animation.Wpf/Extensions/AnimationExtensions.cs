@@ -9,8 +9,18 @@ using System.Windows.Media.Animation;
 
 namespace Toolkits.Animation;
 
+/// <summary>
+///
+/// </summary>
 public static class AnimationExtensions
 {
+    /// <summary>
+    /// Adds the animation.
+    /// </summary>
+    /// <param name="storyboard">The storyboard.</param>
+    /// <param name="animations">The animations.</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">storyboard</exception>
     public static Storyboard AddAnimation(
         this Storyboard? storyboard,
         params AnimationTimeline[] animations
@@ -29,6 +39,13 @@ public static class AnimationExtensions
         return storyboard;
     }
 
+    /// <summary>
+    /// Registers the completed.
+    /// </summary>
+    /// <param name="storyboard">The storyboard.</param>
+    /// <param name="completeCallback">The complete callback.</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">storyboard</exception>
     public static Storyboard RegisterCompleted(
         this Storyboard? storyboard,
         Action? completeCallback
@@ -52,7 +69,7 @@ public static class AnimationExtensions
 
         return storyboard;
 
-        static void Storyboard_Completed(object sender, EventArgs e)
+        static void Storyboard_Completed(object? sender, EventArgs e)
         {
             if (sender is not ClockGroup clockGroup || clockGroup.Timeline is not Storyboard ss)
             {

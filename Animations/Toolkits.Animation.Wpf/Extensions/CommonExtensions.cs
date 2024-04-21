@@ -8,6 +8,12 @@ namespace Toolkits.Animation;
 
 internal static class CommonExtensions
 {
+    /// <summary>
+    /// Fors the each.
+    /// </summary>
+    /// <typeparam name="TSource">The type of the source.</typeparam>
+    /// <param name="source">The source.</param>
+    /// <param name="loop">The loop.</param>
     public static void ForEach<TSource>(this IEnumerable<TSource> source, Action<TSource> loop)
     {
         if (source is null || loop is null)

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Toolkits;
+namespace Toolkits.Core;
 
 /// <summary>
 /// string extensions
@@ -24,7 +24,7 @@ public static class StringExtensions
     /// <param name="defaultValue"></param>
     /// <returns></returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static string IsNullOrWhiteSpaceUse(this string? value, string defaultValue)
+    public static string WhenNullOrWhiteSpaceUse(this string? value, string defaultValue)
     {
         return string.IsNullOrWhiteSpace(value) ? defaultValue : value!;
     }
@@ -36,7 +36,7 @@ public static class StringExtensions
     /// <param name="exception"></param>
     /// <returns></returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static string IsNullOrWhiteSpaceUse(this string? value, Exception exception)
+    public static string WhenNullOrWhiteSpaceUse(this string? value, Exception exception)
     {
         _ = exception ?? throw new ArgumentNullException(nameof(exception));
 
@@ -58,13 +58,13 @@ public static class StringExtensions
     }
 
     /// <summary>
-    /// If the current string <paramref name="value"/ >is <see langword="null"/> or empty, use <paramref name="defaultValue"/>
+    /// If the current string <paramref name="value" />is <see langword="null"/> or empty, use <paramref name="defaultValue"/>
     /// </summary>
     /// <param name="value"></param>
     /// <param name="defaultValue"></param>
     /// <returns></returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static string IsNullOrEmptyUse(this string? value, string defaultValue)
+    public static string WhenNullOrEmptyUse(this string? value, string defaultValue)
     {
         return string.IsNullOrEmpty(value) ? defaultValue : value!;
     }
@@ -76,7 +76,7 @@ public static class StringExtensions
     /// <param name="exception"></param>
     /// <returns></returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static string IsNullOrEmptyUse(this string? value, Exception exception)
+    public static string WhenNullOrEmptyUse(this string? value, Exception exception)
     {
         _ = exception ?? throw new ArgumentNullException(nameof(exception));
 

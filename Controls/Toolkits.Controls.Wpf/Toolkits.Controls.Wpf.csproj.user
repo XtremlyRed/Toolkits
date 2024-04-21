@@ -2,10 +2,10 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
-    <Page Update="PopupView\MessageView.xaml">
+    <Page Update="Popup\PopupView\MessageView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="PopupView\ToastView.xaml">
+    <Page Update="Popup\PopupView\ToastView.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

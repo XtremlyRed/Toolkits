@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Windows.Input;
 
-namespace Toolkits;
+namespace Toolkits.Core;
 
 /// <summary>
 /// <see cref="IRelayCommand"/>

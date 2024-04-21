@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Toolkits.Animation.Wpf.Extensions;
 
+/// <summary>
+///
+/// </summary>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public class ReflectionExtensions
 {

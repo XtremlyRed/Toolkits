@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Windows.Input;
 
-namespace Toolkits;
+namespace Toolkits.Core;
 
 /// <summary>
 /// <see cref="IRelayCommand{TParameter}"/>

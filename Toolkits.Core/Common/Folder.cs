@@ -1,7 +1,8 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 
-namespace Toolkits;
+namespace Toolkits.Core;
 
 /// <summary>
 /// <see cref="Folder"/>

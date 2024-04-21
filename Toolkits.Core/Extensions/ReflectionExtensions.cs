@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Toolkits;
+namespace Toolkits.Core;
 
 /// <summary>
 /// reflection extensions

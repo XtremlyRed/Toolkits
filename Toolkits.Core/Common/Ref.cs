@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace Toolkits;
+namespace Toolkits.Core;
 
 /// <summary>
 ///
@@ -8,9 +8,6 @@ namespace Toolkits;
 [DebuggerDisplay("{value}")]
 public sealed class Ref<T>
 {
-    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    private int locker;
-
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private T? value;
 
@@ -21,8 +18,10 @@ public sealed class Ref<T>
     {
         get
         {
-            while (Interlocked.CompareExchange(ref locker, 0, 0) != 0) { }
-            return value!;
+            lock (this)
+            {
+                return value!;
+            }
         }
     }
 
@@ -32,14 +31,9 @@ public sealed class Ref<T>
     /// <param name="newValue">The new value.</param>
     public void Swap(T newValue)
     {
-        try
+        lock (this)
         {
-            while (Interlocked.CompareExchange(ref locker, 1, 0) != 0) { }
             value = newValue;
-        }
-        finally
-        {
-            Interlocked.Exchange(ref locker, 0);
         }
     }
 

@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Toolkits;
-using Toolkits.Popup;
+using Toolkits.Controls;
 
 namespace WPF_UI_TEST
 {

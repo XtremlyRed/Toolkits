@@ -2,8 +2,9 @@
 using System.Windows;
 using System.Windows.Media.Animation;
 using Toolkits.Animation;
+using Toolkits.Controls;
 
-namespace Toolkits.Popup.Assist;
+namespace Toolkits.Controls.Assist;
 
 internal static class PopupAdornerAssist
 {

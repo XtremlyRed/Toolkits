@@ -1,26 +1,22 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>
 			net451;
 			net48;
-			netcoreapp3.1; 
+			netcoreapp3.1;
 			net6.0;
 			net7.0;
 			net8.0;
 		</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable> 
-		<LangVersion>11</LangVersion> 
-		<Description>popup core</Description>
+		<Nullable>enable</Nullable>
+		<LangVersion>11</LangVersion>
+		<Description>controls core</Description>
 	</PropertyGroup>
 
-	<ItemGroup>
-	  <Folder Include="Properties\" />
-	</ItemGroup>
 
 
- 
 
 	<Import Project="$(SolutionDir)\GlobalCompileSettings.Targets" />
 

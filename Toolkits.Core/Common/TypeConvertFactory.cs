@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
-namespace Toolkits;
+namespace Toolkits.Core;
 
 /// <summary>
 /// class of <see cref="TypeConvertExtensions"/>

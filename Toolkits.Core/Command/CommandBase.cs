@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Windows.Input;
 
-namespace Toolkits;
+namespace Toolkits.Core;
 
 /// <summary>
 /// a class of <see cref="CommandBase"/>
@@ -23,6 +23,9 @@ public abstract class CommandBase : ICommand, INotifyPropertyChanged
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private string commandName = string.Empty;
 
+    /// <summary>
+    /// The synchronization context
+    /// </summary>
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     protected SynchronizationContext SynchronizationContext = SynchronizationContext.Current;
 

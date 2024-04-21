@@ -4,13 +4,69 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
 
-namespace Toolkits;
+namespace Toolkits.Core;
 
 /// <summary>
 /// enumerable extensions
 /// </summary>
 public static class EnumerableExtensions
 {
+    /// <summary>
+    /// Determines whether [is null or empty].
+    /// </summary>
+    /// <param name="source">The source.</param>
+    /// <returns>
+    ///   <c>true</c> if [is null or empty] [the specified source]; otherwise, <c>false</c>.
+    /// </returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public static bool IsNullOrEmpty(this IEnumerable source)
+    {
+        if (source is null)
+        {
+            return true;
+        }
+
+        if (source is ICollection collection2)
+        {
+            return collection2.Count == 0;
+        }
+
+        foreach (object? _ in source)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Determines whether [is not null or empty].
+    /// </summary>
+    /// <param name="source">The source.</param>
+    /// <returns>
+    ///   <c>true</c> if [is not null or empty] [the specified source]; otherwise, <c>false</c>.
+    /// </returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public static bool IsNotNullOrEmpty(this IEnumerable? source)
+    {
+        if (source is null)
+        {
+            return false;
+        }
+
+        if (source is ICollection collection2)
+        {
+            return collection2.Count != 0;
+        }
+
+        foreach (object? _ in source)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     /// <summary>
     /// Determines whether [is null or empty].
     /// </summary>
@@ -303,7 +359,7 @@ public static class EnumerableExtensions
         {
             return;
         }
-        foreach (object item in source)
+        foreach (object? item in source)
         {
             if (item is Target target)
             {
@@ -412,7 +468,7 @@ public static class EnumerableExtensions
         {
             return;
         }
-        foreach (object item in source)
+        foreach (object? item in source)
         {
             if (item is Target target)
             {
@@ -466,10 +522,45 @@ public static class EnumerableExtensions
     }
 
     /// <summary>
+    /// Sorts the specified comparer.
+    /// </summary>
+    /// <typeparam name="Target">The type of the arget.</typeparam>
+    /// <param name="source">The source.</param>
+    /// <param name="comparer">The comparer.</param>
+    /// <param name="isDescending">if set to <c>true</c> [is descending].</param>
+    /// <exception cref="ArgumentNullException">
+    /// source
+    /// or
+    /// comparer
+    /// </exception>
+    public static void Sort<Target>(
+        this Target[] source,
+        Func<Target, IComparable> comparer,
+        bool isDescending = false
+    )
+    {
+        _ = source ?? throw new ArgumentNullException(nameof(source));
+        _ = comparer ?? throw new ArgumentNullException(nameof(comparer));
+
+        if (isDescending)
+        {
+            var comparper = new DescendingSortIComparer<Target>(comparer);
+            Array.Sort(source, 0, source.Length, comparper);
+        }
+        else
+        {
+            var comparper = new SortIComparer<Target>(comparer);
+            Array.Sort(source, 0, source.Length, comparper);
+        }
+    }
+
+    /// <summary>
     ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    private record DescendingSortIComparer<T>(Func<T, IComparable> Selector) : IComparer<T>
+    private record DescendingSortIComparer<T>(Func<T, IComparable> Selector)
+        : IComparer<T>,
+            IComparer
     {
         public int Compare(T? x, T? y)
         {
@@ -480,13 +571,23 @@ public static class EnumerableExtensions
 
             return -Selector(x).CompareTo(Selector(y));
         }
+
+        public int Compare(object? x, object? y)
+        {
+            if (x is not T tx || y is not T ty)
+            {
+                return 0;
+            }
+
+            return this.Compare(tx, ty);
+        }
     }
 
     /// <summary>
     ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    private record SortIComparer<T>(Func<T, IComparable> Selector) : IComparer<T>
+    private record SortIComparer<T>(Func<T, IComparable> Selector) : IComparer<T>, IComparer
     {
         public int Compare(T? x, T? y)
         {
@@ -495,6 +596,16 @@ public static class EnumerableExtensions
                 return 0;
             }
             return Selector(x).CompareTo(Selector(y));
+        }
+
+        public int Compare(object? x, object? y)
+        {
+            if (x is not T tx || y is not T ty)
+            {
+                return 0;
+            }
+
+            return this.Compare(tx, ty);
         }
     }
 

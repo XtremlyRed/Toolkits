@@ -22,9 +22,9 @@ using System.Windows.Markup;
 
 [assembly: XmlnsDefinition(
     "http://schemas.microsoft.com/winfx/2006/xaml/presentation",
-    "Toolkits.Popup"
+    "Toolkits.Controls"
 )]
-[assembly: XmlnsDefinition("https://github.com/xtremlyred/toolkits", "Toolkits.Popup")]
+[assembly: XmlnsDefinition("https://github.com/xtremlyred/toolkits", "Toolkits.Controls")]
 [assembly: XmlnsPrefix("https://github.com/xtremlyred/toolkits", "toolkits")]
 
 namespace System.Runtime.CompilerServices

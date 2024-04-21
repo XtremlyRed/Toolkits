@@ -12,35 +12,32 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<UseWPF>true</UseWPF>
+		<UseWindowsForms>true</UseWindowsForms>
 		<LangVersion>11</LangVersion>
 		<DefineConstants>$(DefineConstants);___WPF___</DefineConstants>
-		<Description>wpf popup</Description>
+		<Description>wpf controls</Description>
 	</PropertyGroup>
 
 
  
-
 	<Import Project="$(SolutionDir)\GlobalCompileSettings.Targets" />
 
 
  
-
 	<ItemGroup>
 	  <None Remove="FodyWeavers.xml" />
 	</ItemGroup>
 
 
- 
-
 	<ItemGroup>
-	  <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets="All" />
+		<PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets="All" />
 	</ItemGroup>
 
 
 	<ItemGroup>
 	  <ProjectReference Include="..\..\Animations\Toolkits.Animation.Wpf\Toolkits.Animation.Wpf.csproj" />
 	  <ProjectReference Include="..\..\Toolkits.Core\Toolkits.Core.csproj" />
-	  <ProjectReference Include="..\Toolkits.Popup.Core\Toolkits.Popup.Core.csproj" />
+	  <ProjectReference Include="..\Toolkits.Controls.Core\Toolkits.Controls.Core.csproj" /> 
 	</ItemGroup>
 
 

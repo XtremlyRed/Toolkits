@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace Toolkits.Popup;
+namespace Toolkits.Controls.PopupView;
 
 /// <summary>
 /// ToastView.xaml

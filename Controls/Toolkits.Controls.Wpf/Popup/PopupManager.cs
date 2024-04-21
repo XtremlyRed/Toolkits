@@ -3,10 +3,11 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
-using Toolkits.Popup;
-using Toolkits.Popup.Assist;
+using Toolkits.Controls;
+using Toolkits.Controls.Assist;
+using Toolkits.Controls.PopupView;
 
-namespace Toolkits.Popup;
+namespace Toolkits.Controls;
 
 /// <summary>
 /// a class of <see cref="PopupManager"/>
@@ -19,60 +20,6 @@ public class PopupManager : IPopupManager
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     private static readonly List<WeakReference> adornerDecorators = new();
-
-    ///// <summary>
-    /////  display tips with <paramref name="message"/>,<paramref name="title"/>, in container right
-    ///// </summary>
-    ///// <param name="message">the message content of the pop-up box</param>
-    ///// <param name="title">the title of the pop-up box</param>
-    ///// <param name="parameters"></param>
-    ///// <param name="displayTime_Ms"></param>
-    ///// <returns></returns>
-    ///// <exception cref="Exception"></exception>
-    //public async Task ToastAsync(
-    //    string message,
-    //    string title,
-    //    int displayTime_Ms = -1,
-    //    params object[] parameters
-    //)
-    //{
-    //    PopupContainerCheck(true, out var adornerDecorator);
-    //    await PopupManagerAssist.InnerTipPopup(
-    //        adornerDecorator,
-    //        title,
-    //        message,
-    //        displayTime_Ms,
-    //        parameters
-    //    );
-    //}
-
-    ///// <summary>
-    /////  display tips with <paramref name="message"/>,<paramref name="title"/>, in container right
-    ///// </summary>
-    ///// <param name="containerName"></param>
-    ///// <param name="message">the message content of the pop-up box</param>
-    ///// <param name="title">the title of the pop-up box</param>
-    ///// <param name="parameters"></param>
-    ///// <param name="displayTime_Ms"></param>
-    ///// <returns></returns>
-    ///// <exception cref="Exception"></exception>
-    //public async Task ToastAsyncIn(
-    //    string containerName,
-    //    string message,
-    //    string title,
-    //    int displayTime_Ms = -1,
-    //    params object[] parameters
-    //)
-    //{
-    //    PopupContainerCheck(true, out var adornerDecorator);
-    //    await PopupManagerAssist.InnerTipPopup(
-    //        adornerDecorator,
-    //        title,
-    //        message,
-    //        displayTime_Ms,
-    //        parameters
-    //    );
-    //}
 
     /// <summary>
     /// show message with <paramref name="message"/>,<paramref name="title"/>,<paramref name="buttonContents"/>,

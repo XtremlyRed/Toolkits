@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Animations\Toolkits.Animation.Wpf\Toolkits.Animation.Wpf.csproj" />
-    <ProjectReference Include="..\..\Popups\Toolkits.Popup.Wpf\Toolkits.Popup.Wpf.csproj" />
+    <ProjectReference Include="..\..\Controls\Toolkits.Controls.Wpf\Toolkits.Controls.Wpf.csproj" />
   </ItemGroup>
 
 </Project>

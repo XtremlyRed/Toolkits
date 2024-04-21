@@ -11,8 +11,21 @@ using Toolkits.Animation.Wpf.Extensions;
 
 namespace Toolkits.Animation;
 
+/// <summary>
+///
+/// </summary>
 public static class ObjectAnimationUsingKeyFramesExtensions
 {
+    /// <summary>
+    /// Builds the animation.
+    /// </summary>
+    /// <typeparam name="TObject">The type of the object.</typeparam>
+    /// <typeparam name="TPropety">The type of the propety.</typeparam>
+    /// <param name="object">The object.</param>
+    /// <param name="propertyExpression">The property expression.</param>
+    /// <param name="keyValue">The key value.</param>
+    /// <param name="keyTime">The key time.</param>
+    /// <returns></returns>
     public static ObjectAnimationUsingKeyFrames BuildAnimation<TObject, TPropety>(
         this TObject @object,
         Expression<Func<TObject, TPropety>> propertyExpression,
@@ -26,6 +39,21 @@ public static class ObjectAnimationUsingKeyFramesExtensions
         return BuildAnimation(@object, property, keyValue, keyTime);
     }
 
+    /// <summary>
+    /// Builds the animation.
+    /// </summary>
+    /// <typeparam name="TObject">The type of the object.</typeparam>
+    /// <typeparam name="TPropety">The type of the propety.</typeparam>
+    /// <param name="object">The object.</param>
+    /// <param name="animationProperty">The animation property.</param>
+    /// <param name="keyValue">The key value.</param>
+    /// <param name="keyTime">The key time.</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">
+    /// object
+    /// or
+    /// animationProperty
+    /// </exception>
     public static ObjectAnimationUsingKeyFrames BuildAnimation<TObject, TPropety>(
         this TObject @object,
         string animationProperty,
@@ -50,6 +78,19 @@ public static class ObjectAnimationUsingKeyFramesExtensions
         return objectAnimation;
     }
 
+    /// <summary>
+    /// Adds the key frame.
+    /// </summary>
+    /// <typeparam name="TProperty">The type of the property.</typeparam>
+    /// <param name="objectAnimation">The object animation.</param>
+    /// <param name="keyValue">The key value.</param>
+    /// <param name="keyTime">The key time.</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">
+    /// objectAnimation
+    /// or
+    /// keyValue
+    /// </exception>
     public static ObjectAnimationUsingKeyFrames AddKeyFrame<TProperty>(
         this ObjectAnimationUsingKeyFrames objectAnimation,
         TProperty keyValue,

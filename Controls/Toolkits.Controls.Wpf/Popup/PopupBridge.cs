@@ -8,8 +8,9 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media.Animation;
 using Toolkits.Animation;
+using Toolkits.Core;
 
-namespace Toolkits.Popup.Assist;
+namespace Toolkits.Controls.Assist;
 
 [EditorBrowsable(EditorBrowsableState.Never)]
 internal class PopupBridge

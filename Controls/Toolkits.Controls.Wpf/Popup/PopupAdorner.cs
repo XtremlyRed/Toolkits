@@ -6,8 +6,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
+using Toolkits.Core;
 
-namespace Toolkits.Popup.Assist;
+namespace Toolkits.Controls.Assist;
 
 internal class PopupAdorner : Adorner
 {

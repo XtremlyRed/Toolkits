@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Media.Animation;
 using Toolkits.Animation;
 
-namespace Toolkits.Popup;
+namespace Toolkits.Controls;
 
 /// <summary>
 /// The base class for all toast popup views.

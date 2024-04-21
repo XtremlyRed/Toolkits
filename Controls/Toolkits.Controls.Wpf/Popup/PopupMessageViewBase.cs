@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace Toolkits.Popup;
+namespace Toolkits.Controls;
 
 /// <summary>
 /// The base class for all message popup views.

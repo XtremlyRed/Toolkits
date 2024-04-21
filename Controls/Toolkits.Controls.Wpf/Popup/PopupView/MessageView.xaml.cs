@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
-namespace Toolkits.Popup;
+namespace Toolkits.Controls.PopupView;
 
 /// <summary>
 /// MessageView.xaml

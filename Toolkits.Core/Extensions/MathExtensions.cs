@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Toolkits;
+namespace Toolkits.Core;
 
 /// <summary>
 /// simple math extensions

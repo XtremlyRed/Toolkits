@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace Toolkits;
+namespace Toolkits.Core;
 
 /// <summary>
 /// task  extensions

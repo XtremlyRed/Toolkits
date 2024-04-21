@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace Toolkits;
+namespace Toolkits.Core;
 
 /// <summary>
 /// <see cref="IRelayCommandAsync"/>

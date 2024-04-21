@@ -3,8 +3,9 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using Toolkits.Controls;
 
-namespace Toolkits.Popup.Assist;
+namespace Toolkits.Controls.Assist;
 
 [EditorBrowsable(EditorBrowsableState.Never)]
 internal static class PopupManagerAssist
