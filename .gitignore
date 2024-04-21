@@ -15,3 +15,6 @@
 /UITest/WPF_UI_TEST/obj
 /Controls/Toolkits.Controls.Core/obj
 /Controls/Toolkits.Controls.Wpf/obj
+/Test/Toolkits.Configuration.Test/bin
+/Test/Toolkits.Configuration.Test/obj
+/Toolkits.Configuration/obj

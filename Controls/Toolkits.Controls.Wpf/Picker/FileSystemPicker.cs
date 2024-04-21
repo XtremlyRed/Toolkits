@@ -8,19 +8,19 @@ namespace Toolkits.Controls;
 /// <summary>
 /// pick from file system
 /// </summary>
-public static class PickFactory
+public class FileSystemPicker : IFileSystemPicker
 {
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     [EditorBrowsable(EditorBrowsableState.Never)]
-    private static readonly System.Windows.Forms.FolderBrowserDialog folderBrowserDialog = new();
+    private readonly System.Windows.Forms.FolderBrowserDialog folderBrowserDialog = new();
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     [EditorBrowsable(EditorBrowsableState.Never)]
-    private static readonly System.Windows.Forms.OpenFileDialog openFileDialog = new();
+    private readonly System.Windows.Forms.OpenFileDialog openFileDialog = new();
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     [EditorBrowsable(EditorBrowsableState.Never)]
-    private static readonly System.Windows.Forms.SaveFileDialog saveFileDialog = new();
+    private readonly System.Windows.Forms.SaveFileDialog saveFileDialog = new();
 
     /// <summary>
     /// pick folder from file system
@@ -29,7 +29,7 @@ public static class PickFactory
     /// <param name="title"></param>
     /// <param name="showNewFolderButton"></param>
     /// <returns></returns>
-    public static string? FolderPicker(
+    public string? FolderPicker(
         string? defaultPath = null,
         string title = "please select folder",
         bool showNewFolderButton = false
@@ -55,7 +55,7 @@ public static class PickFactory
     /// <param name="showNewFolderButton"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public static async Task<string?> FolderPickerAsync(
+    public async Task<string?> FolderPickerAsync(
         string? defaultPath = null,
         string title = "please select folder",
         bool showNewFolderButton = false
@@ -95,7 +95,7 @@ public static class PickFactory
     /// <param name="defaultFileName"></param>
     /// <param name="rootFolder"></param>
     /// <returns></returns>
-    public static string? FileNamePicker(
+    public string? FileNamePicker(
         string filter = "all file|*.*",
         string title = "please input file name",
         string? defaultFileName = null,
@@ -131,7 +131,7 @@ public static class PickFactory
     /// <param name="rootFolder"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public static async Task<string?> FileNamePickerAsync(
+    public async Task<string?> FileNamePickerAsync(
         string filter = "all file|*.*",
         string title = "please input file name",
         string? defaultFileName = null,
@@ -179,7 +179,7 @@ public static class PickFactory
     /// <param name="rootFolder"></param>
     /// <returns></returns>
 
-    public static string? FilePicker(
+    public string? FilePicker(
         string filter = "all file|*.*",
         string title = "please select files",
         string? rootFolder = null
@@ -208,7 +208,7 @@ public static class PickFactory
     /// <param name="title"></param>
     /// <param name="rootFolder"></param>
     /// <returns></returns>
-    public static string[]? FilesPicker(
+    public string[]? FilesPicker(
         string filter = "all file|*.*",
         string? title = "please select files",
         string? rootFolder = null
@@ -238,7 +238,7 @@ public static class PickFactory
     /// <param name="rootFolder"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public static async Task<string?> FilePickerAsync(
+    public async Task<string?> FilePickerAsync(
         string filter = "all file|*.*",
         string title = "please select files",
         string? rootFolder = null
@@ -280,7 +280,7 @@ public static class PickFactory
     /// <param name="rootFolder"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public static async Task<string[]?> FilesPickerAsync(
+    public async Task<string[]?> FilesPickerAsync(
         string filter = "all file|*.*",
         string title = "please select files",
         string? rootFolder = null

@@ -33,9 +33,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPF_UI_TEST", "UITest\WPF_U
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Controls", "Controls", "{226D7634-E2E0-4DA9-AB1C-923F31189CD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toolkits.Controls.Wpf", "Controls\Toolkits.Controls.Wpf\Toolkits.Controls.Wpf.csproj", "{360BF363-8CEC-492B-97BB-3A1D8BD6F52F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toolkits.Controls.Wpf", "Controls\Toolkits.Controls.Wpf\Toolkits.Controls.Wpf.csproj", "{360BF363-8CEC-492B-97BB-3A1D8BD6F52F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toolkits.Controls.Core", "Controls\Toolkits.Controls.Core\Toolkits.Controls.Core.csproj", "{687171F8-7AF9-4431-9DA5-8E882A3CC0DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toolkits.Controls.Core", "Controls\Toolkits.Controls.Core\Toolkits.Controls.Core.csproj", "{687171F8-7AF9-4431-9DA5-8E882A3CC0DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toolkits.Configuration", "Toolkits.Configuration\Toolkits.Configuration.csproj", "{6404110A-4F48-4A9F-B5C1-1F69D0700EAC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{18F28F93-6579-4346-81AF-40948D90BBE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toolkits.Configuration.Test", "Test\Toolkits.Configuration.Test\Toolkits.Configuration.Test.csproj", "{413B064D-48DF-4673-B941-6C35ACB4918A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +81,14 @@ Global
 		{687171F8-7AF9-4431-9DA5-8E882A3CC0DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{687171F8-7AF9-4431-9DA5-8E882A3CC0DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{687171F8-7AF9-4431-9DA5-8E882A3CC0DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6404110A-4F48-4A9F-B5C1-1F69D0700EAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6404110A-4F48-4A9F-B5C1-1F69D0700EAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6404110A-4F48-4A9F-B5C1-1F69D0700EAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6404110A-4F48-4A9F-B5C1-1F69D0700EAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{413B064D-48DF-4673-B941-6C35ACB4918A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{413B064D-48DF-4673-B941-6C35ACB4918A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{413B064D-48DF-4673-B941-6C35ACB4918A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{413B064D-48DF-4673-B941-6C35ACB4918A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -88,6 +102,7 @@ Global
 		{80131B04-37BF-41C7-AAA4-F2BB910F0181} = {FB038E2A-7B85-4752-B815-F06EE2664F70}
 		{360BF363-8CEC-492B-97BB-3A1D8BD6F52F} = {226D7634-E2E0-4DA9-AB1C-923F31189CD2}
 		{687171F8-7AF9-4431-9DA5-8E882A3CC0DF} = {226D7634-E2E0-4DA9-AB1C-923F31189CD2}
+		{413B064D-48DF-4673-B941-6C35ACB4918A} = {18F28F93-6579-4346-81AF-40948D90BBE8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B45F90B8-3B2E-4915-8430-B929DFB383FC}

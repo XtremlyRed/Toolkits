@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>
+			net451;
+			net48;
+			netcoreapp3.1;
+			net6.0;
+			net7.0;
+			net8.0;
+		</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<LangVersion>11</LangVersion>
+		<NoWarn>$(NoWarn);SYSLIB0011</NoWarn>
+		<Description>some commonly used extension methods for classes, such as enumerable, string, task, etc</Description>
+	</PropertyGroup>
+
+
+	<ItemGroup Condition=" $(TargetFramework.StartsWith('net451')) ">
+		<PackageReference Include="System.ValueTuple" Version="4.5.0" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	</ItemGroup>
+
+	<Import Project="$(SolutionDir)\GlobalCompileSettings.Targets" />
+
+
+
+
+
+
+
+</Project>
+
