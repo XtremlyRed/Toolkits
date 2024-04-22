@@ -90,7 +90,7 @@ internal class PopupBridge
             storyboard.Children.Add(da);
             storyboard.Completed += Storyboard_Completed;
             storyboard.Begin();
-            void Storyboard_Completed(object sender, EventArgs e)
+            void Storyboard_Completed(object? sender, EventArgs e)
             {
                 storyboard.Completed -= Storyboard_Completed;
                 AdornerLayer!.Remove(PopupAdornet);

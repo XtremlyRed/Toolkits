@@ -4,10 +4,13 @@ using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
-using Toolkits.Configuration.Internal;
 
 namespace Toolkits.Configuration;
 
+/// <summary>
+/// a class of <see cref="XMLConfiguration"/>
+/// </summary>
+/// <seealso cref="Toolkits.Configuration.IConfiguration" />
 [DebuggerDisplay("{xmlDocument}")]
 public class XMLConfiguration : IConfiguration
 {
@@ -18,7 +21,7 @@ public class XMLConfiguration : IConfiguration
     private XmlDocument xmlDocument;
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    private readonly AsyncLocker asyncLocker = new AsyncLocker(1, 1);
+    private readonly SemaphoreSlim asyncLocker = new SemaphoreSlim(1, 1);
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private static readonly XmlWriterSettings serializerSettings;
@@ -29,6 +32,9 @@ public class XMLConfiguration : IConfiguration
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private const string intervalChar = ".";
 
+    /// <summary>
+    /// Initializes the <see cref="XMLConfiguration"/> class.
+    /// </summary>
     static XMLConfiguration()
     {
         serializerSettings = new XmlWriterSettings
@@ -41,6 +47,10 @@ public class XMLConfiguration : IConfiguration
         };
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="XMLConfiguration"/> class.
+    /// </summary>
+    /// <param name="configurationPath">The configuration path.</param>
     public XMLConfiguration(FileInfo configurationPath)
     {
         this.configurationPath = configurationPath;
@@ -49,7 +59,8 @@ public class XMLConfiguration : IConfiguration
 
         if (configurationPath.Exists)
         {
-            xmlDocument.Load(configurationPath.FullName);
+            using var fs = File.OpenRead(configurationPath.FullName);
+            xmlDocument.Load(fs);
         }
         else
         {
@@ -60,6 +71,14 @@ public class XMLConfiguration : IConfiguration
         }
     }
 
+    /// <summary>
+    /// Gets the specified key.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="key">The key.</param>
+    /// <param name="defaultValue">The default value.</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">key</exception>
     public T Get<T>(string key, T defaultValue = default!)
     {
         _ = string.IsNullOrWhiteSpace(key) ? throw new ArgumentNullException(nameof(key)) : 0;
@@ -91,6 +110,17 @@ public class XMLConfiguration : IConfiguration
         }
     }
 
+    /// <summary>
+    /// Sets the specified key.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="key">The key.</param>
+    /// <param name="value">The value.</param>
+    /// <exception cref="ArgumentNullException">
+    /// key
+    /// or
+    /// value
+    /// </exception>
     public void Set<T>(string key, T value)
     {
         _ = string.IsNullOrWhiteSpace(key) ? throw new ArgumentNullException(nameof(key)) : 0;
@@ -108,17 +138,24 @@ public class XMLConfiguration : IConfiguration
         }
     }
 
+    /// <summary>
+    /// Clears this instance.
+    /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public void Clear()
     {
         try
         {
+            asyncLocker.Wait();
+
             xmlDocument = new XmlDocument();
 
             XmlDeclaration xmlDeclaration = xmlDocument.CreateXmlDeclaration("1.0", "UTF-8", null);
             XmlElement root = xmlDocument.CreateElement("Root");
             xmlDocument.AppendChild(xmlDeclaration);
             xmlDocument.AppendChild(root);
+
+            WriteIn();
         }
         finally
         {
@@ -178,6 +215,9 @@ public class XMLConfiguration : IConfiguration
                 valueDoc.Load(stream);
                 XmlNode importedNode = xmlDocument.ImportNode(valueDoc.DocumentElement!, true);
                 newElement.AppendChild(importedNode);
+
+                valueDoc = null!;
+                serializer = null!;
             }
             node!.AppendChild(newElement);
         }
@@ -196,8 +236,17 @@ public class XMLConfiguration : IConfiguration
                 valueDoc.Load(stream);
                 XmlNode importedNode = xmlDocument.ImportNode(valueDoc.DocumentElement!, true);
                 targetNode.AppendChild(importedNode);
+                valueDoc = null!;
+                serializer = null!;
             }
         }
+
+        WriteIn();
+    }
+
+    private void WriteIn()
+    {
+        var clone = (XmlDocument)xmlDocument.Clone();
 
         var writer = XmlWriter.Create(configurationPath.FullName, serializerSettings);
 

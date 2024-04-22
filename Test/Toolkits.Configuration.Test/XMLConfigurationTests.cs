@@ -17,7 +17,7 @@ namespace Toolkits.Configuration.Tests
         [TestInitialize]
         public void SetupXML()
         {
-            configuration_XML = ConfigurationFactory.CreateConfiguration(
+            configuration_XML = ConfigurationFactory.GetConfiguration(
                 "xmlText.xml",
                 ConfigurationType.Xml
             );

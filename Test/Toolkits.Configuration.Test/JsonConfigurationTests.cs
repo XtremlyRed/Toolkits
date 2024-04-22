@@ -16,7 +16,7 @@ namespace Toolkits.Configuration.Tests
         [TestInitialize]
         public void SetupJSON()
         {
-            configuration_JSON = ConfigurationFactory.CreateConfiguration(
+            configuration_JSON = ConfigurationFactory.GetConfiguration(
                 "jsonTest.json",
                 ConfigurationType.Json
             );

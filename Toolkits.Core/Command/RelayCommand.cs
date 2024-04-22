@@ -44,10 +44,16 @@ public class RelayCommand : CommandBase, IRelayCommand, ICommand
     }
 
     /// <summary>
-    /// create a new command
+    /// Initializes a new instance of the <see cref="RelayCommand"/> class.
     /// </summary>
-    /// <param name="execute"></param>
-    /// <param name="canExecute"></param>
+    /// <param name="commandName">Name of the command.</param>
+    /// <param name="execute">The execute.</param>
+    /// <param name="canExecute">The can execute.</param>
+    /// <exception cref="ArgumentNullException">
+    /// commandName
+    /// or
+    /// execute
+    /// </exception>
     public RelayCommand(string commandName, Action execute, Func<bool>? canExecute = null)
     {
         base.CommandName = commandName ?? throw new ArgumentNullException(nameof(commandName));

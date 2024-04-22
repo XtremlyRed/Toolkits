@@ -5,10 +5,13 @@ using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using Toolkits.Configuration.Internal;
 
 namespace Toolkits.Configuration;
 
+/// <summary>
+/// a  class of <see cref="JsonConfiguration"/>
+/// </summary>
+/// <seealso cref="Toolkits.Configuration.IConfiguration" />
 [DebuggerDisplay("{thisToken}")]
 public class JsonConfiguration : IConfiguration
 {
@@ -19,7 +22,7 @@ public class JsonConfiguration : IConfiguration
     JToken? thisToken;
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    AsyncLocker asyncLocker = new AsyncLocker(1, 1);
+    SemaphoreSlim asyncLocker = new SemaphoreSlim(1, 1);
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     static JsonSerializerSettings serializerSettings;
@@ -30,6 +33,9 @@ public class JsonConfiguration : IConfiguration
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     const string intervalChar = ".";
 
+    /// <summary>
+    /// Initializes the <see cref="JsonConfiguration"/> class.
+    /// </summary>
     static JsonConfiguration()
     {
         serializerSettings = new JsonSerializerSettings()
@@ -43,6 +49,10 @@ public class JsonConfiguration : IConfiguration
         serializerSettings.NullValueHandling = NullValueHandling.Ignore;
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="JsonConfiguration"/> class.
+    /// </summary>
+    /// <param name="configurationPath">The configuration path.</param>
     public JsonConfiguration(FileInfo configurationPath)
     {
         this.configurationPath = configurationPath;
@@ -66,6 +76,14 @@ public class JsonConfiguration : IConfiguration
         }
     }
 
+    /// <summary>
+    /// Gets the specified key.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="key">The key.</param>
+    /// <param name="defaultValue">The default value.</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">key</exception>
     public T Get<T>(string key, T defaultValue = default!)
     {
         _ = string.IsNullOrWhiteSpace(key) ? throw new ArgumentNullException(nameof(key)) : 0;
@@ -94,6 +112,17 @@ public class JsonConfiguration : IConfiguration
         }
     }
 
+    /// <summary>
+    /// Sets the specified key.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="key">The key.</param>
+    /// <param name="value">The value.</param>
+    /// <exception cref="ArgumentNullException">
+    /// key
+    /// or
+    /// value
+    /// </exception>
     public void Set<T>(string key, T value)
     {
         _ = string.IsNullOrWhiteSpace(key) ? throw new ArgumentNullException(nameof(key)) : 0;
@@ -111,6 +140,9 @@ public class JsonConfiguration : IConfiguration
         }
     }
 
+    /// <summary>
+    /// Clears this instance.
+    /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public void Clear()
     {

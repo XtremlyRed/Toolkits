@@ -46,10 +46,13 @@ public class RelayCommandAsync : CommandBase, IRelayCommandAsync
     }
 
     /// <summary>
-    /// create a new command
+    /// Initializes a new instance of the <see cref="RelayCommandAsync"/> class.
     /// </summary>
-    /// <param name="execute"></param>
-    /// <param name="canExecute"></param>
+    /// <param name="commandName">Name of the command.</param>
+    /// <param name="execute">The execute.</param>
+    /// <param name="canExecute">The can execute.</param>
+    /// <exception cref="ArgumentNullException">commandName</exception>
+    /// <exception cref="Exception">execute</exception>
     public RelayCommandAsync(string commandName, Func<Task> execute, Func<bool>? canExecute = null)
     {
         base.CommandName = commandName ?? throw new ArgumentNullException(nameof(commandName));
@@ -58,11 +61,22 @@ public class RelayCommandAsync : CommandBase, IRelayCommandAsync
         this.canExecute = canExecute ??= () => true;
     }
 
+    /// <summary>
+    /// Determines whether this instance can execute the specified parameter.
+    /// </summary>
+    /// <param name="parameter">The parameter.</param>
+    /// <returns>
+    ///   <c>true</c> if this instance can execute the specified parameter; otherwise, <c>false</c>.
+    /// </returns>
     protected override bool CanExecute(object parameter)
     {
         return CanExecute();
     }
 
+    /// <summary>
+    /// Executes the specified parameter.
+    /// </summary>
+    /// <param name="parameter">The parameter.</param>
     protected override async void Execute(object parameter)
     {
         await ExecuteAsync();

@@ -17,7 +17,7 @@ namespace Toolkits.Configuration.Tests
         [TestInitialize]
         public void SetupBinary()
         {
-            configuration_Binary = ConfigurationFactory.CreateConfiguration(
+            configuration_Binary = ConfigurationFactory.GetConfiguration(
                 "xmlText.bin",
                 ConfigurationType.Binary
             );

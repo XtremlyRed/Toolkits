@@ -5,10 +5,22 @@ using Toolkits.Animation.Wpf.Extensions;
 
 namespace Toolkits.Animation;
 
+/// <summary>
+///
+/// </summary>
 public static class Int32AnimationExtension
 {
     #region int
-
+    /// <summary>
+    /// Builds the animation.
+    /// </summary>
+    /// <typeparam name="TObject">The type of the object.</typeparam>
+    /// <param name="object">The object.</param>
+    /// <param name="propertyExpression">The property expression.</param>
+    /// <param name="toValue">To value.</param>
+    /// <param name="duration">The duration.</param>
+    /// <param name="completeCallback">The complete callback.</param>
+    /// <returns></returns>
     public static Int32Animation BuildAnimation<TObject>(
         this TObject @object,
         Expression<Func<TObject, int>> propertyExpression,
@@ -32,6 +44,17 @@ public static class Int32AnimationExtension
         );
     }
 
+    /// <summary>
+    /// Builds the animation.
+    /// </summary>
+    /// <typeparam name="TObject">The type of the object.</typeparam>
+    /// <param name="object">The object.</param>
+    /// <param name="propertyExpression">The property expression.</param>
+    /// <param name="fromValue">From value.</param>
+    /// <param name="toValue">To value.</param>
+    /// <param name="duration">The duration.</param>
+    /// <param name="completeCallback">The complete callback.</param>
+    /// <returns></returns>
     public static Int32Animation BuildAnimation<TObject>(
         this TObject @object,
         Expression<Func<TObject, int>> propertyExpression,
@@ -56,6 +79,17 @@ public static class Int32AnimationExtension
         );
     }
 
+    /// <summary>
+    /// Builds the animation.
+    /// </summary>
+    /// <typeparam name="TObject">The type of the object.</typeparam>
+    /// <param name="object">The object.</param>
+    /// <param name="propertyExpression">The property expression.</param>
+    /// <param name="toValue">To value.</param>
+    /// <param name="beginTime">The begin time.</param>
+    /// <param name="duration">The duration.</param>
+    /// <param name="completeCallback">The complete callback.</param>
+    /// <returns></returns>
     public static Int32Animation BuildAnimation<TObject>(
         this TObject @object,
         Expression<Func<TObject, int>> propertyExpression,
@@ -80,6 +114,18 @@ public static class Int32AnimationExtension
         );
     }
 
+    /// <summary>
+    /// Builds the animation.
+    /// </summary>
+    /// <typeparam name="TObject">The type of the object.</typeparam>
+    /// <param name="object">The object.</param>
+    /// <param name="propertyExpression">The property expression.</param>
+    /// <param name="fromValue">From value.</param>
+    /// <param name="toValue">To value.</param>
+    /// <param name="beginTime">The begin time.</param>
+    /// <param name="duration">The duration.</param>
+    /// <param name="completeCallback">The complete callback.</param>
+    /// <returns></returns>
     public static Int32Animation BuildAnimation<TObject>(
         this TObject @object,
         Expression<Func<TObject, int>> propertyExpression,
@@ -109,7 +155,23 @@ public static class Int32AnimationExtension
 
 
 
-
+    /// <summary>
+    /// Builds the animation.
+    /// </summary>
+    /// <param name="object">The object.</param>
+    /// <param name="animationProperty">The animation property.</param>
+    /// <param name="fromValue">From value.</param>
+    /// <param name="toValue">To value.</param>
+    /// <param name="beginTime">The begin time.</param>
+    /// <param name="duration">The duration.</param>
+    /// <param name="easingFunction">The easing function.</param>
+    /// <param name="completeCallback">The complete callback.</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">
+    /// object
+    /// or
+    /// animationProperty
+    /// </exception>
     public static Int32Animation BuildAnimation(
         this UIElement @object,
         string animationProperty,
@@ -148,7 +210,7 @@ public static class Int32AnimationExtension
         {
             animation.Completed += Animation_Completed;
 
-            void Animation_Completed(object sender, EventArgs e)
+            void Animation_Completed(object? sender, EventArgs e)
             {
                 animation.Completed -= Animation_Completed;
                 completeCallback();

@@ -27,7 +27,7 @@ public abstract class CommandBase : ICommand, INotifyPropertyChanged
     /// The synchronization context
     /// </summary>
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    protected SynchronizationContext SynchronizationContext = SynchronizationContext.Current;
+    protected SynchronizationContext SynchronizationContext = SynchronizationContext.Current!;
 
     /// <summary>
     ///
@@ -127,18 +127,37 @@ public abstract class CommandBase : ICommand, INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    bool ICommand.CanExecute(object parameter)
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="parameter"></param>
+    bool ICommand.CanExecute(object? parameter)
     {
-        return CanExecute(parameter);
+        return CanExecute(parameter!);
     }
 
-    void ICommand.Execute(object parameter)
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="parameter"></param>
+    void ICommand.Execute(object? parameter)
     {
-        Execute(parameter);
+        Execute(parameter!);
     }
 
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="parameter"></param>
+    /// <returns>
+    /// 如果可以执行此命令，则为 true；否则为 false。
+    /// </returns>
     protected abstract bool CanExecute(object parameter);
 
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="parameter"></param>
     protected abstract void Execute(object parameter);
 }
     #endregion

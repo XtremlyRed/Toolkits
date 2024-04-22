@@ -4,10 +4,13 @@ using System.Diagnostics;
 using System.Runtime.Serialization.Formatters;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
-using Toolkits.Configuration.Internal;
 
 namespace Toolkits.Configuration;
 
+/// <summary>
+/// a class of <see cref="BinaryConfiguration"/>
+/// </summary>
+/// <seealso cref="Toolkits.Configuration.IConfiguration" />
 [DebuggerDisplay("{thisMaps}")]
 public class BinaryConfiguration : IConfiguration
 {
@@ -18,7 +21,7 @@ public class BinaryConfiguration : IConfiguration
     Dictionary<string, object> thisMaps = new();
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    AsyncLocker asyncLocker = new AsyncLocker(1, 1);
+    SemaphoreSlim asyncLocker = new SemaphoreSlim(1, 1);
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     static char[] splitChars = new[] { '.', ' ' };
@@ -26,6 +29,10 @@ public class BinaryConfiguration : IConfiguration
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     const string intervalChar = ".";
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="BinaryConfiguration"/> class.
+    /// </summary>
+    /// <param name="configurationPath">The configuration path.</param>
     public BinaryConfiguration(FileInfo configurationPath)
     {
         this.configurationPath = configurationPath;
@@ -40,6 +47,14 @@ public class BinaryConfiguration : IConfiguration
         thisMaps = Deserialize<Dictionary<string, object>>(buffers);
     }
 
+    /// <summary>
+    /// Gets the specified key.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="key">The key.</param>
+    /// <param name="defaultValue">The default value.</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">key</exception>
     public T Get<T>(string key, T defaultValue = default!)
     {
         _ = string.IsNullOrWhiteSpace(key) ? throw new ArgumentNullException(nameof(key)) : 0;
@@ -75,6 +90,17 @@ public class BinaryConfiguration : IConfiguration
         }
     }
 
+    /// <summary>
+    /// Sets the specified key.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="key">The key.</param>
+    /// <param name="value">The value.</param>
+    /// <exception cref="ArgumentNullException">
+    /// key
+    /// or
+    /// value
+    /// </exception>
     public void Set<T>(string key, T value)
     {
         _ = string.IsNullOrWhiteSpace(key) ? throw new ArgumentNullException(nameof(key)) : 0;
@@ -92,6 +118,9 @@ public class BinaryConfiguration : IConfiguration
         }
     }
 
+    /// <summary>
+    /// Clears this instance.
+    /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public void Clear()
     {

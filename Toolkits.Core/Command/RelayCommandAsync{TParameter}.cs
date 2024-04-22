@@ -52,10 +52,16 @@ public class RelayCommandAsync<TParameter> : CommandBase, ICommand, IRelayComman
     }
 
     /// <summary>
-    /// create a new command
+    /// Initializes a new instance of the <see cref="RelayCommandAsync{TParameter}"/> class.
     /// </summary>
-    /// <param name="execute"></param>
-    /// <param name="canExecute"></param>
+    /// <param name="commandName">Name of the command.</param>
+    /// <param name="execute">The execute.</param>
+    /// <param name="canExecute">The can execute.</param>
+    /// <exception cref="ArgumentNullException">
+    /// commandName
+    /// or
+    /// execute
+    /// </exception>
     public RelayCommandAsync(
         string commandName,
         Func<TParameter, Task> execute,
@@ -68,11 +74,22 @@ public class RelayCommandAsync<TParameter> : CommandBase, ICommand, IRelayComman
         this.canExecute = canExecute ??= i => true;
     }
 
+    /// <summary>
+    /// Determines whether this instance can execute the specified parameter.
+    /// </summary>
+    /// <param name="parameter">The parameter.</param>
+    /// <returns>
+    ///   <c>true</c> if this instance can execute the specified parameter; otherwise, <c>false</c>.
+    /// </returns>
     protected override bool CanExecute(object parameter)
     {
         return parameter is not TParameter parameter1 || CanExecute(parameter1);
     }
 
+    /// <summary>
+    /// Executes the specified parameter.
+    /// </summary>
+    /// <param name="parameter">The parameter.</param>
     protected override async void Execute(object parameter)
     {
         if (parameter is TParameter parameter1)

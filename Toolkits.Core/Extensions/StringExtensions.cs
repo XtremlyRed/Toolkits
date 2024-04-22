@@ -24,7 +24,7 @@ public static class StringExtensions
     /// <param name="defaultValue"></param>
     /// <returns></returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static string WhenNullOrWhiteSpaceUse(this string? value, string defaultValue)
+    public static string WhenIsNullOrWhiteSpaceUse(this string? value, string defaultValue)
     {
         return string.IsNullOrWhiteSpace(value) ? defaultValue : value!;
     }
@@ -36,7 +36,7 @@ public static class StringExtensions
     /// <param name="exception"></param>
     /// <returns></returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static string WhenNullOrWhiteSpaceUse(this string? value, Exception exception)
+    public static string WhenIsNullOrWhiteSpaceUse(this string? value, Exception exception)
     {
         _ = exception ?? throw new ArgumentNullException(nameof(exception));
 
@@ -64,7 +64,7 @@ public static class StringExtensions
     /// <param name="defaultValue"></param>
     /// <returns></returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static string WhenNullOrEmptyUse(this string? value, string defaultValue)
+    public static string WhenIsNullOrEmptyUse(this string? value, string defaultValue)
     {
         return string.IsNullOrEmpty(value) ? defaultValue : value!;
     }
@@ -76,7 +76,7 @@ public static class StringExtensions
     /// <param name="exception"></param>
     /// <returns></returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static string WhenNullOrEmptyUse(this string? value, Exception exception)
+    public static string WhenIsNullOrEmptyUse(this string? value, Exception exception)
     {
         _ = exception ?? throw new ArgumentNullException(nameof(exception));
 

@@ -8,12 +8,22 @@ using System.Threading.Tasks;
 
 namespace Toolkits.Configuration;
 
+/// <summary>
+///
+/// </summary>
 public static class ConfigurationFactory
 {
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private static ConcurrentDictionary<string, IConfiguration> configurationMaps = new();
 
-    public static IConfiguration CreateConfiguration(
+    /// <summary>
+    /// Gets the configuration.
+    /// </summary>
+    /// <param name="configurationPath">The configuration path.</param>
+    /// <param name="configurationType">Type of the configuration.</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">configurationPath</exception>
+    public static IConfiguration GetConfiguration(
         string configurationPath,
         ConfigurationType configurationType = ConfigurationType.Json
     )

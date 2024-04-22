@@ -273,3 +273,89 @@ public class AsyncLocker : IDisposable
         currentCounter = 0;
     }
 }
+
+/// <summary>
+///
+/// </summary>
+public static class AsyncLockerExtensions
+{
+    /// <summary>
+    /// Locks the invoke.
+    /// </summary>
+    /// <param name="asyncLocker">The asynchronous locker.</param>
+    /// <param name="action">The action.</param>
+    public static void LockInvoke(this AsyncLocker asyncLocker, Action action)
+    {
+        asyncLocker.Wait();
+
+        try
+        {
+            action();
+        }
+        finally
+        {
+            asyncLocker.Release();
+        }
+    }
+
+    /// <summary>
+    /// Locks the invoke.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="asyncLocker">The asynchronous locker.</param>
+    /// <param name="func">The function.</param>
+    /// <returns></returns>
+    public static T LockInvoke<T>(this AsyncLocker asyncLocker, Func<T> func)
+    {
+        asyncLocker.Wait();
+
+        try
+        {
+            return func();
+        }
+        finally
+        {
+            asyncLocker.Release();
+        }
+    }
+
+    /// <summary>
+    /// Locks the invoke asynchronous.
+    /// </summary>
+    /// <param name="asyncLocker">The asynchronous locker.</param>
+    /// <param name="func">The function.</param>
+    public static async Task LockInvokeAsync(this AsyncLocker asyncLocker, Func<Task> func)
+    {
+        await asyncLocker.WaitAsync();
+
+        try
+        {
+            await func();
+        }
+        finally
+        {
+            asyncLocker.Release();
+        }
+    }
+
+    /// <summary>
+    /// Locks the invoke asynchronous.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="asyncLocker">The asynchronous locker.</param>
+    /// <param name="func">The function.</param>
+    /// <returns></returns>
+    public static async Task<T> LockInvokeAsync<T>(this AsyncLocker asyncLocker, Func<Task<T>> func)
+    {
+        await asyncLocker.WaitAsync();
+
+        try
+        {
+            return await func();
+        }
+        finally
+        {
+            asyncLocker.Release();
+        }
+    }
+}

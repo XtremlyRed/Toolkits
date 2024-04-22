@@ -5,8 +5,21 @@ using Toolkits.Animation.Wpf.Extensions;
 
 namespace Toolkits.Animation;
 
+/// <summary>
+///
+/// </summary>
 public static class ThicknessAnimationExtension
 {
+    /// <summary>
+    /// Builds the animation.
+    /// </summary>
+    /// <typeparam name="TObject">The type of the object.</typeparam>
+    /// <param name="object">The object.</param>
+    /// <param name="propertyExpression">The property expression.</param>
+    /// <param name="toValue">To value.</param>
+    /// <param name="duration">The duration.</param>
+    /// <param name="completeCallback">The complete callback.</param>
+    /// <returns></returns>
     public static ThicknessAnimation BuildAnimation<TObject>(
         this TObject @object,
         Expression<Func<TObject, Thickness>> propertyExpression,
@@ -30,6 +43,17 @@ public static class ThicknessAnimationExtension
         );
     }
 
+    /// <summary>
+    /// Builds the animation.
+    /// </summary>
+    /// <typeparam name="TObject">The type of the object.</typeparam>
+    /// <param name="object">The object.</param>
+    /// <param name="propertyExpression">The property expression.</param>
+    /// <param name="fromValue">From value.</param>
+    /// <param name="toValue">To value.</param>
+    /// <param name="duration">The duration.</param>
+    /// <param name="completeCallback">The complete callback.</param>
+    /// <returns></returns>
     public static ThicknessAnimation BuildAnimation<TObject>(
         this TObject @object,
         Expression<Func<TObject, Thickness>> propertyExpression,
@@ -54,6 +78,17 @@ public static class ThicknessAnimationExtension
         );
     }
 
+    /// <summary>
+    /// Builds the animation.
+    /// </summary>
+    /// <typeparam name="TObject">The type of the object.</typeparam>
+    /// <param name="object">The object.</param>
+    /// <param name="propertyExpression">The property expression.</param>
+    /// <param name="toValue">To value.</param>
+    /// <param name="beginTime">The begin time.</param>
+    /// <param name="duration">The duration.</param>
+    /// <param name="completeCallback">The complete callback.</param>
+    /// <returns></returns>
     public static ThicknessAnimation BuildAnimation<TObject>(
         this TObject @object,
         Expression<Func<TObject, Thickness>> propertyExpression,
@@ -78,6 +113,18 @@ public static class ThicknessAnimationExtension
         );
     }
 
+    /// <summary>
+    /// Builds the animation.
+    /// </summary>
+    /// <typeparam name="TObject">The type of the object.</typeparam>
+    /// <param name="object">The object.</param>
+    /// <param name="propertyExpression">The property expression.</param>
+    /// <param name="fromValue">From value.</param>
+    /// <param name="toValue">To value.</param>
+    /// <param name="beginTime">The begin time.</param>
+    /// <param name="duration">The duration.</param>
+    /// <param name="completeCallback">The complete callback.</param>
+    /// <returns></returns>
     public static ThicknessAnimation BuildAnimation<TObject>(
         this TObject @object,
         Expression<Func<TObject, Thickness>> propertyExpression,
@@ -103,6 +150,23 @@ public static class ThicknessAnimationExtension
         );
     }
 
+    /// <summary>
+    /// Builds the animation.
+    /// </summary>
+    /// <param name="object">The object.</param>
+    /// <param name="animationProperty">The animation property.</param>
+    /// <param name="fromValue">From value.</param>
+    /// <param name="toValue">To value.</param>
+    /// <param name="beginTime">The begin time.</param>
+    /// <param name="duration">The duration.</param>
+    /// <param name="easingFunction">The easing function.</param>
+    /// <param name="completeCallback">The complete callback.</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">
+    /// object
+    /// or
+    /// animationProperty
+    /// </exception>
     public static ThicknessAnimation BuildAnimation(
         this UIElement @object,
         string animationProperty,
@@ -141,7 +205,7 @@ public static class ThicknessAnimationExtension
         {
             animation.Completed += Animation_Completed;
 
-            void Animation_Completed(object sender, EventArgs e)
+            void Animation_Completed(object? sender, EventArgs e)
             {
                 animation.Completed -= Animation_Completed;
                 completeCallback();

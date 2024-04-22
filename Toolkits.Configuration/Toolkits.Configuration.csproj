@@ -13,7 +13,7 @@
 		<Nullable>enable</Nullable>
 		<LangVersion>11</LangVersion>
 		<NoWarn>$(NoWarn);SYSLIB0011</NoWarn>
-		<Description>some commonly used extension methods for classes, such as enumerable, string, task, etc</Description>
+		<Description>json, xml, binary configuration, providing basic configuration read and write functionality</Description>
 	</PropertyGroup>
 
 
