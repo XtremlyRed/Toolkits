@@ -42,11 +42,10 @@ public class JsonConfiguration : IConfiguration
         {
             DateFormatString = "yyyy-MM-dd HH:mm:ss",
             Formatting = Formatting.Indented,
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            NullValueHandling = NullValueHandling.Ignore
         };
-
         serializerSettings.Converters.Add(new StringEnumConverter());
-        serializerSettings.NullValueHandling = NullValueHandling.Ignore;
     }
 
     /// <summary>
@@ -168,7 +167,12 @@ public class JsonConfiguration : IConfiguration
             var splits = key.Split(splitChars, StringSplitOptions.RemoveEmptyEntries);
             for (int i = 0, length = splits.Length - 1; i < length; i++)
             {
-                currentToken[splits[i]] = currentToken = JToken.FromObject(new object());
+                var token = currentToken[splits[i]];
+                if (token is null)
+                {
+                    currentToken[splits[i]] = token = JToken.FromObject(new object());
+                }
+                currentToken = token;
             }
 
             currentToken[splits[splits.Length - 1]] = JToken.FromObject(value!);
@@ -189,7 +193,9 @@ public class JsonConfiguration : IConfiguration
         {
             var currentToken = thisToken!;
 
-            var splits = key.Split(splitChars, StringSplitOptions.RemoveEmptyEntries);
+            var splits = key.Contains(intervalChar)
+                ? key.Split(splitChars, StringSplitOptions.RemoveEmptyEntries)
+                : new[] { key };
 
             for (int i = 0, length = splits.Length; i < length; i++)
             {

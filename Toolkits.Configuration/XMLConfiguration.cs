@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Data.SqlTypes;
 using System.Diagnostics;
 using System.Text;
 using System.Xml;
@@ -11,7 +12,6 @@ namespace Toolkits.Configuration;
 /// a class of <see cref="XMLConfiguration"/>
 /// </summary>
 /// <seealso cref="Toolkits.Configuration.IConfiguration" />
-[DebuggerDisplay("{xmlDocument}")]
 public class XMLConfiguration : IConfiguration
 {
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -31,6 +31,9 @@ public class XMLConfiguration : IConfiguration
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private const string intervalChar = ".";
+
+    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+    private static Type rootValueType = typeof(RootValue<>);
 
     /// <summary>
     /// Initializes the <see cref="XMLConfiguration"/> class.
@@ -99,10 +102,20 @@ public class XMLConfiguration : IConfiguration
                 return defaultValue;
             }
 
-            using StringReader stringReader = new StringReader(valueToken.InnerXml);
+            var type = typeof(T);
 
-            XmlSerializer serializer = new XmlSerializer(typeof(T));
-            return (T)serializer.Deserialize(stringReader)!;
+            var xmlString =
+                $"<?xml version=\"1.0\" encoding=\"utf-8\"?><RootValue><value>{valueToken.InnerXml}</value></RootValue>";
+
+            var dataType = rootValueType.MakeGenericType(type);
+
+            using StringReader stringReader = new StringReader(xmlString);
+
+            XmlSerializer serializer = new XmlSerializer(dataType);
+
+            var retvarurn = (IRootValue)serializer.Deserialize(stringReader)!;
+
+            return (T)retvarurn.Value;
         }
         finally
         {
@@ -213,8 +226,15 @@ public class XMLConfiguration : IConfiguration
                 stream.Position = 0;
                 XmlDocument valueDoc = new XmlDocument();
                 valueDoc.Load(stream);
-                XmlNode importedNode = xmlDocument.ImportNode(valueDoc.DocumentElement!, true);
-                newElement.AppendChild(importedNode);
+
+                var length = valueDoc.DocumentElement!.ChildNodes.Count;
+
+                for (int i = 0; i < length; i++)
+                {
+                    XmlNode xmlNode = valueDoc.DocumentElement!.ChildNodes[i]!;
+                    XmlNode importedNode = xmlDocument.ImportNode(xmlNode, true);
+                    newElement.AppendChild(importedNode);
+                }
 
                 valueDoc = null!;
                 serializer = null!;
@@ -234,8 +254,16 @@ public class XMLConfiguration : IConfiguration
                 stream.Position = 0;
                 XmlDocument valueDoc = new XmlDocument();
                 valueDoc.Load(stream);
-                XmlNode importedNode = xmlDocument.ImportNode(valueDoc.DocumentElement!, true);
-                targetNode.AppendChild(importedNode);
+
+                var length = valueDoc.DocumentElement!.ChildNodes.Count;
+
+                for (int i = 0; i < length; i++)
+                {
+                    XmlNode xmlNode = valueDoc.DocumentElement!.ChildNodes[i]!;
+                    XmlNode importedNode = xmlDocument.ImportNode(xmlNode, true);
+                    targetNode.AppendChild(importedNode);
+                }
+
                 valueDoc = null!;
                 serializer = null!;
             }
@@ -248,8 +276,37 @@ public class XMLConfiguration : IConfiguration
     {
         var clone = (XmlDocument)xmlDocument.Clone();
 
-        var writer = XmlWriter.Create(configurationPath.FullName, serializerSettings);
+        using var writer = XmlWriter.Create(configurationPath.FullName, serializerSettings);
 
-        xmlDocument.Save(writer);
+        clone.Save(writer);
+
+        clone = null!;
+    }
+
+    private interface IRootValue
+    {
+        object Value { get; }
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <seealso cref="Toolkits.Configuration.XMLConfiguration.IRootValue" />
+    [XmlRoot("RootValue")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public class RootValue<T> : IRootValue
+    {
+        /// <summary>
+        /// current value.
+        /// </summary>
+        [XmlElement(ElementName = "value")]
+        public T Value { get; set; } = default!;
+
+        /// <summary>
+        /// current value.
+        /// </summary>
+        [XmlIgnore]
+        object IRootValue.Value => Value!;
     }
 }
