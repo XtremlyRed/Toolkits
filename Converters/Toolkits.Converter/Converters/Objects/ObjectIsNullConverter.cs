@@ -17,8 +17,19 @@ using Microsoft.Maui.Media;
 #endif
 namespace Toolkits;
 
+/// <summary>
+///
+/// </summary>
 public class ObjectIsNullConverter : IValueConverter
 {
+    /// <summary>
+    /// Converts the specified value.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    /// <param name="targetType">Type of the target.</param>
+    /// <param name="parameter">The parameter.</param>
+    /// <param name="culture">The culture.</param>
+    /// <returns></returns>
     public object Convert(
         object? value,
         Type targetType,
@@ -29,7 +40,16 @@ public class ObjectIsNullConverter : IValueConverter
         return value is null;
     }
 
-    public object ConvertBack(
+    /// <summary>
+    /// Converts the back.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    /// <param name="targetType">Type of the target.</param>
+    /// <param name="parameter">The parameter.</param>
+    /// <param name="culture">The culture.</param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    object IValueConverter.ConvertBack(
         object? value,
         Type targetType,
         object? parameter,

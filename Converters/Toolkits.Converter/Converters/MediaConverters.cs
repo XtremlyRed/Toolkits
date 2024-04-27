@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Toolkits;
 
+/// <summary>
+/// media converter
+/// </summary>
 public static class MediaConverters
 {
     /// <summary>

@@ -20,6 +20,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\Enumerables\EnumerableCountConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\Enumerables\EnumerableIsNotNullOrEmptyConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\Enumerables\EnumerableIsNullOrEmptyConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\Enums\EnumDisplayNameConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\Enums\EnumDescriptionConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\MediaConverters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\Medias\BrushStringConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\Medias\ColorStringConverter.cs" />
@@ -29,6 +31,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ObjectConverters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\Objects\ObjectIsNotNullConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\Objects\ObjectIsNullConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\EnumConverters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\StringConverters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\Strings\StringIsNotNullOrEmptyConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\Strings\StringIsNotNullOrWhiteSpaceConverter.cs" />

@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Toolkits;
 
+/// <summary>
+/// bool converter
+/// </summary>
 public static class BooleanConverters
 {
     /// <summary>

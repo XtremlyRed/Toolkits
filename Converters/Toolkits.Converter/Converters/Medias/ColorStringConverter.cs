@@ -11,8 +11,19 @@ using Avalonia.Media;
 
 namespace Toolkits;
 
+/// <summary>
+///
+/// </summary>
 public class ColorStringConverter : IValueConverter
 {
+    /// <summary>
+    /// Converts the specified value.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    /// <param name="targetType">Type of the target.</param>
+    /// <param name="parameter">The parameter.</param>
+    /// <param name="culture">The culture.</param>
+    /// <returns></returns>
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value is not string @string)
@@ -44,10 +55,11 @@ public class ColorStringConverter : IValueConverter
         }
 
 #endif
+
         return default!;
     }
 
-    public object ConvertBack(
+    object IValueConverter.ConvertBack(
         object? value,
         Type targetType,
         object? parameter,

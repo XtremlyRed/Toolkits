@@ -16,6 +16,9 @@ using global::Avalonia.Data;
 using global::Avalonia.Data.Converters;
 #endif
 
+/// <summary>
+///
+/// </summary>
 public abstract class NumberRangeConverterBase :
 #if ___WPF___
     DependencyObject,
@@ -28,6 +31,14 @@ public abstract class NumberRangeConverterBase :
 #endif
         IValueConverter
 {
+    /// <summary>
+    /// Converts the specified value.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    /// <param name="targetType">Type of the target.</param>
+    /// <param name="parameter">The parameter.</param>
+    /// <param name="culture">The culture.</param>
+    /// <returns></returns>
     public abstract object Convert(
         object? value,
         Type targetType,
@@ -35,6 +46,14 @@ public abstract class NumberRangeConverterBase :
         CultureInfo culture
     );
 
+    /// <summary>
+    /// Converts the back.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    /// <param name="targetType">Type of the target.</param>
+    /// <param name="parameter">The parameter.</param>
+    /// <param name="culture">The culture.</param>
+    /// <returns></returns>
     public abstract object ConvertBack(
         object? value,
         Type targetType,

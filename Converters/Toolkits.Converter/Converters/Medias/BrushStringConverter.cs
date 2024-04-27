@@ -19,12 +19,23 @@ using Microsoft.Maui.Media;
 #endif
 namespace Toolkits;
 
+/// <summary>
+///
+/// </summary>
 public class BrushStringConverter : IValueConverter
 {
 #if ___MAUI___
     static ColorStringConverter colorString = new ColorStringConverter();
 #endif
 
+    /// <summary>
+    /// Converts the specified value.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    /// <param name="targetType">Type of the target.</param>
+    /// <param name="parameter">The parameter.</param>
+    /// <param name="culture">The culture.</param>
+    /// <returns></returns>
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value is null)
@@ -56,7 +67,7 @@ public class BrushStringConverter : IValueConverter
         return default!;
     }
 
-    public object ConvertBack(
+    object IValueConverter.ConvertBack(
         object? value,
         Type targetType,
         object? parameter,

@@ -13,8 +13,20 @@ using Microsoft.Maui.Media;
 #endif
 namespace Toolkits;
 
+/// <summary>
+///
+/// </summary>
 public class StringIsNotNullOrWhiteSpaceConverter : IValueConverter
 {
+    /// <summary>
+    /// Converts the specified value.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    /// <param name="targetType">Type of the target.</param>
+    /// <param name="parameter">The parameter.</param>
+    /// <param name="culture">The culture.</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException">current value type is not {typeof(string)}</exception>
     public object Convert(
         object? value,
         Type targetType,
@@ -27,7 +39,7 @@ public class StringIsNotNullOrWhiteSpaceConverter : IValueConverter
             : string.IsNullOrWhiteSpace(stringValue) == false;
     }
 
-    public object ConvertBack(
+    object IValueConverter.ConvertBack(
         object? value,
         Type targetType,
         object? parameter,
