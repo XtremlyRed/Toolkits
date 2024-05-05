@@ -1,14 +1,13 @@
 ﻿using System.Linq.Expressions;
 using System.Windows;
 using System.Windows.Media.Animation;
-using Toolkits.Animation.Wpf.Extensions;
 
 namespace Toolkits.Animation;
 
 /// <summary>
 ///
 /// </summary>
-public static class VectorAnimationExtension
+public static class VectorAnimationBuildExtension
 {
     /// <summary>
     /// Builds the animation.
@@ -29,7 +28,7 @@ public static class VectorAnimationExtension
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -64,7 +63,7 @@ public static class VectorAnimationExtension
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -99,7 +98,7 @@ public static class VectorAnimationExtension
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -136,7 +135,7 @@ public static class VectorAnimationExtension
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,

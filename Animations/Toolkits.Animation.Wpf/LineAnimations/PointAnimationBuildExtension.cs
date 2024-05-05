@@ -1,16 +1,14 @@
 ﻿using System.Linq.Expressions;
 using System.Windows;
 using System.Windows.Media.Animation;
-using Toolkits.Animation.Wpf.Extensions;
 
 namespace Toolkits.Animation;
 
 /// <summary>
 ///
 /// </summary>
-public static class Int32AnimationExtension
+public static class PointAnimationBuildExtension
 {
-    #region int
     /// <summary>
     /// Builds the animation.
     /// </summary>
@@ -21,16 +19,16 @@ public static class Int32AnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static Int32Animation BuildAnimation<TObject>(
+    public static PointAnimation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, int>> propertyExpression,
-        int toValue,
+        Expression<Func<TObject, Point>> propertyExpression,
+        Point toValue,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -55,17 +53,17 @@ public static class Int32AnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static Int32Animation BuildAnimation<TObject>(
+    public static PointAnimation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, int>> propertyExpression,
-        int fromValue,
-        int toValue,
+        Expression<Func<TObject, Point>> propertyExpression,
+        Point fromValue,
+        Point toValue,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -90,17 +88,17 @@ public static class Int32AnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static Int32Animation BuildAnimation<TObject>(
+    public static PointAnimation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, int>> propertyExpression,
-        int toValue,
+        Expression<Func<TObject, Point>> propertyExpression,
+        Point toValue,
         TimeSpan beginTime,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -126,18 +124,18 @@ public static class Int32AnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static Int32Animation BuildAnimation<TObject>(
+    public static PointAnimation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, int>> propertyExpression,
-        int? fromValue,
-        int toValue,
+        Expression<Func<TObject, Point>> propertyExpression,
+        Point? fromValue,
+        Point toValue,
         TimeSpan? beginTime,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -150,10 +148,6 @@ public static class Int32AnimationExtension
             completeCallback
         );
     }
-
-    #endregion
-
-
 
     /// <summary>
     /// Builds the animation.
@@ -172,11 +166,11 @@ public static class Int32AnimationExtension
     /// or
     /// animationProperty
     /// </exception>
-    public static Int32Animation BuildAnimation(
+    public static PointAnimation BuildAnimation(
         this UIElement @object,
         string animationProperty,
-        int? fromValue,
-        int toValue,
+        Point? fromValue,
+        Point toValue,
         TimeSpan? beginTime,
         TimeSpan duration,
         IEasingFunction? easingFunction = null,
@@ -188,7 +182,7 @@ public static class Int32AnimationExtension
             ? throw new ArgumentNullException(nameof(animationProperty))
             : 0;
 
-        var animation = new Int32Animation();
+        var animation = new PointAnimation();
 
         if (fromValue.HasValue)
         {

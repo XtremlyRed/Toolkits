@@ -1,15 +1,13 @@
 ﻿using System.Linq.Expressions;
 using System.Windows;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Media3D;
-using Toolkits.Animation.Wpf.Extensions;
 
 namespace Toolkits.Animation;
 
 /// <summary>
 ///
 /// </summary>
-public static class Vector3DAnimationExtension
+public static class SizeAnimationBuildExtension
 {
     /// <summary>
     /// Builds the animation.
@@ -21,16 +19,16 @@ public static class Vector3DAnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static Vector3DAnimation BuildAnimation<TObject>(
+    public static SizeAnimation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, Vector3D>> propertyExpression,
-        Vector3D toValue,
+        Expression<Func<TObject, Size>> propertyExpression,
+        Size toValue,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -55,17 +53,17 @@ public static class Vector3DAnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static Vector3DAnimation BuildAnimation<TObject>(
+    public static SizeAnimation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, Vector3D>> propertyExpression,
-        Vector3D fromValue,
-        Vector3D toValue,
+        Expression<Func<TObject, Size>> propertyExpression,
+        Size fromValue,
+        Size toValue,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -90,17 +88,17 @@ public static class Vector3DAnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static Vector3DAnimation BuildAnimation<TObject>(
+    public static SizeAnimation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, Vector3D>> propertyExpression,
-        Vector3D toValue,
+        Expression<Func<TObject, Size>> propertyExpression,
+        Size toValue,
         TimeSpan beginTime,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -126,18 +124,18 @@ public static class Vector3DAnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static Vector3DAnimation BuildAnimation<TObject>(
+    public static SizeAnimation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, Vector3D>> propertyExpression,
-        Vector3D? fromValue,
-        Vector3D toValue,
+        Expression<Func<TObject, Size>> propertyExpression,
+        Size? fromValue,
+        Size toValue,
         TimeSpan? beginTime,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -168,11 +166,11 @@ public static class Vector3DAnimationExtension
     /// or
     /// animationProperty
     /// </exception>
-    public static Vector3DAnimation BuildAnimation(
+    public static SizeAnimation BuildAnimation(
         this UIElement @object,
         string animationProperty,
-        Vector3D? fromValue,
-        Vector3D toValue,
+        Size? fromValue,
+        Size toValue,
         TimeSpan? beginTime,
         TimeSpan duration,
         IEasingFunction? easingFunction = null,
@@ -184,7 +182,7 @@ public static class Vector3DAnimationExtension
             ? throw new ArgumentNullException(nameof(animationProperty))
             : 0;
 
-        var animation = new Vector3DAnimation();
+        var animation = new SizeAnimation();
 
         if (fromValue.HasValue)
         {

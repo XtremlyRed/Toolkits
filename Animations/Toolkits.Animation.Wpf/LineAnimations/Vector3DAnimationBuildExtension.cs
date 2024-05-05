@@ -2,14 +2,13 @@
 using System.Windows;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
-using Toolkits.Animation.Wpf.Extensions;
 
 namespace Toolkits.Animation;
 
 /// <summary>
 ///
 /// </summary>
-public static class QuaternionAnimationExtension
+public static class Vector3DAnimationBuildExtension
 {
     /// <summary>
     /// Builds the animation.
@@ -21,16 +20,16 @@ public static class QuaternionAnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static QuaternionAnimation BuildAnimation<TObject>(
+    public static Vector3DAnimation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, Quaternion>> propertyExpression,
-        Quaternion toValue,
+        Expression<Func<TObject, Vector3D>> propertyExpression,
+        Vector3D toValue,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -55,17 +54,17 @@ public static class QuaternionAnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static QuaternionAnimation BuildAnimation<TObject>(
+    public static Vector3DAnimation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, Quaternion>> propertyExpression,
-        Quaternion fromValue,
-        Quaternion toValue,
+        Expression<Func<TObject, Vector3D>> propertyExpression,
+        Vector3D fromValue,
+        Vector3D toValue,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -90,17 +89,17 @@ public static class QuaternionAnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static QuaternionAnimation BuildAnimation<TObject>(
+    public static Vector3DAnimation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, Quaternion>> propertyExpression,
-        Quaternion toValue,
+        Expression<Func<TObject, Vector3D>> propertyExpression,
+        Vector3D toValue,
         TimeSpan beginTime,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -126,18 +125,18 @@ public static class QuaternionAnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static QuaternionAnimation BuildAnimation<TObject>(
+    public static Vector3DAnimation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, Quaternion>> propertyExpression,
-        Quaternion? fromValue,
-        Quaternion toValue,
+        Expression<Func<TObject, Vector3D>> propertyExpression,
+        Vector3D? fromValue,
+        Vector3D toValue,
         TimeSpan? beginTime,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -168,11 +167,11 @@ public static class QuaternionAnimationExtension
     /// or
     /// animationProperty
     /// </exception>
-    public static QuaternionAnimation BuildAnimation(
+    public static Vector3DAnimation BuildAnimation(
         this UIElement @object,
         string animationProperty,
-        Quaternion? fromValue,
-        Quaternion toValue,
+        Vector3D? fromValue,
+        Vector3D toValue,
         TimeSpan? beginTime,
         TimeSpan duration,
         IEasingFunction? easingFunction = null,
@@ -184,7 +183,7 @@ public static class QuaternionAnimationExtension
             ? throw new ArgumentNullException(nameof(animationProperty))
             : 0;
 
-        var animation = new QuaternionAnimation();
+        var animation = new Vector3DAnimation();
 
         if (fromValue.HasValue)
         {

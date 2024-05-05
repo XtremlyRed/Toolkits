@@ -1,14 +1,13 @@
 ﻿using System.Linq.Expressions;
 using System.Windows;
 using System.Windows.Media.Animation;
-using Toolkits.Animation.Wpf.Extensions;
 
 namespace Toolkits.Animation;
 
 /// <summary>
 ///
 /// </summary>
-public static class DoubleAnimationExtension
+public static class DoubleAnimationBuildExtension
 {
     #region double
     /// <summary>
@@ -30,7 +29,7 @@ public static class DoubleAnimationExtension
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -65,7 +64,7 @@ public static class DoubleAnimationExtension
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -100,7 +99,7 @@ public static class DoubleAnimationExtension
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -137,7 +136,7 @@ public static class DoubleAnimationExtension
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -174,7 +173,7 @@ public static class DoubleAnimationExtension
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -209,7 +208,7 @@ public static class DoubleAnimationExtension
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -244,7 +243,7 @@ public static class DoubleAnimationExtension
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -281,7 +280,7 @@ public static class DoubleAnimationExtension
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,

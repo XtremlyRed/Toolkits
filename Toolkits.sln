@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Converters", "Converters", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".solutionItems", ".solutionItems", "{3AB576FC-BD0B-4FB1-B1B3-5EDE0C27FE1D}"
 	ProjectSection(SolutionItems) = preProject
+		.csharpierrc.json = .csharpierrc.json
+		.editorconfig = .editorconfig
 		GlobalCompileSettings.Targets = GlobalCompileSettings.Targets
 		LICENSE = LICENSE
 		README.md = README.md
@@ -37,11 +39,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toolkits.Controls.Wpf", "Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toolkits.Controls.Core", "Controls\Toolkits.Controls.Core\Toolkits.Controls.Core.csproj", "{687171F8-7AF9-4431-9DA5-8E882A3CC0DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toolkits.Configuration", "Toolkits.Configuration\Toolkits.Configuration.csproj", "{6404110A-4F48-4A9F-B5C1-1F69D0700EAC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toolkits.Configuration", "Toolkits.Configuration\Toolkits.Configuration.csproj", "{6404110A-4F48-4A9F-B5C1-1F69D0700EAC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{18F28F93-6579-4346-81AF-40948D90BBE8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toolkits.Configuration.Test", "Test\Toolkits.Configuration.Test\Toolkits.Configuration.Test.csproj", "{413B064D-48DF-4673-B941-6C35ACB4918A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toolkits.Configuration.Test", "Test\Toolkits.Configuration.Test\Toolkits.Configuration.Test.csproj", "{413B064D-48DF-4673-B941-6C35ACB4918A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

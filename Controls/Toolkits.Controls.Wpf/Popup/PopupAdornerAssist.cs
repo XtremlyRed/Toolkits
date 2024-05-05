@@ -155,8 +155,8 @@ internal static class PopupAdornerAssist
 
         Storyboard storyboard = new Storyboard();
 
-        storyboard.AddAnimation(animation1);
-        storyboard.AddAnimation(animation2);
+        storyboard.AppendAnimations(animation1);
+        storyboard.AppendAnimations(animation2);
 
         storyboard.Begin();
     }
@@ -174,8 +174,7 @@ internal static class PopupAdornerAssist
 
         Storyboard storyboard = new Storyboard();
 
-        storyboard.AddAnimation(animation1);
-        storyboard.AddAnimation(animation2);
+        storyboard.AppendAnimations(animation1, animation2);
 
         storyboard.RegisterCompleted(popupCloseCallback);
 

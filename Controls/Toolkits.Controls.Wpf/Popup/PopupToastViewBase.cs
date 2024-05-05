@@ -99,8 +99,7 @@ public abstract class PopupToastViewBase : UserControl
 
         Storyboard story = new Storyboard();
 
-        story.AddAnimation(animation1);
-        story.AddAnimation(animation2);
+        story.AppendAnimations(animation1, animation2);
         story.RegisterCompleted(() =>
         {
             CloseCallback?.Invoke();

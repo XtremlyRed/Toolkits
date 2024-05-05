@@ -7,14 +7,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Animation;
 using System.Xml.Linq;
-using Toolkits.Animation.Wpf.Extensions;
 
 namespace Toolkits.Animation;
 
 /// <summary>
 ///
 /// </summary>
-public static class ObjectAnimationUsingKeyFramesExtensions
+public static class ObjectAnimationUsingKeyFramesBuildExtensions
 {
     /// <summary>
     /// Builds the animation.
@@ -34,7 +33,7 @@ public static class ObjectAnimationUsingKeyFramesExtensions
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(@object, property, keyValue, keyTime);
     }

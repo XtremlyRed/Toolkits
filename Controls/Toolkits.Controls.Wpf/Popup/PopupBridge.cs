@@ -61,7 +61,7 @@ internal class PopupBridge
 
             var da = PopupAdornet.BuildAnimation(i => i.Opacity, 1d, dur);
 
-            storyboard.AddAnimation(da);
+            storyboard.AppendAnimations(da);
             storyboard.RegisterCompleted(visualAnimationSemaphoreSlim!.Release);
             storyboard.Begin();
 

@@ -34,7 +34,7 @@ public class AsyncLocker : IDisposable
     /// <param name="maxCount">The maximum count.</param>
     public AsyncLocker(int initialCount, int maxCount)
     {
-        semaphoreSlim = new SemaphoreSlim(initialCount, maxCount);
+        semaphoreSlim = new(initialCount, maxCount);
     }
 
     /// <summary>
@@ -255,22 +255,32 @@ public class AsyncLocker : IDisposable
     [EditorBrowsable(EditorBrowsableState.Never)]
     public void Dispose()
     {
-        if (isDisposabled)
+        if (isDisposabled == false)
         {
-            return;
+            isDisposabled = true;
+
+            Dispose(true);
         }
+    }
 
-        isDisposabled = true;
-
-        if (currentCounter != 0)
+    /// <summary>
+    /// Releases unmanaged and - optionally - managed resources.
+    /// </summary>
+    /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+    protected virtual void Dispose(bool disposing)
+    {
+        if (disposing)
         {
-            semaphoreSlim?.Release(currentCounter);
-        }
+            if (currentCounter != 0)
+            {
+                semaphoreSlim?.Release(currentCounter);
+            }
 
-        semaphoreSlim?.Dispose();
-        semaphoreSlim = null!;
-        syncRoot = null!;
-        currentCounter = 0;
+            semaphoreSlim?.Dispose();
+            semaphoreSlim = null!;
+            syncRoot = null!;
+            currentCounter = 0;
+        }
     }
 }
 

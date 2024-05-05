@@ -1,14 +1,13 @@
 ﻿using System.Linq.Expressions;
 using System.Windows;
 using System.Windows.Media.Animation;
-using Toolkits.Animation.Wpf.Extensions;
 
 namespace Toolkits.Animation;
 
 /// <summary>
 ///
 /// </summary>
-public static class SizeAnimationExtension
+public static class ColorAnimationBuildExtension
 {
     /// <summary>
     /// Builds the animation.
@@ -20,16 +19,16 @@ public static class SizeAnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static SizeAnimation BuildAnimation<TObject>(
+    public static ColorAnimation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, Size>> propertyExpression,
-        Size toValue,
+        Expression<Func<TObject, Color>> propertyExpression,
+        Color toValue,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -54,17 +53,17 @@ public static class SizeAnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static SizeAnimation BuildAnimation<TObject>(
+    public static ColorAnimation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, Size>> propertyExpression,
-        Size fromValue,
-        Size toValue,
+        Expression<Func<TObject, Color>> propertyExpression,
+        Color fromValue,
+        Color toValue,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -89,17 +88,17 @@ public static class SizeAnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static SizeAnimation BuildAnimation<TObject>(
+    public static ColorAnimation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, Size>> propertyExpression,
-        Size toValue,
+        Expression<Func<TObject, Color>> propertyExpression,
+        Color toValue,
         TimeSpan beginTime,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -125,18 +124,18 @@ public static class SizeAnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static SizeAnimation BuildAnimation<TObject>(
+    public static ColorAnimation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, Size>> propertyExpression,
-        Size? fromValue,
-        Size toValue,
+        Expression<Func<TObject, Color>> propertyExpression,
+        Color? fromValue,
+        Color toValue,
         TimeSpan? beginTime,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -167,11 +166,11 @@ public static class SizeAnimationExtension
     /// or
     /// animationProperty
     /// </exception>
-    public static SizeAnimation BuildAnimation(
+    public static ColorAnimation BuildAnimation(
         this UIElement @object,
         string animationProperty,
-        Size? fromValue,
-        Size toValue,
+        Color? fromValue,
+        Color toValue,
         TimeSpan? beginTime,
         TimeSpan duration,
         IEasingFunction? easingFunction = null,
@@ -183,7 +182,7 @@ public static class SizeAnimationExtension
             ? throw new ArgumentNullException(nameof(animationProperty))
             : 0;
 
-        var animation = new SizeAnimation();
+        var animation = new ColorAnimation();
 
         if (fromValue.HasValue)
         {

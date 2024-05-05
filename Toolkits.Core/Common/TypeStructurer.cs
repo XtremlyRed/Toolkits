@@ -1,6 +1,8 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -13,30 +15,33 @@ namespace Toolkits.Core;
 /// <typeparam name="T"></typeparam>
 public static class TypeStructurer<T>
 {
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    static ConcurrentDictionary<Type, object> propertyMaps = new();
+    private record PropertyStructurer(PropertyInfo Property, Attribute[] Attributes);
+
+    private record FieldStructurer(FieldInfo Field, Attribute[] Attributes);
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    static ConcurrentDictionary<Type, object> fieldMaps = new();
+    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+    static PropertyStructurer[] propertyStructurers;
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    static PropertyInfo[] emptyProperty = new PropertyInfo[0];
-
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    static FieldInfo[] emptyField = new FieldInfo[0];
+    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+    static FieldStructurer[] fieldStructurers;
 
     /// <summary>
     /// Initializes the <see cref="EnumStructurer{T}"/> class.
     /// </summary>
     static TypeStructurer()
     {
-        var properties = typeof(T).GetProperties() ?? emptyProperty;
+        var properties = typeof(T).GetProperties() ?? new PropertyInfo[0];
 
         PropertyInfos = new ReadOnlyCollection<PropertyInfo>(properties);
 
-        var fields = typeof(T).GetFields() ?? emptyField;
+        var fields = typeof(T).GetFields() ?? new FieldInfo[0];
 
         FieldInfos = new ReadOnlyCollection<FieldInfo>(fields);
+
+        propertyStructurers = properties.Select(i => new PropertyStructurer(i, i.GetCustomAttributes()?.ToArray() ?? new Attribute[0])).ToArray();
+        fieldStructurers = fields.Select(i => new FieldStructurer(i, i.GetCustomAttributes()?.ToArray() ?? new Attribute[0])).ToArray();
     }
 
     /// <summary>
@@ -57,25 +62,25 @@ public static class TypeStructurer<T>
     public static IReadOnlyDictionary<PropertyInfo, TAttribute> GetPropertyAttributes<TAttribute>()
         where TAttribute : Attribute
     {
-        var type = typeof(TAttribute);
+        var dict = new Dictionary<PropertyInfo, TAttribute>();
 
-        if (propertyMaps.TryGetValue(type, out var maps) == false)
+        for (int i = 0; i < propertyStructurers.Length; i++)
         {
-            var attributeMap = new Dictionary<PropertyInfo, TAttribute>();
+            var attributes = propertyStructurers[i].Attributes;
 
-            foreach (var propertyInfo in PropertyInfos)
+            dict[propertyStructurers[i].Property] = default!;
+
+            for (int j = 0; j < attributes.Length; j++)
             {
-                var attribute = propertyInfo.GetCustomAttribute<TAttribute>();
-
-                attributeMap[propertyInfo] = attribute!;
+                if (attributes[i] is TAttribute attribute)
+                {
+                    dict[propertyStructurers[i].Property] = attribute;
+                    break;
+                }
             }
-
-            propertyMaps[type] = maps = new ReadOnlyDictionary<PropertyInfo, TAttribute>(
-                attributeMap
-            );
         }
 
-        return (IReadOnlyDictionary<PropertyInfo, TAttribute>)maps;
+        return dict;
     }
 
     /// <summary>
@@ -86,22 +91,24 @@ public static class TypeStructurer<T>
     public static IReadOnlyDictionary<FieldInfo, TAttribute> GetFieldAttributes<TAttribute>()
         where TAttribute : Attribute
     {
-        var type = typeof(TAttribute);
+        var dict = new Dictionary<FieldInfo, TAttribute>();
 
-        if (fieldMaps.TryGetValue(type, out var maps) == false)
+        for (int i = 0; i < fieldStructurers.Length; i++)
         {
-            var attributeMap = new Dictionary<FieldInfo, TAttribute>();
+            var attributes = fieldStructurers[i].Attributes;
 
-            foreach (var fieldInfo in FieldInfos)
+            dict[fieldStructurers[i].Field] = default!;
+
+            for (int j = 0; j < attributes.Length; j++)
             {
-                var attribute = fieldInfo.GetCustomAttribute<TAttribute>();
-
-                attributeMap[fieldInfo] = attribute!;
+                if (attributes[i] is TAttribute attribute)
+                {
+                    dict[fieldStructurers[i].Field] = attribute;
+                    break;
+                }
             }
-
-            fieldMaps[type] = maps = new ReadOnlyDictionary<FieldInfo, TAttribute>(attributeMap);
         }
 
-        return (IReadOnlyDictionary<FieldInfo, TAttribute>)maps;
+        return dict;
     }
 }

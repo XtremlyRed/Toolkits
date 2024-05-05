@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media.Animation;
 
 namespace Toolkits.Animation;
@@ -21,7 +22,7 @@ public static class AnimationExtensions
     /// <param name="animations">The animations.</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">storyboard</exception>
-    public static Storyboard AddAnimation(
+    public static Storyboard AppendAnimations(
         this Storyboard? storyboard,
         params AnimationTimeline[] animations
     )
@@ -34,7 +35,37 @@ public static class AnimationExtensions
         }
         for (int i = 0; i < animations.Length; i++)
         {
-            storyboard.Children.Add(animations[i]);
+            if (animations[i] is not null)
+                storyboard.Children.Add(animations[i]);
+        }
+        return storyboard;
+    }
+
+    /// <summary>
+    /// Adds the animation.
+    /// </summary>
+    /// <param name="storyboard">The storyboard.</param>
+    /// <param name="animations">The animations.</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">storyboard</exception>
+    public static Storyboard AppendAnimations(
+        this Storyboard? storyboard,
+        IEnumerable<AnimationTimeline> animations
+    )
+    {
+        _ = storyboard ?? throw new ArgumentNullException(nameof(storyboard));
+
+        if (animations is null)
+        {
+            return storyboard;
+        }
+
+        foreach (var item in animations)
+        {
+            if (item is not null)
+            {
+                storyboard.Children.Add(item);
+            }
         }
         return storyboard;
     }
@@ -48,7 +79,8 @@ public static class AnimationExtensions
     /// <exception cref="ArgumentNullException">storyboard</exception>
     public static Storyboard RegisterCompleted(
         this Storyboard? storyboard,
-        Action? completeCallback
+        Action? completeCallback,
+        bool autoRelease = true
     )
     {
         _ = storyboard ?? throw new ArgumentNullException(nameof(storyboard));
@@ -58,12 +90,12 @@ public static class AnimationExtensions
             return storyboard;
         }
 
-        if (GetCompleteCallback(storyboard) is not HashSet<Action> actions)
+        if (GetCompleteCallback(storyboard) is not HashSet<CompleteInfo> actions)
         {
-            SetCompleteCallback(storyboard, actions = new HashSet<Action>());
+            SetCompleteCallback(storyboard, actions = new HashSet<CompleteInfo>());
         }
 
-        actions.Add(completeCallback);
+        actions.Add(new CompleteInfo(completeCallback, autoRelease));
 
         storyboard.Completed += Storyboard_Completed;
 
@@ -76,28 +108,34 @@ public static class AnimationExtensions
                 return;
             }
 
-            if (GetCompleteCallback(ss) is not HashSet<Action> actions)
+            if (GetCompleteCallback(ss) is not HashSet<CompleteInfo> infos)
             {
                 return;
             }
 
-            foreach (var action in actions)
+            foreach (var info in infos)
             {
-                if (action is null)
+                if (info is null || info.Callback is null)
                 {
                     continue;
                 }
-                action();
+
+                if (info.AutoRelease)
+                {
+                    ss.Completed -= Storyboard_Completed;
+                }
+
+                info.Callback();
             }
         }
     }
 
-    private static HashSet<Action> GetCompleteCallback(Storyboard obj)
+    private static HashSet<CompleteInfo> GetCompleteCallback(Storyboard obj)
     {
-        return (HashSet<Action>)obj.GetValue(CompleteCallbackProperty);
+        return (HashSet<CompleteInfo>)obj.GetValue(CompleteCallbackProperty);
     }
 
-    private static void SetCompleteCallback(Storyboard obj, HashSet<Action> value)
+    private static void SetCompleteCallback(Storyboard obj, HashSet<CompleteInfo> value)
     {
         obj.SetValue(CompleteCallbackProperty, value);
     }
@@ -105,8 +143,195 @@ public static class AnimationExtensions
     private static readonly DependencyProperty CompleteCallbackProperty =
         DependencyProperty.RegisterAttached(
             "CompleteCallback",
-            typeof(HashSet<Action>),
+            typeof(HashSet<CompleteInfo>),
             typeof(AnimationExtensions),
             new PropertyMetadata(null)
         );
+
+    private record CompleteInfo(Action Callback, bool AutoRelease);
+
+    /// <summary>
+    /// Gets the animations.
+    /// </summary>
+    /// <param name="obj">The object.</param>
+    /// <returns></returns>
+    internal static Collection<IAnimationInfo> GetAnimations(DependencyObject obj)
+    {
+        if (obj.GetValue(AnimationsProperty) is not Collection<IAnimationInfo> collection)
+        {
+            obj.SetValue(AnimationsProperty, collection = new Collection<IAnimationInfo>());
+        }
+
+        return collection;
+    }
+
+    /// <summary>
+    /// The animations property
+    /// </summary>
+    internal static readonly DependencyProperty AnimationsProperty =
+        DependencyProperty.RegisterAttached(
+            "Animations",
+            typeof(Collection<IAnimationInfo>),
+            typeof(IAnimationInfo),
+            new PropertyMetadata(null)
+        );
+
+    #region Event
+    /// <summary>
+    /// Registers the event.
+    /// </summary>
+    /// <param name="frameworkElement">The framework element.</param>
+    /// <param name="eventMode">The event mode.</param>
+    internal static void RegisterEvent(FrameworkElement frameworkElement, EventMode eventMode)
+    {
+        switch (eventMode)
+        {
+            case EventMode.None:
+                break;
+            case EventMode.Loaded:
+
+                WeakEventManager<FrameworkElement, RoutedEventArgs>.AddHandler(
+                    frameworkElement,
+                    nameof(FrameworkElement.Loaded),
+                    FrameworkElement_Loaded
+                );
+                break;
+            case EventMode.Unloaded:
+                WeakEventManager<FrameworkElement, RoutedEventArgs>.AddHandler(
+                    frameworkElement,
+                    nameof(FrameworkElement.Unloaded),
+                    FrameworkElement_Unloaded
+                );
+                break;
+            case EventMode.MouseEnter:
+                WeakEventManager<FrameworkElement, MouseEventArgs>.AddHandler(
+                    frameworkElement,
+                    nameof(FrameworkElement.MouseEnter),
+                    FrameworkElement_MouseEnter
+                );
+                break;
+            case EventMode.MouseLeave:
+                WeakEventManager<FrameworkElement, MouseEventArgs>.AddHandler(
+                    frameworkElement,
+                    nameof(FrameworkElement.MouseLeave),
+                    FrameworkElement_MouseLeave
+                );
+                break;
+            case EventMode.DataContextChanged:
+
+                frameworkElement.DataContextChanged += FrameworkElement_DataContextChanged;
+                break;
+            case EventMode.GotFocus:
+                WeakEventManager<FrameworkElement, RoutedEventArgs>.AddHandler(
+                    frameworkElement,
+                    nameof(FrameworkElement.GotFocus),
+                    FrameworkElement_GotFocus
+                );
+                break;
+            case EventMode.LostFocus:
+                WeakEventManager<FrameworkElement, RoutedEventArgs>.AddHandler(
+                    frameworkElement,
+                    nameof(FrameworkElement.LostFocus),
+                    FrameworkElement_LostFocus
+                );
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Frameworks the element lost focus.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+    private static void FrameworkElement_LostFocus(object? sender, RoutedEventArgs e)
+    {
+        BeginAnimation(sender, EventMode.LostFocus);
+    }
+
+    /// <summary>
+    /// Frameworks the element got focus.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+    private static void FrameworkElement_GotFocus(object? sender, RoutedEventArgs e)
+    {
+        BeginAnimation(sender, EventMode.GotFocus);
+    }
+
+    /// <summary>
+    /// Handles the DataContextChanged event of the FrameworkElement control.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
+    private static void FrameworkElement_DataContextChanged(
+        object sender,
+        DependencyPropertyChangedEventArgs e
+    )
+    {
+        BeginAnimation(sender, EventMode.DataContextChanged);
+    }
+
+    /// <summary>
+    /// Frameworks the element mouse leave.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
+    private static void FrameworkElement_MouseLeave(object? sender, MouseEventArgs e)
+    {
+        BeginAnimation(sender, EventMode.MouseLeave);
+    }
+
+    /// <summary>
+    /// Frameworks the element mouse enter.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
+    private static void FrameworkElement_MouseEnter(object? sender, MouseEventArgs e)
+    {
+        BeginAnimation(sender, EventMode.MouseEnter);
+    }
+
+    /// <summary>
+    /// Frameworks the element unloaded.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+    private static void FrameworkElement_Unloaded(object? sender, RoutedEventArgs e)
+    {
+        BeginAnimation(sender, EventMode.Unloaded);
+    }
+
+    /// <summary>
+    /// Frameworks the element loaded.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+    private static void FrameworkElement_Loaded(object? sender, RoutedEventArgs e)
+    {
+        BeginAnimation(sender, EventMode.Loaded);
+    }
+
+    /// <summary>
+    /// Begins the animation.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="eventMode">The event mode.</param>
+    private static void BeginAnimation(object? sender, EventMode eventMode)
+    {
+        if (sender is not FrameworkElement element)
+        {
+            return;
+        }
+
+        IAnimationInfo[] array = GetAnimations(element)
+            .Where(i => i.EventMode == eventMode)
+            .ToArray();
+
+        for (int i = 0; i < array.Length; i++)
+        {
+            array[i].Invoke();
+        }
+    }
+
+    #endregion
 }

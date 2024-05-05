@@ -1,15 +1,15 @@
 ﻿using System.Linq.Expressions;
 using System.Windows;
 using System.Windows.Media.Animation;
-using Toolkits.Animation.Wpf.Extensions;
 
 namespace Toolkits.Animation;
 
 /// <summary>
 ///
 /// </summary>
-public static class ThicknessAnimationExtension
+public static class Int32AnimationBuildExtension
 {
+    #region int
     /// <summary>
     /// Builds the animation.
     /// </summary>
@@ -20,16 +20,16 @@ public static class ThicknessAnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static ThicknessAnimation BuildAnimation<TObject>(
+    public static Int32Animation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, Thickness>> propertyExpression,
-        Thickness toValue,
+        Expression<Func<TObject, int>> propertyExpression,
+        int toValue,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -54,17 +54,17 @@ public static class ThicknessAnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static ThicknessAnimation BuildAnimation<TObject>(
+    public static Int32Animation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, Thickness>> propertyExpression,
-        Thickness fromValue,
-        Thickness toValue,
+        Expression<Func<TObject, int>> propertyExpression,
+        int fromValue,
+        int toValue,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -89,17 +89,17 @@ public static class ThicknessAnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static ThicknessAnimation BuildAnimation<TObject>(
+    public static Int32Animation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, Thickness>> propertyExpression,
-        Thickness toValue,
+        Expression<Func<TObject, int>> propertyExpression,
+        int toValue,
         TimeSpan beginTime,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -125,18 +125,18 @@ public static class ThicknessAnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static ThicknessAnimation BuildAnimation<TObject>(
+    public static Int32Animation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, Thickness>> propertyExpression,
-        Thickness? fromValue,
-        Thickness toValue,
+        Expression<Func<TObject, int>> propertyExpression,
+        int? fromValue,
+        int toValue,
         TimeSpan? beginTime,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -149,6 +149,10 @@ public static class ThicknessAnimationExtension
             completeCallback
         );
     }
+
+    #endregion
+
+
 
     /// <summary>
     /// Builds the animation.
@@ -167,11 +171,11 @@ public static class ThicknessAnimationExtension
     /// or
     /// animationProperty
     /// </exception>
-    public static ThicknessAnimation BuildAnimation(
+    public static Int32Animation BuildAnimation(
         this UIElement @object,
         string animationProperty,
-        Thickness? fromValue,
-        Thickness toValue,
+        int? fromValue,
+        int toValue,
         TimeSpan? beginTime,
         TimeSpan duration,
         IEasingFunction? easingFunction = null,
@@ -183,7 +187,7 @@ public static class ThicknessAnimationExtension
             ? throw new ArgumentNullException(nameof(animationProperty))
             : 0;
 
-        var animation = new ThicknessAnimation();
+        var animation = new Int32Animation();
 
         if (fromValue.HasValue)
         {

@@ -2,14 +2,13 @@
 using System.Windows;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
-using Toolkits.Animation.Wpf.Extensions;
 
 namespace Toolkits.Animation;
 
 /// <summary>
 ///
 /// </summary>
-public static class Rotation3DAnimationExtension
+public static class QuaternionAnimationBuildExtension
 {
     /// <summary>
     /// Builds the animation.
@@ -21,16 +20,16 @@ public static class Rotation3DAnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static Rotation3DAnimation BuildAnimation<TObject>(
+    public static QuaternionAnimation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, Rotation3D>> propertyExpression,
-        Rotation3D toValue,
+        Expression<Func<TObject, Quaternion>> propertyExpression,
+        Quaternion toValue,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -55,17 +54,17 @@ public static class Rotation3DAnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static Rotation3DAnimation BuildAnimation<TObject>(
+    public static QuaternionAnimation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, Rotation3D>> propertyExpression,
-        Rotation3D fromValue,
-        Rotation3D toValue,
+        Expression<Func<TObject, Quaternion>> propertyExpression,
+        Quaternion fromValue,
+        Quaternion toValue,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -90,17 +89,17 @@ public static class Rotation3DAnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static Rotation3DAnimation BuildAnimation<TObject>(
+    public static QuaternionAnimation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, Rotation3D>> propertyExpression,
-        Rotation3D toValue,
+        Expression<Func<TObject, Quaternion>> propertyExpression,
+        Quaternion toValue,
         TimeSpan beginTime,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -126,18 +125,18 @@ public static class Rotation3DAnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static Rotation3DAnimation BuildAnimation<TObject>(
+    public static QuaternionAnimation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, Rotation3D>> propertyExpression,
-        Rotation3D? fromValue,
-        Rotation3D toValue,
+        Expression<Func<TObject, Quaternion>> propertyExpression,
+        Quaternion? fromValue,
+        Quaternion toValue,
         TimeSpan? beginTime,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -168,11 +167,11 @@ public static class Rotation3DAnimationExtension
     /// or
     /// animationProperty
     /// </exception>
-    public static Rotation3DAnimation BuildAnimation(
+    public static QuaternionAnimation BuildAnimation(
         this UIElement @object,
         string animationProperty,
-        Rotation3D? fromValue,
-        Rotation3D toValue,
+        Quaternion? fromValue,
+        Quaternion toValue,
         TimeSpan? beginTime,
         TimeSpan duration,
         IEasingFunction? easingFunction = null,
@@ -184,10 +183,12 @@ public static class Rotation3DAnimationExtension
             ? throw new ArgumentNullException(nameof(animationProperty))
             : 0;
 
-        var animation = new Rotation3DAnimation();
+        var animation = new QuaternionAnimation();
 
-        animation.From = fromValue;
-
+        if (fromValue.HasValue)
+        {
+            animation.From = fromValue.Value;
+        }
         if (beginTime.HasValue)
         {
             animation.BeginTime = beginTime.Value;

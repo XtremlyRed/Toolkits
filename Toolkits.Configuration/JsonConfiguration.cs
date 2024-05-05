@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics;
-using System.Runtime.Serialization.Formatters;
 using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -16,22 +15,22 @@ namespace Toolkits.Configuration;
 public class JsonConfiguration : IConfiguration
 {
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    private FileInfo configurationPath;
+    private readonly FileInfo configurationPath;
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    JToken? thisToken;
+    private JToken? thisToken;
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    SemaphoreSlim asyncLocker = new SemaphoreSlim(1, 1);
+    private readonly SemaphoreSlim asyncLocker = new SemaphoreSlim(1, 1);
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    static JsonSerializerSettings serializerSettings;
+    private static readonly JsonSerializerSettings serializerSettings;
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    static char[] splitChars = new[] { '.', ' ' };
+    private static readonly char[] splitChars = new[] { '.', ' ' };
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    const string intervalChar = ".";
+    private const string intervalChar = ".";
 
     /// <summary>
     /// Initializes the <see cref="JsonConfiguration"/> class.
@@ -63,7 +62,7 @@ public class JsonConfiguration : IConfiguration
             return;
         }
 
-        var content = File.ReadAllText(configurationPath.FullName, Encoding.UTF8);
+        string content = File.ReadAllText(configurationPath.FullName, Encoding.UTF8);
 
         try
         {
@@ -91,7 +90,7 @@ public class JsonConfiguration : IConfiguration
         {
             asyncLocker.Wait();
 
-            var valueToken = InternalGet(key);
+            JToken? valueToken = InternalGet(key);
 
             if (valueToken is null)
             {
@@ -149,7 +148,7 @@ public class JsonConfiguration : IConfiguration
         {
             thisToken = JToken.FromObject(new object());
 
-            var jsonString = JsonConvert.SerializeObject(thisToken, serializerSettings);
+            string jsonString = JsonConvert.SerializeObject(thisToken, serializerSettings);
 
             File.WriteAllText(configurationPath.FullName, jsonString, Encoding.UTF8);
         }
@@ -163,11 +162,11 @@ public class JsonConfiguration : IConfiguration
     {
         if (key.Contains(intervalChar))
         {
-            var currentToken = thisToken!;
-            var splits = key.Split(splitChars, StringSplitOptions.RemoveEmptyEntries);
+            JToken currentToken = thisToken!;
+            string[] splits = key.Split(splitChars, StringSplitOptions.RemoveEmptyEntries);
             for (int i = 0, length = splits.Length - 1; i < length; i++)
             {
-                var token = currentToken[splits[i]];
+                JToken? token = currentToken[splits[i]];
                 if (token is null)
                 {
                     currentToken[splits[i]] = token = JToken.FromObject(new object());
@@ -182,7 +181,7 @@ public class JsonConfiguration : IConfiguration
             thisToken![key] = JToken.FromObject(value!);
         }
 
-        var jsonString = JsonConvert.SerializeObject(thisToken, serializerSettings);
+        string jsonString = JsonConvert.SerializeObject(thisToken, serializerSettings);
 
         File.WriteAllText(configurationPath.FullName, jsonString, Encoding.UTF8);
     }
@@ -191,9 +190,9 @@ public class JsonConfiguration : IConfiguration
     {
         if (key.Contains(intervalChar))
         {
-            var currentToken = thisToken!;
+            JToken? currentToken = thisToken!;
 
-            var splits = key.Contains(intervalChar)
+            string[] splits = key.Contains(intervalChar)
                 ? key.Split(splitChars, StringSplitOptions.RemoveEmptyEntries)
                 : new[] { key };
 
@@ -209,9 +208,7 @@ public class JsonConfiguration : IConfiguration
 
             return currentToken;
         }
-        else
-        {
-            return thisToken![key]!;
-        }
+
+        return thisToken![key]!;
     }
 }

@@ -1,14 +1,14 @@
 ﻿using System.Linq.Expressions;
 using System.Windows;
 using System.Windows.Media.Animation;
-using Toolkits.Animation.Wpf.Extensions;
+using System.Windows.Media.Media3D;
 
 namespace Toolkits.Animation;
 
 /// <summary>
 ///
 /// </summary>
-public static class ColorAnimationExtension
+public static class Point3DAnimationBuildExtension
 {
     /// <summary>
     /// Builds the animation.
@@ -20,16 +20,16 @@ public static class ColorAnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static ColorAnimation BuildAnimation<TObject>(
+    public static Point3DAnimation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, Color>> propertyExpression,
-        Color toValue,
+        Expression<Func<TObject, Point3D>> propertyExpression,
+        Point3D toValue,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -54,17 +54,17 @@ public static class ColorAnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static ColorAnimation BuildAnimation<TObject>(
+    public static Point3DAnimation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, Color>> propertyExpression,
-        Color fromValue,
-        Color toValue,
+        Expression<Func<TObject, Point3D>> propertyExpression,
+        Point3D fromValue,
+        Point3D toValue,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -89,17 +89,17 @@ public static class ColorAnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static ColorAnimation BuildAnimation<TObject>(
+    public static Point3DAnimation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, Color>> propertyExpression,
-        Color toValue,
+        Expression<Func<TObject, Point3D>> propertyExpression,
+        Point3D toValue,
         TimeSpan beginTime,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -125,18 +125,18 @@ public static class ColorAnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static ColorAnimation BuildAnimation<TObject>(
+    public static Point3DAnimation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, Color>> propertyExpression,
-        Color? fromValue,
-        Color toValue,
+        Expression<Func<TObject, Point3D>> propertyExpression,
+        Point3D? fromValue,
+        Point3D toValue,
         TimeSpan? beginTime,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -167,11 +167,11 @@ public static class ColorAnimationExtension
     /// or
     /// animationProperty
     /// </exception>
-    public static ColorAnimation BuildAnimation(
+    public static Point3DAnimation BuildAnimation(
         this UIElement @object,
         string animationProperty,
-        Color? fromValue,
-        Color toValue,
+        Point3D? fromValue,
+        Point3D toValue,
         TimeSpan? beginTime,
         TimeSpan duration,
         IEasingFunction? easingFunction = null,
@@ -183,7 +183,7 @@ public static class ColorAnimationExtension
             ? throw new ArgumentNullException(nameof(animationProperty))
             : 0;
 
-        var animation = new ColorAnimation();
+        var animation = new Point3DAnimation();
 
         if (fromValue.HasValue)
         {

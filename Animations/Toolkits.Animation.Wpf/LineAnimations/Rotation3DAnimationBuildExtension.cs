@@ -1,14 +1,14 @@
 ﻿using System.Linq.Expressions;
 using System.Windows;
 using System.Windows.Media.Animation;
-using Toolkits.Animation.Wpf.Extensions;
+using System.Windows.Media.Media3D;
 
 namespace Toolkits.Animation;
 
 /// <summary>
 ///
 /// </summary>
-public static class PointAnimationExtension
+public static class Rotation3DAnimationBuildExtension
 {
     /// <summary>
     /// Builds the animation.
@@ -20,16 +20,16 @@ public static class PointAnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static PointAnimation BuildAnimation<TObject>(
+    public static Rotation3DAnimation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, Point>> propertyExpression,
-        Point toValue,
+        Expression<Func<TObject, Rotation3D>> propertyExpression,
+        Rotation3D toValue,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -54,17 +54,17 @@ public static class PointAnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static PointAnimation BuildAnimation<TObject>(
+    public static Rotation3DAnimation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, Point>> propertyExpression,
-        Point fromValue,
-        Point toValue,
+        Expression<Func<TObject, Rotation3D>> propertyExpression,
+        Rotation3D fromValue,
+        Rotation3D toValue,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -89,17 +89,17 @@ public static class PointAnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static PointAnimation BuildAnimation<TObject>(
+    public static Rotation3DAnimation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, Point>> propertyExpression,
-        Point toValue,
+        Expression<Func<TObject, Rotation3D>> propertyExpression,
+        Rotation3D toValue,
         TimeSpan beginTime,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -125,18 +125,18 @@ public static class PointAnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static PointAnimation BuildAnimation<TObject>(
+    public static Rotation3DAnimation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, Point>> propertyExpression,
-        Point? fromValue,
-        Point toValue,
+        Expression<Func<TObject, Rotation3D>> propertyExpression,
+        Rotation3D? fromValue,
+        Rotation3D toValue,
         TimeSpan? beginTime,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -167,11 +167,11 @@ public static class PointAnimationExtension
     /// or
     /// animationProperty
     /// </exception>
-    public static PointAnimation BuildAnimation(
+    public static Rotation3DAnimation BuildAnimation(
         this UIElement @object,
         string animationProperty,
-        Point? fromValue,
-        Point toValue,
+        Rotation3D? fromValue,
+        Rotation3D toValue,
         TimeSpan? beginTime,
         TimeSpan duration,
         IEasingFunction? easingFunction = null,
@@ -183,12 +183,10 @@ public static class PointAnimationExtension
             ? throw new ArgumentNullException(nameof(animationProperty))
             : 0;
 
-        var animation = new PointAnimation();
+        var animation = new Rotation3DAnimation();
 
-        if (fromValue.HasValue)
-        {
-            animation.From = fromValue.Value;
-        }
+        animation.From = fromValue;
+
         if (beginTime.HasValue)
         {
             animation.BeginTime = beginTime.Value;

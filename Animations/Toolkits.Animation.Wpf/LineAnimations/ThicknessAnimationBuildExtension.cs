@@ -1,15 +1,13 @@
 ﻿using System.Linq.Expressions;
 using System.Windows;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Media3D;
-using Toolkits.Animation.Wpf.Extensions;
 
 namespace Toolkits.Animation;
 
 /// <summary>
 ///
 /// </summary>
-public static class Point3DAnimationExtension
+public static class ThicknessAnimationBuildExtension
 {
     /// <summary>
     /// Builds the animation.
@@ -21,16 +19,16 @@ public static class Point3DAnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static Point3DAnimation BuildAnimation<TObject>(
+    public static ThicknessAnimation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, Point3D>> propertyExpression,
-        Point3D toValue,
+        Expression<Func<TObject, Thickness>> propertyExpression,
+        Thickness toValue,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -55,17 +53,17 @@ public static class Point3DAnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static Point3DAnimation BuildAnimation<TObject>(
+    public static ThicknessAnimation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, Point3D>> propertyExpression,
-        Point3D fromValue,
-        Point3D toValue,
+        Expression<Func<TObject, Thickness>> propertyExpression,
+        Thickness fromValue,
+        Thickness toValue,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -90,17 +88,17 @@ public static class Point3DAnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static Point3DAnimation BuildAnimation<TObject>(
+    public static ThicknessAnimation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, Point3D>> propertyExpression,
-        Point3D toValue,
+        Expression<Func<TObject, Thickness>> propertyExpression,
+        Thickness toValue,
         TimeSpan beginTime,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -126,18 +124,18 @@ public static class Point3DAnimationExtension
     /// <param name="duration">The duration.</param>
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
-    public static Point3DAnimation BuildAnimation<TObject>(
+    public static ThicknessAnimation BuildAnimation<TObject>(
         this TObject @object,
-        Expression<Func<TObject, Point3D>> propertyExpression,
-        Point3D? fromValue,
-        Point3D toValue,
+        Expression<Func<TObject, Thickness>> propertyExpression,
+        Thickness? fromValue,
+        Thickness toValue,
         TimeSpan? beginTime,
         TimeSpan duration,
         Action? completeCallback = null
     )
         where TObject : UIElement
     {
-        var property = ReflectionExtensions.GetPropertyName(propertyExpression);
+        var property = propertyExpression.GetPropertyName();
 
         return BuildAnimation(
             @object,
@@ -168,11 +166,11 @@ public static class Point3DAnimationExtension
     /// or
     /// animationProperty
     /// </exception>
-    public static Point3DAnimation BuildAnimation(
+    public static ThicknessAnimation BuildAnimation(
         this UIElement @object,
         string animationProperty,
-        Point3D? fromValue,
-        Point3D toValue,
+        Thickness? fromValue,
+        Thickness toValue,
         TimeSpan? beginTime,
         TimeSpan duration,
         IEasingFunction? easingFunction = null,
@@ -184,7 +182,7 @@ public static class Point3DAnimationExtension
             ? throw new ArgumentNullException(nameof(animationProperty))
             : 0;
 
-        var animation = new Point3DAnimation();
+        var animation = new ThicknessAnimation();
 
         if (fromValue.HasValue)
         {

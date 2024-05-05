@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:WPF_UI_TEST"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="https://github.com/xtremlyred/toolkits"
     Title="MainWindow"
     Width="800"
     Height="450"
@@ -12,8 +13,14 @@
 
     <AdornerDecorator PopupManager.ContainerName="MainPopupContainer" PopupManager.IsMainContainer="True">
         <Button
-            Width="100"
             Height="20"
+            toolkit:Animation.SlideY="{toolkit:SlideYDeclareExtension Duration=0:0:05,
+                                                                      From=100,
+                                                                      To=0}"
+            Animation.Play="False"
+            Animation.ScaleX="{toolkit:ScaleXDeclareExtension Duration=0:0:05,
+                                                              From=100,
+                                                              To=1}"
             Click="Button_Click"
             Content="Open Popup" />
     </AdornerDecorator>
