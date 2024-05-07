@@ -1,4 +1,4 @@
-﻿namespace Toolkits.Controls;
+﻿namespace Toolkits.Core;
 
 /// <summary>
 ///
@@ -42,11 +42,7 @@ public interface IFileSystemPicker
     /// <param name="title">The title.</param>
     /// <param name="rootFolder">The root folder.</param>
     /// <returns></returns>
-    string? FilePicker(
-        string filter = "all file|*.*",
-        string title = "please select files",
-        string? rootFolder = null
-    );
+    string? FilePicker(string filter = "all file|*.*", string title = "please select files", string? rootFolder = null);
 
     /// <summary>
     /// Files the picker asynchronous.
@@ -55,11 +51,7 @@ public interface IFileSystemPicker
     /// <param name="title">The title.</param>
     /// <param name="rootFolder">The root folder.</param>
     /// <returns></returns>
-    Task<string?> FilePickerAsync(
-        string filter = "all file|*.*",
-        string title = "please select files",
-        string? rootFolder = null
-    );
+    Task<string?> FilePickerAsync(string filter = "all file|*.*", string title = "please select files", string? rootFolder = null);
 
     /// <summary>
     /// Fileses the picker.
@@ -68,11 +60,7 @@ public interface IFileSystemPicker
     /// <param name="title">The title.</param>
     /// <param name="rootFolder">The root folder.</param>
     /// <returns></returns>
-    string[]? FilesPicker(
-        string filter = "all file|*.*",
-        string? title = "please select files",
-        string? rootFolder = null
-    );
+    string[]? FilesPicker(string filter = "all file|*.*", string? title = "please select files", string? rootFolder = null);
 
     /// <summary>
     /// Fileses the picker asynchronous.
@@ -81,11 +69,7 @@ public interface IFileSystemPicker
     /// <param name="title">The title.</param>
     /// <param name="rootFolder">The root folder.</param>
     /// <returns></returns>
-    Task<string[]?> FilesPickerAsync(
-        string filter = "all file|*.*",
-        string title = "please select files",
-        string? rootFolder = null
-    );
+    Task<string[]?> FilesPickerAsync(string filter = "all file|*.*", string title = "please select files", string? rootFolder = null);
 
     /// <summary>
     /// Folders the picker.
@@ -94,11 +78,7 @@ public interface IFileSystemPicker
     /// <param name="title">The title.</param>
     /// <param name="showNewFolderButton">if set to <c>true</c> [show new folder button].</param>
     /// <returns></returns>
-    string? FolderPicker(
-        string? defaultPath = null,
-        string title = "please select folder",
-        bool showNewFolderButton = false
-    );
+    string? FolderPicker(string? defaultPath = null, string title = "please select folder", bool showNewFolderButton = false);
 
     /// <summary>
     /// Folders the picker asynchronous.
@@ -107,9 +87,5 @@ public interface IFileSystemPicker
     /// <param name="title">The title.</param>
     /// <param name="showNewFolderButton">if set to <c>true</c> [show new folder button].</param>
     /// <returns></returns>
-    Task<string?> FolderPickerAsync(
-        string? defaultPath = null,
-        string title = "please select folder",
-        bool showNewFolderButton = false
-    );
+    Task<string?> FolderPickerAsync(string? defaultPath = null, string title = "please select folder", bool showNewFolderButton = false);
 }

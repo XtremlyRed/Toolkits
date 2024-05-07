@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Toolkits.Controls;
+namespace Toolkits.Core;
 
 /// <summary>
 /// a class of <see cref="IPopupManager"/>
@@ -36,12 +36,7 @@ public interface IPopupManager
     /// <param name="buttonContents">the button contents of the pop-up box</param>
     /// <param name="expectedClickIndex">expected click index of the (see parameter: <paramref name="buttonContents"/>).</param>
     /// <returns></returns>
-    Task<bool> ComfirmAsync(
-        string message,
-        string title,
-        string[] buttonContents,
-        int expectedClickIndex = 0
-    );
+    Task<bool> ComfirmAsync(string message, string title, string[] buttonContents, int expectedClickIndex = 0);
 
     /// <summary>
     /// show message with <paramref name="message"/>,<paramref name="title"/>,<paramref name="buttonContents"/> from <paramref name="containerName"/>
@@ -51,12 +46,7 @@ public interface IPopupManager
     /// <param name="title">the title of the pop-up box</param>
     /// <param name="buttonContents">the button contents of the pop-up box</param>
     /// <returns></returns>
-    Task ShowAsyncIn(
-        string containerName,
-        string message,
-        string title,
-        params string[] buttonContents
-    );
+    Task ShowAsyncIn(string containerName, string message, string title, params string[] buttonContents);
 
     /// <summary>
     /// comfirm message with <paramref name="message"/>,<paramref name="title"/>,<paramref name="buttonContents"/> from <paramref name="containerName"/>
@@ -66,12 +56,7 @@ public interface IPopupManager
     /// <param name="title">the title of the pop-up box</param>
     /// <param name="buttonContents">the button contents of the pop-up box</param>
     /// <returns></returns>
-    Task<bool> ComfirmAsyncIn(
-        string containerName,
-        string message,
-        string title,
-        params string[] buttonContents
-    );
+    Task<bool> ComfirmAsyncIn(string containerName, string message, string title, params string[] buttonContents);
 
     /// <summary>
     /// comfirm message with <paramref name="message"/>,<paramref name="title"/>,<paramref name="buttonContents"/> from <paramref name="containerName"/>
@@ -82,13 +67,7 @@ public interface IPopupManager
     /// <param name="buttonContents">the button contents of the pop-up box</param>
     /// <param name="expectedClickIndex">expected click index of the (see parameter: <paramref name="buttonContents"/>).</param>
     /// <returns></returns>
-    Task<bool> ComfirmAsyncIn(
-        string containerName,
-        string message,
-        string title,
-        string[] buttonContents,
-        int expectedClickIndex = 0
-    );
+    Task<bool> ComfirmAsyncIn(string containerName, string message, string title, string[] buttonContents, int expectedClickIndex = 0);
 
     /// <summary>
     /// popup view with <paramref name="parameters"/> from  main container
@@ -124,9 +103,5 @@ public interface IPopupManager
     /// <param name="viewCreator">view creator</param>
     /// <param name="parameters">parameters</param>
     /// <returns></returns>
-    Task<object> PopupAsyncIn(
-        string containerName,
-        Func<object> viewCreator,
-        Parameters? parameters = null
-    );
+    Task<object> PopupAsyncIn(string containerName, Func<object> viewCreator, Parameters? parameters = null);
 }

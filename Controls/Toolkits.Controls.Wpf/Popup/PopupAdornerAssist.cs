@@ -2,18 +2,13 @@
 using System.Windows;
 using System.Windows.Media.Animation;
 using Toolkits.Animation;
-using Toolkits.Controls;
+using Toolkits.Core;
 
 namespace Toolkits.Controls.Assist;
 
 internal static class PopupAdornerAssist
 {
-    internal static Action SetContent(
-        this PopupAdorner popupAdorner,
-        int contentIndex,
-        object popupView,
-        Parameters? parameters = null
-    )
+    internal static Action SetContent(this PopupAdorner popupAdorner, int contentIndex, object popupView, Parameters? parameters = null)
     {
         var popupContent = popupView as FrameworkElement;
 
@@ -72,12 +67,7 @@ internal static class PopupAdornerAssist
         }
     }
 
-    public static void ShowContainer(
-        this PopupAdorner popupAdorner,
-        FrameworkElement visual,
-        int index,
-        TimeSpan durationAnimation
-    )
+    public static void ShowContainer(this PopupAdorner popupAdorner, FrameworkElement visual, int index, TimeSpan durationAnimation)
     {
         if (popupAdorner.shown[index])
         {
@@ -161,11 +151,7 @@ internal static class PopupAdornerAssist
         storyboard.Begin();
     }
 
-    private static void RemoveVisual(
-        FrameworkElement @object,
-        TimeSpan durationAnimation,
-        Action? popupCloseCallback = null
-    )
+    private static void RemoveVisual(FrameworkElement @object, TimeSpan durationAnimation, Action? popupCloseCallback = null)
     {
         KeyTime keyTime = TimeSpan.FromMilliseconds(010);
 

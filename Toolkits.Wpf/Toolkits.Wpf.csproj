@@ -32,13 +32,13 @@
 
 
 	<ItemGroup>
-	  <PackageReference Include="PropertyChanged.Fody" Version="4.1.0"  PrivateAssets="All"/>
+	  <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets="All" />
 	</ItemGroup>
 
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Controls\Toolkits.Controls.Core\Toolkits.Controls.Core.csproj" />
 	  <ProjectReference Include="..\Toolkits.Core\Toolkits.Core.csproj" />
+	  <ProjectReference Include="..\Toolkits.Wpf.Core\Toolkits.Wpf.Core.csproj" />
 	</ItemGroup>
 
 

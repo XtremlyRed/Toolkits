@@ -3,9 +3,9 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
-using Toolkits.Controls;
 using Toolkits.Controls.Assist;
 using Toolkits.Controls.PopupView;
+using Toolkits.Core;
 
 namespace Toolkits.Controls;
 
@@ -33,12 +33,7 @@ public class PopupManager : IPopupManager
     {
         ButtonContentsCheck(buttonContents);
         PopupContainerCheck(true, out var adornerDecorator);
-        await PopupManagerAssist.InnerMessagePopup(
-            adornerDecorator,
-            message,
-            title,
-            buttonContents
-        );
+        await PopupManagerAssist.InnerMessagePopup(adornerDecorator, message, title, buttonContents);
     }
 
     /// <summary>
@@ -49,11 +44,7 @@ public class PopupManager : IPopupManager
     /// <param name="title">the title of the pop-up box</param>
     /// <param name="buttonContents">the button contents of the pop-up box</param>
     /// <returns>the content of a clicked button</returns>
-    public async Task<bool> ComfirmAsync(
-        string message,
-        string title,
-        params string[] buttonContents
-    )
+    public async Task<bool> ComfirmAsync(string message, string title, params string[] buttonContents)
     {
         return await ComfirmAsync(message, title, buttonContents, 0);
     }
@@ -67,23 +58,13 @@ public class PopupManager : IPopupManager
     /// <param name="buttonContents">the button contents of the pop-up box</param>
     /// <param name="expectedClickIndex">expected click index of the (see parameter: <paramref name="buttonContents"/>).</param>
     /// <returns></returns>
-    public async Task<bool> ComfirmAsync(
-        string message,
-        string title,
-        string[] buttonContents,
-        int expectedClickIndex = 0
-    )
+    public async Task<bool> ComfirmAsync(string message, string title, string[] buttonContents, int expectedClickIndex = 0)
     {
         ButtonContentsCheck(buttonContents, expectedClickIndex);
 
         PopupContainerCheck(true, out var adornerDecorator);
 
-        var clickConent = await PopupManagerAssist.InnerMessagePopup(
-            adornerDecorator,
-            message,
-            title,
-            buttonContents
-        );
+        var clickConent = await PopupManagerAssist.InnerMessagePopup(adornerDecorator, message, title, buttonContents);
 
         return buttonContents[expectedClickIndex] == clickConent;
     }
@@ -96,21 +77,11 @@ public class PopupManager : IPopupManager
     /// <param name="title">the title of the pop-up box</param>
     /// <param name="buttonContents">the button contents of the pop-up box</param>
     /// <returns></returns>
-    public async Task ShowAsyncIn(
-        string containerName,
-        string message,
-        string title,
-        params string[] buttonContents
-    )
+    public async Task ShowAsyncIn(string containerName, string message, string title, params string[] buttonContents)
     {
         ButtonContentsCheck(buttonContents);
         PopupContainerCheck(containerName, out var adornerDecorator);
-        await PopupManagerAssist.InnerMessagePopup(
-            adornerDecorator,
-            message,
-            title,
-            buttonContents
-        );
+        await PopupManagerAssist.InnerMessagePopup(adornerDecorator, message, title, buttonContents);
     }
 
     /// <summary>
@@ -121,12 +92,7 @@ public class PopupManager : IPopupManager
     /// <param name="title">the title of the pop-up box</param>
     /// <param name="buttonContents">the button contents of the pop-up box</param>
     /// <returns></returns>
-    public async Task<bool> ComfirmAsyncIn(
-        string containerName,
-        string message,
-        string title,
-        params string[] buttonContents
-    )
+    public async Task<bool> ComfirmAsyncIn(string containerName, string message, string title, params string[] buttonContents)
     {
         return await ComfirmAsyncIn(containerName, message, title, buttonContents, 0);
     }
@@ -140,23 +106,12 @@ public class PopupManager : IPopupManager
     /// <param name="buttonContents">the button contents of the pop-up box</param>
     /// <param name="expectedClickIndex">expected click index of the (see parameter: <paramref name="buttonContents"/>).</param>
     /// <returns></returns>
-    public async Task<bool> ComfirmAsyncIn(
-        string containerName,
-        string message,
-        string title,
-        string[] buttonContents,
-        int expectedClickIndex = 0
-    )
+    public async Task<bool> ComfirmAsyncIn(string containerName, string message, string title, string[] buttonContents, int expectedClickIndex = 0)
     {
         ButtonContentsCheck(buttonContents, expectedClickIndex);
         PopupContainerCheck(containerName, out var adornerDecorator);
 
-        var clickContent = await PopupManagerAssist.InnerMessagePopup(
-            adornerDecorator,
-            message,
-            title,
-            buttonContents
-        );
+        var clickContent = await PopupManagerAssist.InnerMessagePopup(adornerDecorator, message, title, buttonContents);
 
         return buttonContents[expectedClickIndex] == clickContent;
     }
@@ -188,8 +143,7 @@ public class PopupManager : IPopupManager
 
         return viewCreator is null
             ? throw new ArgumentNullException(nameof(viewCreator))
-            : (await adornerDecorator.Dispatcher.InvokeAsync(() => viewCreator()))
-                is not object view
+            : (await adornerDecorator.Dispatcher.InvokeAsync(() => viewCreator())) is not object view
                 ? throw new ArgumentException("invalid visual")
                 : await PopupManagerAssist.InnerContentPopup(adornerDecorator, view, parameters);
     }
@@ -203,11 +157,7 @@ public class PopupManager : IPopupManager
     /// <param name="view">view</param>
     /// <param name="parameters">parameters</param>
     /// <returns></returns>
-    public async Task<object> PopupAsyncIn(
-        string containerName,
-        object view,
-        Parameters? parameters = null
-    )
+    public async Task<object> PopupAsyncIn(string containerName, object view, Parameters? parameters = null)
     {
         return await PopupAsyncIn(containerName, () => view, parameters);
     }
@@ -221,18 +171,13 @@ public class PopupManager : IPopupManager
     /// <param name="viewCreator">view creator</param>
     /// <param name="parameters">parameters</param>
     /// <returns></returns>
-    public async Task<object> PopupAsyncIn(
-        string containerName,
-        Func<object> viewCreator,
-        Parameters? parameters = null
-    )
+    public async Task<object> PopupAsyncIn(string containerName, Func<object> viewCreator, Parameters? parameters = null)
     {
         PopupContainerCheck(containerName, out var adornerDecorator);
 
         return viewCreator is null
             ? throw new ArgumentNullException(nameof(viewCreator))
-            : (await adornerDecorator.Dispatcher.InvokeAsync(() => viewCreator()))
-                is not object view
+            : (await adornerDecorator.Dispatcher.InvokeAsync(() => viewCreator())) is not object view
                 ? throw new ArgumentException("invalid visual")
                 : await PopupManagerAssist.InnerContentPopup(adornerDecorator, view, parameters);
     }
@@ -247,18 +192,12 @@ public class PopupManager : IPopupManager
     {
         if (buttonContents is null || buttonContents.Length == 0)
         {
-            throw new ArgumentNullException(
-                nameof(buttonContents),
-                "the display content of the buttons has not been configured"
-            );
+            throw new ArgumentNullException(nameof(buttonContents), "the display content of the buttons has not been configured");
         }
 
         if (expectedClickIndex < 0 || expectedClickIndex >= buttonContents.Length)
         {
-            throw new ArgumentOutOfRangeException(
-                nameof(expectedClickIndex),
-                "the expected click index of the button to be clicked is out of range"
-            );
+            throw new ArgumentOutOfRangeException(nameof(expectedClickIndex), "the expected click index of the button to be clicked is out of range");
         }
     }
 
@@ -287,14 +226,9 @@ public class PopupManager : IPopupManager
 
         adornerDecorator = (
             adornerDecorators
-                .FirstOrDefault(i =>
-                    i.Target is AdornerDecorator adorner
-                    && adorner.Dispatcher.Invoke(() => GetIsMainContainer(adorner)) == true
-                )
+                .FirstOrDefault(i => i.Target is AdornerDecorator adorner && adorner.Dispatcher.Invoke(() => GetIsMainContainer(adorner)) == true)
                 ?.Target as AdornerDecorator
-            ?? throw new Exception(
-                "PopupManager: the main container was not found or the main container name is empty"
-            )
+            ?? throw new Exception("PopupManager: the main container was not found or the main container name is empty")
         )!;
     }
 
@@ -310,8 +244,7 @@ public class PopupManager : IPopupManager
         adornerDecorator = (
             adornerDecorators
                 .FirstOrDefault(i =>
-                    i.Target is AdornerDecorator adorner
-                    && adorner.Dispatcher.Invoke(() => GetContainerName(adorner)) == containerName
+                    i.Target is AdornerDecorator adorner && adorner.Dispatcher.Invoke(() => GetContainerName(adorner)) == containerName
                 )
                 ?.Target as AdornerDecorator
         )!;
@@ -334,10 +267,7 @@ public class PopupManager : IPopupManager
     /// </summary>
     /// <param name="adornerDecorator"></param>
     /// <param name="popupContainerName"></param>
-    public static void SetContainerName(
-        AdornerDecorator adornerDecorator,
-        string popupContainerName
-    )
+    public static void SetContainerName(AdornerDecorator adornerDecorator, string popupContainerName)
     {
         adornerDecorator.SetValue(ContainerNameProperty, popupContainerName);
     }
@@ -345,93 +275,75 @@ public class PopupManager : IPopupManager
     /// <summary>
     /// popup container name
     /// </summary>
-    public static readonly DependencyProperty ContainerNameProperty =
-        DependencyProperty.RegisterAttached(
-            "ContainerName",
-            typeof(string),
-            typeof(PopupManager),
-            new FrameworkPropertyMetadata(
-                Guid.NewGuid().ToString(),
-                (s, e) =>
+    public static readonly DependencyProperty ContainerNameProperty = DependencyProperty.RegisterAttached(
+        "ContainerName",
+        typeof(string),
+        typeof(PopupManager),
+        new FrameworkPropertyMetadata(
+            Guid.NewGuid().ToString(),
+            (s, e) =>
+            {
+                if (s is AdornerDecorator adornerDecorator)
                 {
-                    if (s is AdornerDecorator adornerDecorator)
+                    if (adornerDecorator.IsLoaded)
                     {
-                        if (adornerDecorator.IsLoaded)
-                        {
-                            CreateAdorner(adornerDecorator, e.NewValue as string);
-                        }
-                        adornerDecorator.Loaded += Element_Loaded;
-                        adornerDecorator.Unloaded += Element_Unloaded;
+                        CreateAdorner(adornerDecorator, e.NewValue as string);
                     }
+                    adornerDecorator.Loaded += Element_Loaded;
+                    adornerDecorator.Unloaded += Element_Unloaded;
+                }
 
-                    static void Element_Unloaded(object sender, RoutedEventArgs e)
+                static void Element_Unloaded(object sender, RoutedEventArgs e)
+                {
+                    if (sender is AdornerDecorator adornerDecorator)
                     {
-                        if (sender is AdornerDecorator adornerDecorator)
+                        if (GetPopupAdornerContainer(adornerDecorator) is PopupAdorner popupBridge)
                         {
-                            if (
-                                GetPopupAdornerContainer(adornerDecorator)
-                                is PopupAdorner popupBridge
-                            )
-                            {
-                                AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(
-                                    adornerDecorator
-                                );
-                                adornerLayer?.Remove(popupBridge);
-                            }
-
-                            var item = adornerDecorators.FirstOrDefault(i =>
-                                i.Target is AdornerDecorator adorner && adorner == adornerDecorator
-                            );
-                            if (item != null)
-                                adornerDecorators.Remove(item);
+                            AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(adornerDecorator);
+                            adornerLayer?.Remove(popupBridge);
                         }
+
+                        var item = adornerDecorators.FirstOrDefault(i => i.Target is AdornerDecorator adorner && adorner == adornerDecorator);
+                        if (item != null)
+                            adornerDecorators.Remove(item);
                     }
+                }
 
-                    static void Element_Loaded(object sender, RoutedEventArgs e)
+                static void Element_Loaded(object sender, RoutedEventArgs e)
+                {
+                    if (sender is AdornerDecorator current)
                     {
-                        if (sender is AdornerDecorator current)
-                        {
-                            if (
-                                adornerDecorators.Any(i =>
-                                    i.Target is AdornerDecorator adorner && adorner == current
-                                )
-                            )
-                            {
-                                return;
-                            }
-                            CreateAdorner(current, GetContainerName(current));
-                        }
-                    }
-
-                    static void CreateAdorner(AdornerDecorator adornerDecorator, string? name)
-                    {
-                        adornerDecorators.Add(new WeakReference(adornerDecorator));
-
-                        AdornerLayer adornerLayer = adornerDecorator.AdornerLayer;
-                        if (adornerLayer == null)
+                        if (adornerDecorators.Any(i => i.Target is AdornerDecorator adorner && adorner == current))
                         {
                             return;
                         }
-
-                        Type toastContainerType = GetToastContainerType(adornerDecorator);
-                        Type messageContainerType = GetMessageContainerType(adornerDecorator);
-                        Brush maskBrush = GetMaskBrush(adornerDecorator);
-
-                        PopupAdorner popupAdorner =
-                            new(
-                                messageContainerType,
-                                toastContainerType,
-                                adornerDecorator,
-                                maskBrush
-                            );
-
-                        adornerLayer.Add(popupAdorner);
-
-                        SetPopupAdornerContainer(adornerDecorator, popupAdorner);
+                        CreateAdorner(current, GetContainerName(current));
                     }
                 }
-            )
-        );
+
+                static void CreateAdorner(AdornerDecorator adornerDecorator, string? name)
+                {
+                    adornerDecorators.Add(new WeakReference(adornerDecorator));
+
+                    AdornerLayer adornerLayer = adornerDecorator.AdornerLayer;
+                    if (adornerLayer == null)
+                    {
+                        return;
+                    }
+
+                    Type toastContainerType = GetToastContainerType(adornerDecorator);
+                    Type messageContainerType = GetMessageContainerType(adornerDecorator);
+                    Brush maskBrush = GetMaskBrush(adornerDecorator);
+
+                    PopupAdorner popupAdorner = new(messageContainerType, toastContainerType, adornerDecorator, maskBrush);
+
+                    adornerLayer.Add(popupAdorner);
+
+                    SetPopupAdornerContainer(adornerDecorator, popupAdorner);
+                }
+            }
+        )
+    );
 
     #endregion
 
@@ -460,13 +372,12 @@ public class PopupManager : IPopupManager
     /// <summary>
     /// mask maskBrush of popup container
     /// </summary>
-    public static readonly DependencyProperty MaskBrushProperty =
-        DependencyProperty.RegisterAttached(
-            "MaskBrush",
-            typeof(Brush),
-            typeof(PopupManager),
-            new PropertyMetadata(new BrushConverter().ConvertFromString("#40000000"))
-        );
+    public static readonly DependencyProperty MaskBrushProperty = DependencyProperty.RegisterAttached(
+        "MaskBrush",
+        typeof(Brush),
+        typeof(PopupManager),
+        new PropertyMetadata(new BrushConverter().ConvertFromString("#40000000"))
+    );
 
     #endregion
 
@@ -495,13 +406,12 @@ public class PopupManager : IPopupManager
     /// <summary>
     /// is main container
     /// </summary>
-    public static readonly DependencyProperty IsMainContainerProperty =
-        DependencyProperty.RegisterAttached(
-            "IsMainContainer",
-            typeof(bool),
-            typeof(PopupManager),
-            new PropertyMetadata(false)
-        );
+    public static readonly DependencyProperty IsMainContainerProperty = DependencyProperty.RegisterAttached(
+        "IsMainContainer",
+        typeof(bool),
+        typeof(PopupManager),
+        new PropertyMetadata(false)
+    );
 
     #endregion
 
@@ -536,9 +446,7 @@ public class PopupManager : IPopupManager
         Type baseType = typeof(PopupMessageViewBase);
         if (baseType.IsAssignableFrom(messageContainerType) == false)
         {
-            throw new Exception(
-                $"PopupManager: {messageContainerType.FullName} must inherit {baseType.FullName}"
-            );
+            throw new Exception($"PopupManager: {messageContainerType.FullName} must inherit {baseType.FullName}");
         }
 
         element.SetValue(MessageContainerTypeProperty, messageContainerType);
@@ -548,13 +456,12 @@ public class PopupManager : IPopupManager
     /// message container type
     /// This type must inherit <see cref=" PopupMessageViewBase"/>
     /// </summary>
-    public static readonly DependencyProperty MessageContainerTypeProperty =
-        DependencyProperty.RegisterAttached(
-            "MessageContainerType",
-            typeof(Type),
-            typeof(PopupManager),
-            new PropertyMetadata(typeof(MessageView))
-        );
+    public static readonly DependencyProperty MessageContainerTypeProperty = DependencyProperty.RegisterAttached(
+        "MessageContainerType",
+        typeof(Type),
+        typeof(PopupManager),
+        new PropertyMetadata(typeof(MessageView))
+    );
 
     #endregion
 
@@ -579,10 +486,7 @@ public class PopupManager : IPopupManager
     /// </summary>
     /// <param name="adornerDecorator"></param>
     /// <param name="toastContainerType"></param>
-    private static void SetToastContainerType(
-        AdornerDecorator adornerDecorator,
-        Type toastContainerType
-    )
+    private static void SetToastContainerType(AdornerDecorator adornerDecorator, Type toastContainerType)
     {
         if (toastContainerType is null)
         {
@@ -592,9 +496,7 @@ public class PopupManager : IPopupManager
         Type baseType = typeof(PopupToastViewBase);
         if (baseType.IsAssignableFrom(toastContainerType) == false)
         {
-            throw new Exception(
-                $"PopupManager: {toastContainerType.FullName} must inherit {baseType.FullName}"
-            );
+            throw new Exception($"PopupManager: {toastContainerType.FullName} must inherit {baseType.FullName}");
         }
 
         adornerDecorator.SetValue(ToastContainerTypeProperty, toastContainerType);
@@ -604,13 +506,12 @@ public class PopupManager : IPopupManager
     /// toast container type
     /// This type must inherit <see cref=" PopupToastViewBase"/>
     /// </summary>
-    public static readonly DependencyProperty ToastContainerTypeProperty =
-        DependencyProperty.RegisterAttached(
-            "ToastContainerType",
-            typeof(Type),
-            typeof(PopupManager),
-            new PropertyMetadata(typeof(ToastView))
-        );
+    public static readonly DependencyProperty ToastContainerTypeProperty = DependencyProperty.RegisterAttached(
+        "ToastContainerType",
+        typeof(Type),
+        typeof(PopupManager),
+        new PropertyMetadata(typeof(ToastView))
+    );
 
     #endregion
 
@@ -677,13 +578,12 @@ public class PopupManager : IPopupManager
     /// <summary>
     /// mask maskBrush of popup container
     /// </summary>
-    internal static readonly DependencyProperty PopupAdornerContainerProperty =
-        DependencyProperty.RegisterAttached(
-            "PopupAdornerContainer",
-            typeof(PopupAdorner),
-            typeof(PopupManager),
-            new PropertyMetadata(null)
-        );
+    internal static readonly DependencyProperty PopupAdornerContainerProperty = DependencyProperty.RegisterAttached(
+        "PopupAdornerContainer",
+        typeof(PopupAdorner),
+        typeof(PopupManager),
+        new PropertyMetadata(null)
+    );
 
     #endregion
 

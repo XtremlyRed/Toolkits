@@ -1,4 +1,6 @@
-﻿namespace Toolkits.Controls;
+﻿using System.ComponentModel;
+
+namespace Toolkits.Core;
 
 /// <summary>
 /// request close popup event
@@ -10,6 +12,7 @@ public delegate void RequestCloseEventHandler(object sender, object args);
 /// <summary>
 /// popup content aware to view close event
 /// </summary>
+[EditorBrowsable(EditorBrowsableState.Never)]
 public interface IPopupAware
 {
     /// <summary>

@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
-using Toolkits.Controls;
+using Toolkits.Core;
 
 namespace Toolkits.Controls.Assist;
 
@@ -15,12 +15,7 @@ internal static class PopupManagerAssist
     internal const int ContentIndex = 1;
     internal const int ToastIndex = 0;
 
-    internal static async Task<string> InnerMessagePopup(
-        UIElement uIElement,
-        string message,
-        string title,
-        string[] buttonContents
-    )
+    internal static async Task<string> InnerMessagePopup(UIElement uIElement, string message, string title, string[] buttonContents)
     {
         return await await uIElement.Dispatcher.InvokeAsync(async () =>
         {
@@ -50,11 +45,7 @@ internal static class PopupManagerAssist
         });
     }
 
-    internal static async Task<object> InnerContentPopup(
-        UIElement uIElement,
-        object popupContent,
-        Parameters? parameters = null
-    )
+    internal static async Task<object> InnerContentPopup(UIElement uIElement, object popupContent, Parameters? parameters = null)
     {
         return await await uIElement.Dispatcher.InvokeAsync(async () =>
         {
