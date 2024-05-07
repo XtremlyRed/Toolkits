@@ -13,16 +13,39 @@
 
     <AdornerDecorator PopupManager.ContainerName="MainPopupContainer" PopupManager.IsMainContainer="True">
         <Button
-            Height="20"
-            toolkit:Animation.SlideY="{toolkit:SlideYDeclareExtension Duration=0:0:05,
-                                                                      From=100,
-                                                                      To=0}"
-            Animation.Play="False"
-            Animation.ScaleX="{toolkit:ScaleXDeclareExtension Duration=0:0:05,
-                                                              From=100,
-                                                              To=1}"
+            Background="Red"
             Click="Button_Click"
-            Content="Open Popup" />
+            Content="Open Popup">
+
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <RotateTransform Angle="{Binding Angle}" />
+                </TransformGroup>
+            </Button.RenderTransform>
+
+            <Animation.Declare>
+                <SlideXAnimation
+                        Play="{Binding Play}"
+                        SlideMode="Left"
+                        From="-200"
+                        To="0"
+                        Duration="0:0:01" />
+                <!--<AnimationDeclareGroup>
+
+                    <SlideYAnimation
+                        SlideMode="Top"
+                        From="200"
+                        To="0"
+                        Duration="0:0:01" />
+
+                    <ThicknessAnimationDeclare
+                        Property="{x:Static Button.MarginProperty}"
+                        From="0,0,0,0"
+                        To="100"
+                        Duration="0:0:01" />
+                </AnimationDeclareGroup>-->
+            </Animation.Declare>
+        </Button>
     </AdornerDecorator>
 
 

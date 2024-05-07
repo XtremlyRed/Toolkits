@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Animations\Toolkits.Animation.Wpf\Toolkits.Animation.Wpf.csproj" />
     <ProjectReference Include="..\..\Controls\Toolkits.Controls.Wpf\Toolkits.Controls.Wpf.csproj" />
   </ItemGroup>

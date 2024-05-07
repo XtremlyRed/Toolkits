@@ -22,10 +22,7 @@ public static class AnimationExtensions
     /// <param name="animations">The animations.</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">storyboard</exception>
-    public static Storyboard AppendAnimations(
-        this Storyboard? storyboard,
-        params AnimationTimeline[] animations
-    )
+    public static Storyboard AppendAnimations(this Storyboard? storyboard, params AnimationTimeline[] animations)
     {
         _ = storyboard ?? throw new ArgumentNullException(nameof(storyboard));
 
@@ -48,10 +45,7 @@ public static class AnimationExtensions
     /// <param name="animations">The animations.</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">storyboard</exception>
-    public static Storyboard AppendAnimations(
-        this Storyboard? storyboard,
-        IEnumerable<AnimationTimeline> animations
-    )
+    public static Storyboard AppendAnimations(this Storyboard? storyboard, IEnumerable<AnimationTimeline> animations)
     {
         _ = storyboard ?? throw new ArgumentNullException(nameof(storyboard));
 
@@ -77,11 +71,7 @@ public static class AnimationExtensions
     /// <param name="completeCallback">The complete callback.</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">storyboard</exception>
-    public static Storyboard RegisterCompleted(
-        this Storyboard? storyboard,
-        Action? completeCallback,
-        bool autoRelease = true
-    )
+    public static Storyboard RegisterCompleted(this Storyboard? storyboard, Action? completeCallback, bool autoRelease = true)
     {
         _ = storyboard ?? throw new ArgumentNullException(nameof(storyboard));
 
@@ -140,15 +130,31 @@ public static class AnimationExtensions
         obj.SetValue(CompleteCallbackProperty, value);
     }
 
-    private static readonly DependencyProperty CompleteCallbackProperty =
-        DependencyProperty.RegisterAttached(
-            "CompleteCallback",
-            typeof(HashSet<CompleteInfo>),
-            typeof(AnimationExtensions),
-            new PropertyMetadata(null)
-        );
+    private static readonly DependencyProperty CompleteCallbackProperty = DependencyProperty.RegisterAttached(
+        "CompleteCallback",
+        typeof(HashSet<CompleteInfo>),
+        typeof(AnimationExtensions),
+        new PropertyMetadata(null)
+    );
 
     private record CompleteInfo(Action Callback, bool AutoRelease);
+
+    internal static IAnimationInfo GetAnimationInfo(AnimationDeclareBase obj)
+    {
+        return (IAnimationInfo)obj.GetValue(AnimationInfoProperty);
+    }
+
+    internal static void SetAnimationInfo(AnimationDeclareBase obj, IAnimationInfo value)
+    {
+        obj.SetValue(AnimationInfoProperty, value);
+    }
+
+    internal static readonly DependencyProperty AnimationInfoProperty = DependencyProperty.RegisterAttached(
+        "AnimationInfo",
+        typeof(IAnimationInfo),
+        typeof(AnimationExtensions),
+        new PropertyMetadata(null)
+    );
 
     /// <summary>
     /// Gets the animations.
@@ -168,13 +174,12 @@ public static class AnimationExtensions
     /// <summary>
     /// The animations property
     /// </summary>
-    internal static readonly DependencyProperty AnimationsProperty =
-        DependencyProperty.RegisterAttached(
-            "Animations",
-            typeof(Collection<IAnimationInfo>),
-            typeof(IAnimationInfo),
-            new PropertyMetadata(null)
-        );
+    internal static readonly DependencyProperty AnimationsProperty = DependencyProperty.RegisterAttached(
+        "Animations",
+        typeof(Collection<IAnimationInfo>),
+        typeof(IAnimationInfo),
+        new PropertyMetadata(null)
+    );
 
     #region Event
     /// <summary>
@@ -263,10 +268,7 @@ public static class AnimationExtensions
     /// </summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
-    private static void FrameworkElement_DataContextChanged(
-        object sender,
-        DependencyPropertyChangedEventArgs e
-    )
+    private static void FrameworkElement_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
     {
         BeginAnimation(sender, EventMode.DataContextChanged);
     }
@@ -323,9 +325,7 @@ public static class AnimationExtensions
             return;
         }
 
-        IAnimationInfo[] array = GetAnimations(element)
-            .Where(i => i.EventMode == eventMode)
-            .ToArray();
+        IAnimationInfo[] array = GetAnimations(element).Where(i => i.EventMode == eventMode).ToArray();
 
         for (int i = 0; i < array.Length; i++)
         {

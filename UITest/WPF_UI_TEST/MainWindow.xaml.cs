@@ -11,26 +11,35 @@ using System.Windows.Shapes;
 using Toolkits;
 using Toolkits.Controls;
 
-namespace WPF_UI_TEST
+namespace WPF_UI_TEST;
+
+/// <summary>
+/// Interaction logic for MainWindow.xaml
+/// </summary>
+[PropertyChanged.AddINotifyPropertyChangedInterface]
+public partial class MainWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
+    public MainWindow()
     {
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+        DataContext = this;
+    }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-            PopupManager popupManager = new PopupManager();
+    public bool? Play { get; set; }
 
-            for (int i = 0; i < 5; i++)
-            {
-                var resu = await popupManager.PopupAsync(() => new PopupView());
-            }
-        }
+    public double Angle { get; set; }
+
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
+        // Angle = 90;
+
+        Play = true;
+
+        //PopupManager popupManager = new PopupManager();
+
+        //for (int i = 0; i < 5; i++)
+        //{
+        //    var resu = await popupManager.PopupAsync(() => new PopupView());
+        //}
     }
 }

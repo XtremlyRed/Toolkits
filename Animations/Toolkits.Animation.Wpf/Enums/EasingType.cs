@@ -2,6 +2,7 @@
 
 public enum EasingType
 {
+    None,
     Back,
     Bounce,
     Circle,
