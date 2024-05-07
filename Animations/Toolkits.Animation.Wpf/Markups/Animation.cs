@@ -8,6 +8,9 @@ using static System.Reflection.BindingFlags;
 
 namespace Toolkits.Animation;
 
+/// <summary>
+///
+/// </summary>
 public static class Animation
 {
     ///// <summary>

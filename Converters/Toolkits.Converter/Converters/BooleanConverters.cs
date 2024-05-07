@@ -5,7 +5,7 @@ using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Toolkits;
+namespace Toolkits.Converter;
 
 /// <summary>
 /// bool converter
@@ -22,8 +22,7 @@ public static class BooleanConverters
     /// <summary>
     /// The boolean reverse
     /// </summary>
-    public static BooleanToVisibilityReverseConverter ToVisibilityReverse =
-        new BooleanToVisibilityReverseConverter();
+    public static BooleanToVisibilityReverseConverter ToVisibilityReverse = new BooleanToVisibilityReverseConverter();
 
     /// <summary>
     /// The boolean reverse

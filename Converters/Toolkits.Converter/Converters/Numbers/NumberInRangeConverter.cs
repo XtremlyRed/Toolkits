@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Toolkits;
+namespace Toolkits.Converter;
 
 using System.Globalization;
 
@@ -20,12 +20,7 @@ public class NumberInRangeConverter : NumberRangeConverterBase
     /// <param name="culture">The culture.</param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public override object Convert(
-        object? value,
-        Type targetType,
-        object? parameter,
-        CultureInfo culture
-    )
+    public override object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value is not null)
         {
@@ -46,12 +41,7 @@ public class NumberInRangeConverter : NumberRangeConverterBase
     /// <param name="culture">The culture.</param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public override object ConvertBack(
-        object? value,
-        Type targetType,
-        object? parameter,
-        CultureInfo culture
-    )
+    public override object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         throw new NotImplementedException();
     }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Toolkits;
+namespace Toolkits.Converter;
 
 /// <summary>
 /// a class of <see cref="BooleanConverter"/>
@@ -42,12 +42,7 @@ public class BooleanToVisibilityConverter : DependencyObject, IValueConverter
     /// <param name="parameter">The parameter.</param>
     /// <param name="culture">The culture.</param>
     /// <returns></returns>
-    public object? ConvertBack(
-        object? value,
-        Type targetType,
-        object? parameter,
-        CultureInfo culture
-    )
+    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         return value is Visibility.Visible ? true : false;
     }

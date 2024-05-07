@@ -16,7 +16,7 @@ using Microsoft.Maui.Graphics.Converters;
 using Microsoft.Maui.Media;
 #endif
 
-namespace Toolkits;
+namespace Toolkits.Converter;
 
 /// <summary>
 ///
@@ -32,12 +32,7 @@ public class StringLengthConverter : IValueConverter
     /// <param name="culture">The culture.</param>
     /// <returns></returns>
     /// <exception cref="ArgumentException">current value type is not {typeof(string)}</exception>
-    public object Convert(
-        object? value,
-        Type targetType,
-        object? parameter,
-        System.Globalization.CultureInfo culture
-    )
+    public object Convert(object? value, Type targetType, object? parameter, System.Globalization.CultureInfo culture)
     {
         return value is null
             ? 0
@@ -46,12 +41,7 @@ public class StringLengthConverter : IValueConverter
                 : stringValue.Length;
     }
 
-    object IValueConverter.ConvertBack(
-        object? value,
-        Type targetType,
-        object? parameter,
-        System.Globalization.CultureInfo culture
-    )
+    object IValueConverter.ConvertBack(object? value, Type targetType, object? parameter, System.Globalization.CultureInfo culture)
     {
         throw new NotImplementedException();
     }

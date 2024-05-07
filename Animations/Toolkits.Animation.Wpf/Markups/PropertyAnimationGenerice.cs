@@ -39,18 +39,33 @@ public abstract class PropertyAnimationDeclareGenerice<T> : AnimationDeclareGene
     );
 }
 
+/// <summary>
+/// a class of <see cref="BrushAnimationDeclare"/>
+/// </summary>
 public class BrushAnimationDeclare : PropertyAnimationDeclareGenerice<Color>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="BrushAnimationDeclare"/> class.
+    /// </summary>
     public BrushAnimationDeclare()
     {
         SetCurrentValue(PropertyProperty, SolidColorBrush.ColorProperty);
     }
 
+    /// <summary>
+    /// the property.
+    /// </summary>
     public override DependencyProperty Property
     {
         get => base.Property;
     }
 
+    /// <summary>
+    /// Animations the build.
+    /// </summary>
+    /// <param name="element">The element.</param>
+    /// <param name="propertyOwner">The property owner.</param>
+    /// <returns></returns>
     protected override AnimationTimeline AnimationBuild(FrameworkElement element, out object propertyOwner)
     {
         SolidColorBrush brush = new SolidColorBrush(From);
@@ -213,7 +228,7 @@ public class Rotation3DAnimationDeclare : PropertyAnimationDeclareGenerice<Rotat
     {
         propertyOwner = element;
 
-        return element.BuildAnimation(Property!.Name, From, To, TimeSpan.Zero, Duration.TimeSpan);
+        return element.BuildAnimation(Property!.Name, From, To!, TimeSpan.Zero, Duration.TimeSpan);
     }
 }
 

@@ -11,6 +11,7 @@ global using ComboBox = System.Windows.Controls.ComboBox;
 global using DataGrid = System.Windows.Controls.DataGrid;
 global using DataGridColumn = System.Windows.Controls.DataGridColumn;
 global using HorizontalAlignment = System.Windows.HorizontalAlignment;
+global using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 global using Panel = System.Windows.Controls.Panel;
 global using Point = System.Windows.Point;
 global using Size = System.Windows.Size;
@@ -20,11 +21,12 @@ using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Windows.Markup;
 
-[assembly: XmlnsDefinition(
-    "http://schemas.microsoft.com/winfx/2006/xaml/presentation",
-    "Toolkits.Animation"
-)]
+[assembly: XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "Toolkits.Controls")]
+[assembly: XmlnsDefinition("https://github.com/xtremlyred/toolkits", "Toolkits.Controls")]
+[assembly: XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "Toolkits.Animation")]
 [assembly: XmlnsDefinition("https://github.com/xtremlyred/toolkits", "Toolkits.Animation")]
+[assembly: XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "Toolkits.Converter")]
+[assembly: XmlnsDefinition("https://github.com/xtremlyred/toolkits", "Toolkits.Converter")]
 [assembly: XmlnsPrefix("https://github.com/xtremlyred/toolkits", "toolkits")]
 
 namespace System.Runtime.CompilerServices

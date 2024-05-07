@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>cf416b22-8cb1-4dd6-86f0-c40b2f383403</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Toolkits.Controls.Wpf</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Assist\ImageAssist.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Assist\PropertyAssist.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Assist\VisualTreeAssist.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Picker\FileSystemPicker.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Popup\PopupAdorner.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Popup\PopupAdornerAssist.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Popup\PopupBridge.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Popup\PopupManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Popup\PopupManagerAssist.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Popup\PopupMessageViewBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Popup\PopupToastViewBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Popup\PopupView\MessageView.xaml.cs">
+      <DependentUpon>MessageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Popup\PopupView\ThemeDataContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Popup\PopupView\ToastView.xaml.cs">
+      <DependentUpon>ToastView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Popup\PopupView\MessageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Popup\PopupView\ToastView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+</Project>

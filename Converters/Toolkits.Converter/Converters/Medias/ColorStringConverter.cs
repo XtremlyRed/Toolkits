@@ -9,7 +9,7 @@ using Avalonia.Data.Converters;
 using Avalonia.Media;
 #endif
 
-namespace Toolkits;
+namespace Toolkits.Converter;
 
 /// <summary>
 ///
@@ -38,6 +38,7 @@ public class ColorStringConverter : IValueConverter
         {
             return color;
         }
+        return default!;
 #endif
 #if ___MAUI___
         try
@@ -55,16 +56,9 @@ public class ColorStringConverter : IValueConverter
         }
 
 #endif
-
-        return default!;
     }
 
-    object IValueConverter.ConvertBack(
-        object? value,
-        Type targetType,
-        object? parameter,
-        CultureInfo culture
-    )
+    object IValueConverter.ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         throw new NotImplementedException();
     }

@@ -15,7 +15,7 @@ using Avalonia;
 using Avalonia.Data.Converters;
 #endif
 
-namespace Toolkits;
+namespace Toolkits.Converter;
 
 /// <summary>
 ///
@@ -61,9 +61,7 @@ public class EnumDisplayNameConverter : IValueConverter
                 {
                     var enumValueHashCode = fields[i].GetValue(null)!.GetHashCode();
 
-                    enumMaps[enumValueHashCode] =
-                        fields[i].GetCustomAttribute<DisplayNameAttribute>()?.DisplayName
-                        ?? fields[i].Name;
+                    enumMaps[enumValueHashCode] = fields[i].GetCustomAttribute<DisplayNameAttribute>()?.DisplayName ?? fields[i].Name;
                 }
             }
         }
@@ -80,12 +78,7 @@ public class EnumDisplayNameConverter : IValueConverter
 #endif
     }
 
-    object IValueConverter.ConvertBack(
-        object? value,
-        Type targetType,
-        object? parameter,
-        CultureInfo culture
-    )
+    object IValueConverter.ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         throw new NotImplementedException();
     }

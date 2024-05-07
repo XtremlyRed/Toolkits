@@ -12,7 +12,7 @@ using System.Windows.Data;
 using Avalonia;
 using Avalonia.Data.Converters;
 #endif
-namespace Toolkits;
+namespace Toolkits.Converter;
 
 /// <summary>
 ///
@@ -30,12 +30,7 @@ public class EnumerableCountConverter : IValueConverter
     /// <param name="culture">The culture.</param>
     /// <returns></returns>
     /// <exception cref="ArgumentException"></exception>
-    public object Convert(
-        object? value,
-        Type targetType,
-        object? parameter,
-        System.Globalization.CultureInfo culture
-    )
+    public object Convert(object? value, Type targetType, object? parameter, System.Globalization.CultureInfo culture)
     {
         if (value is not IEnumerable enumerable)
         {
@@ -60,12 +55,7 @@ public class EnumerableCountConverter : IValueConverter
         return count;
     }
 
-    object IValueConverter.ConvertBack(
-        object? value,
-        Type targetType,
-        object? parameter,
-        System.Globalization.CultureInfo culture
-    )
+    object IValueConverter.ConvertBack(object? value, Type targetType, object? parameter, System.Globalization.CultureInfo culture)
     {
         throw new NotImplementedException();
     }

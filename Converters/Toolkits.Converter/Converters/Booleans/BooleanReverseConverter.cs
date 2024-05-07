@@ -14,7 +14,7 @@ using Avalonia;
 using Avalonia.Data.Converters;
 #endif
 
-namespace Toolkits;
+namespace Toolkits.Converter;
 
 /// <summary>
 /// a class of <see cref="BooleanReverseConverter"/>
@@ -32,17 +32,10 @@ public class BooleanReverseConverter : IValueConverter
     /// <returns></returns>
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        return value is not bool boolValue
-            ? throw new ArgumentException($"current value type is not {typeof(bool)}")
-            : !boolValue;
+        return value is not bool boolValue ? throw new ArgumentException($"current value type is not {typeof(bool)}") : !boolValue;
     }
 
-    object? IValueConverter.ConvertBack(
-        object? value,
-        Type targetType,
-        object? parameter,
-        CultureInfo culture
-    )
+    object? IValueConverter.ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         throw new NotImplementedException();
     }

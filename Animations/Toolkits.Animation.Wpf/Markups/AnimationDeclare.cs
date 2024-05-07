@@ -13,12 +13,18 @@ namespace Toolkits.Animation;
 /// <seealso cref="Toolkits.Animation.AnimationDeclareBase" />
 public abstract partial class AnimationDeclare : AnimationDeclareBase
 {
+    /// <summary>
+    /// the play.
+    /// </summary>
     public bool? Play
     {
         get { return (bool?)GetValue(PlayProperty); }
         set { SetValue(PlayProperty, value); }
     }
 
+    /// <summary>
+    ///   play property
+    /// </summary>
     public static readonly DependencyProperty PlayProperty = DependencyProperty.Register(
         "Play",
         typeof(bool?),

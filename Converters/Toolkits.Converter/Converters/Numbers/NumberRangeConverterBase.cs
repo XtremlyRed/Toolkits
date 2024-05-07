@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Toolkits;
+namespace Toolkits.Converter;
 
 using System.Globalization;
 #if ___WPF___
@@ -39,12 +39,7 @@ public abstract class NumberRangeConverterBase :
     /// <param name="parameter">The parameter.</param>
     /// <param name="culture">The culture.</param>
     /// <returns></returns>
-    public abstract object Convert(
-        object? value,
-        Type targetType,
-        object? parameter,
-        CultureInfo culture
-    );
+    public abstract object Convert(object? value, Type targetType, object? parameter, CultureInfo culture);
 
     /// <summary>
     /// Converts the back.
@@ -54,12 +49,7 @@ public abstract class NumberRangeConverterBase :
     /// <param name="parameter">The parameter.</param>
     /// <param name="culture">The culture.</param>
     /// <returns></returns>
-    public abstract object ConvertBack(
-        object? value,
-        Type targetType,
-        object? parameter,
-        CultureInfo culture
-    );
+    public abstract object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture);
 
     /// <summary>
     /// maximum value.
@@ -145,17 +135,21 @@ public abstract class NumberRangeConverterBase :
     /// <summary>
     /// The max value property
     /// </summary>
-    private static readonly AvaloniaProperty MaxValueProperty = AvaloniaProperty.Register<
-        NumberInRangeConverter,
-        double
-    >("MaxValue", double.MaxValue, false, BindingMode.OneWay);
+    private static readonly AvaloniaProperty MaxValueProperty = AvaloniaProperty.Register<NumberInRangeConverter, double>(
+        "MaxValue",
+        double.MaxValue,
+        false,
+        BindingMode.OneWay
+    );
 
     /// <summary>
     /// The min value property
     /// </summary>
-    private static readonly AvaloniaProperty MinValueProperty = AvaloniaProperty.Register<
-        NumberInRangeConverter,
-        double
-    >("MinValue", double.MinValue!, false, BindingMode.OneWay);
+    private static readonly AvaloniaProperty MinValueProperty = AvaloniaProperty.Register<NumberInRangeConverter, double>(
+        "MinValue",
+        double.MinValue!,
+        false,
+        BindingMode.OneWay
+    );
 #endif
 }

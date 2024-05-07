@@ -25,10 +25,10 @@ public class DelegateRepeater : IDelegateRepeater
     private static Type voidType = typeof(void);
 
     /// <summary>
-    ///
+    /// Unregister all delegate callback from subscriber by subscribeToken
     /// </summary>
-    /// <param name="subscriber"></param>
-    /// <Exception cref="ArgumentNullException"></Exception>
+    /// <param name="unregisterToken"></param>
+    /// <exception cref="ArgumentNullException">unregisterToken</exception>
     public virtual void Unregister(string unregisterToken)
     {
         _ = unregisterToken ?? throw new ArgumentNullException(nameof(unregisterToken));
@@ -157,7 +157,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// subscribe function
     /// </summary>
     /// <typeparam name="TResult">return value type</typeparam>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe<TResult>(string token, Func<TResult> subscribeDelegate)
@@ -175,7 +175,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// <summary>
     /// subscribe function
     /// </summary>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe(string token, Action subscribeDelegate)
@@ -195,7 +195,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// subscribe function
     /// </summary>
     /// <typeparam name="TMessage1">parameter 1</typeparam>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe<TMessage1>(string token, Action<TMessage1> subscribeDelegate)
@@ -215,7 +215,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// </summary>
     /// <typeparam name="TMessage1">parameter 1</typeparam>
     /// <typeparam name="TResult">return value type</typeparam>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe<TMessage1, TResult>(string token, Func<TMessage1, TResult> subscribeDelegate)
@@ -237,7 +237,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// </summary>
     /// <typeparam name="TMessage1">parameter 1</typeparam>
     /// <typeparam name="TMessage2">parameter 2</typeparam>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe<TMessage1, TMessage2>(string token, Action<TMessage1, TMessage2> subscribeDelegate)
@@ -258,7 +258,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// <typeparam name="TMessage1">parameter 1</typeparam>
     /// <typeparam name="TMessage2">parameter 2</typeparam>
     /// <typeparam name="TResult">return value type</typeparam>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe<TMessage1, TMessage2, TResult>(string token, Func<TMessage1, TMessage2, TResult> subscribeDelegate)
@@ -281,7 +281,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// <typeparam name="TMessage1">parameter 1</typeparam>
     /// <typeparam name="TMessage2">parameter 2</typeparam>
     /// <typeparam name="TMessage3">parameter 3</typeparam>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe<TMessage1, TMessage2, TMessage3>(string token, Action<TMessage1, TMessage2, TMessage3> subscribeDelegate)
@@ -303,7 +303,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// <typeparam name="TMessage2">parameter 2</typeparam>
     /// <typeparam name="TMessage3">parameter 3</typeparam>
     /// <typeparam name="TResult">return value type</typeparam>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TResult>(
@@ -330,7 +330,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// <typeparam name="TMessage2">parameter 2</typeparam>
     /// <typeparam name="TMessage3">parameter 3</typeparam>
     /// <typeparam name="TMessage4">parameter 4</typeparam>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4>(
@@ -356,7 +356,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// <typeparam name="TMessage3">parameter 3</typeparam>
     /// <typeparam name="TMessage4">parameter 4</typeparam>
     /// <typeparam name="TResult">return value type</typeparam>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TResult>(
@@ -384,7 +384,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// <typeparam name="TMessage3">parameter 3</typeparam>
     /// <typeparam name="TMessage4">parameter 4</typeparam>
     /// <typeparam name="TMessage5">parameter 5</typeparam>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5>(
@@ -411,7 +411,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// <typeparam name="TMessage4">parameter 4</typeparam>
     /// <typeparam name="TMessage5">parameter 5</typeparam>
     /// <typeparam name="TResult">return value type</typeparam>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TResult>(
@@ -440,7 +440,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// <typeparam name="TMessage4">parameter 4</typeparam>
     /// <typeparam name="TMessage5">parameter 5</typeparam>
     /// <typeparam name="TMessage6">parameter 6</typeparam>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6>(
@@ -468,7 +468,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// <typeparam name="TMessage5">parameter 5</typeparam>
     /// <typeparam name="TMessage6">parameter 6</typeparam>
     /// <typeparam name="TResult">return value type</typeparam>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TResult>(
@@ -498,7 +498,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// <typeparam name="TMessage5">parameter 5</typeparam>
     /// <typeparam name="TMessage6">parameter 6</typeparam>
     /// <typeparam name="TMessage7">parameter 7</typeparam>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7>(
@@ -527,7 +527,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// <typeparam name="TMessage6">parameter 6</typeparam>
     /// <typeparam name="TMessage7">parameter 7</typeparam>
     /// <typeparam name="TResult">return value type</typeparam>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TResult>(
@@ -558,7 +558,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// <typeparam name="TMessage6">parameter 6</typeparam>
     /// <typeparam name="TMessage7">parameter 7</typeparam>
     /// <typeparam name="TMessage8">parameter 8</typeparam>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8>(
@@ -588,7 +588,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// <typeparam name="TMessage7">parameter 7</typeparam>
     /// <typeparam name="TMessage8">parameter 8</typeparam>
     /// <typeparam name="TResult">return value type</typeparam>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TResult>(
@@ -620,7 +620,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// <typeparam name="TMessage7">parameter 7</typeparam>
     /// <typeparam name="TMessage8">parameter 8</typeparam>
     /// <typeparam name="TMessage9">parameter 9</typeparam>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9>(
@@ -651,7 +651,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// <typeparam name="TMessage8">parameter 8</typeparam>
     /// <typeparam name="TMessage9">parameter 9</typeparam>
     /// <typeparam name="TResult">return value type</typeparam>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TResult>(
@@ -684,7 +684,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// <typeparam name="TMessage8">parameter 8</typeparam>
     /// <typeparam name="TMessage9">parameter 9</typeparam>
     /// <typeparam name="TMessage10">parameter 10</typeparam>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TMessage10>(
@@ -716,7 +716,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// <typeparam name="TMessage9">parameter 9</typeparam>
     /// <typeparam name="TMessage10">parameter 10</typeparam>
     /// <typeparam name="TResult">return value type</typeparam>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe<
@@ -762,7 +762,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// <typeparam name="TMessage9">parameter 9</typeparam>
     /// <typeparam name="TMessage10">parameter 10</typeparam>
     /// <typeparam name="TMessage11">parameter 11</typeparam>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe<
@@ -819,7 +819,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// <typeparam name="TMessage10">parameter 10</typeparam>
     /// <typeparam name="TMessage11">parameter 11</typeparam>
     /// <typeparam name="TResult">return value type</typeparam>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe<
@@ -880,7 +880,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// <typeparam name="TMessage10">parameter 10</typeparam>
     /// <typeparam name="TMessage11">parameter 11</typeparam>
     /// <typeparam name="TMessage12">parameter 12</typeparam>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe<
@@ -940,7 +940,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// <typeparam name="TMessage11">parameter 11</typeparam>
     /// <typeparam name="TMessage12">parameter 12</typeparam>
     /// <typeparam name="TResult">return value type</typeparam>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe<
@@ -1004,7 +1004,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// <typeparam name="TMessage11">parameter 11</typeparam>
     /// <typeparam name="TMessage12">parameter 12</typeparam>
     /// <typeparam name="TMessage13">parameter 13</typeparam>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe<
@@ -1067,7 +1067,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// <typeparam name="TMessage12">parameter 12</typeparam>
     /// <typeparam name="TMessage13">parameter 13</typeparam>
     /// <typeparam name="TResult">return value type</typeparam>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe<
@@ -1134,7 +1134,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// <typeparam name="TMessage12">parameter 12</typeparam>
     /// <typeparam name="TMessage13">parameter 13</typeparam>
     /// <typeparam name="TMessage14">parameter 14</typeparam>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe<
@@ -1200,7 +1200,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// <typeparam name="TMessage13">parameter 13</typeparam>
     /// <typeparam name="TMessage14">parameter 14</typeparam>
     /// <typeparam name="TResult">return value type</typeparam>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe<
@@ -1270,7 +1270,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// <typeparam name="TMessage13">parameter 13</typeparam>
     /// <typeparam name="TMessage14">parameter 14</typeparam>
     /// <typeparam name="TMessage15">parameter 15</typeparam>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe<
@@ -1339,7 +1339,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// <typeparam name="TMessage14">parameter 14</typeparam>
     /// <typeparam name="TMessage15">parameter 15</typeparam>
     /// <typeparam name="TResult">return value type</typeparam>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe<
@@ -1412,7 +1412,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// <typeparam name="TMessage14">parameter 14</typeparam>
     /// <typeparam name="TMessage15">parameter 15</typeparam>
     /// <typeparam name="TMessage16">parameter 16</typeparam>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe<
@@ -1484,7 +1484,7 @@ public class DelegateRepeater : IDelegateRepeater
     /// <typeparam name="TMessage15">parameter 15</typeparam>
     /// <typeparam name="TMessage16">parameter 16</typeparam>
     /// <typeparam name="TResult">return value type</typeparam>
-    /// <param name="subscriber">subscriber</param>
+
     /// <param name="token">subscribe token</param>
     /// <param name="subscribeDelegate">subscribe callback</param>
     public virtual void Subscribe<

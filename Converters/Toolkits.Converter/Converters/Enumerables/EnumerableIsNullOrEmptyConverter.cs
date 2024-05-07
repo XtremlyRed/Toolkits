@@ -13,7 +13,7 @@ using Avalonia;
 using Avalonia.Data.Converters;
 #endif
 
-namespace Toolkits;
+namespace Toolkits.Converter;
 
 /// <summary>
 ///
@@ -29,18 +29,11 @@ public class EnumerableIsNullOrEmptyConverter : IValueConverter
     /// <param name="culture">The culture.</param>
     /// <returns></returns>
     /// <exception cref="ArgumentException">current value type is not {typeof(IEnumerable).FullName}</exception>
-    public object Convert(
-        object? value,
-        Type targetType,
-        object? parameter,
-        System.Globalization.CultureInfo culture
-    )
+    public object Convert(object? value, Type targetType, object? parameter, System.Globalization.CultureInfo culture)
     {
         if (value is not IEnumerable enumerable)
         {
-            throw new ArgumentException(
-                $"current value type is not {typeof(IEnumerable).FullName}"
-            );
+            throw new ArgumentException($"current value type is not {typeof(IEnumerable).FullName}");
         }
 
         foreach (var _ in enumerable)
@@ -51,12 +44,7 @@ public class EnumerableIsNullOrEmptyConverter : IValueConverter
         return true;
     }
 
-    object IValueConverter.ConvertBack(
-        object? value,
-        Type targetType,
-        object? parameter,
-        System.Globalization.CultureInfo culture
-    )
+    object IValueConverter.ConvertBack(object? value, Type targetType, object? parameter, System.Globalization.CultureInfo culture)
     {
         throw new NotImplementedException();
     }

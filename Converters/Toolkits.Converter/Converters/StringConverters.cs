@@ -5,7 +5,7 @@ using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Toolkits;
+namespace Toolkits.Converter;
 
 /// <summary>
 /// string converters
@@ -20,20 +20,17 @@ public static class StringConverters
     /// <summary>
     /// determine whether the string is null or white space
     /// </summary>
-    public static StringIsNullOrWhiteSpaceConverter IsNullOrWhiteSpace =
-        new StringIsNullOrWhiteSpaceConverter();
+    public static StringIsNullOrWhiteSpaceConverter IsNullOrWhiteSpace = new StringIsNullOrWhiteSpaceConverter();
 
     /// <summary>
     ///determine whether the string is not null or empty
     /// </summary>
-    public static StringIsNotNullOrEmptyConverter IsNotNullOrEmpty =
-        new StringIsNotNullOrEmptyConverter();
+    public static StringIsNotNullOrEmptyConverter IsNotNullOrEmpty = new StringIsNotNullOrEmptyConverter();
 
     /// <summary>
     ///  determine whether the string is not  null or white space
     /// </summary>
-    public static StringIsNotNullOrWhiteSpaceConverter IsNotNullOrWhiteSpace =
-        new StringIsNotNullOrWhiteSpaceConverter();
+    public static StringIsNotNullOrWhiteSpaceConverter IsNotNullOrWhiteSpace = new StringIsNotNullOrWhiteSpaceConverter();
 
     /// <summary>
     /// get string length

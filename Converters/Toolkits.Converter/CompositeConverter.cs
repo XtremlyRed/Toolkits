@@ -17,7 +17,11 @@ using global::Avalonia.Data;
 using global::Avalonia.Data.Converters;
 #endif
 
-namespace Toolkits;
+namespace Toolkits.Converter;
+
+/// <summary>
+///  a class of <see cref="CompareConverter"/>
+/// </summary>
 
 #if ___WPF___
 [ContentProperty(nameof(Converters))]
@@ -47,7 +51,11 @@ public class CompositeConverter :
         get { return (ConverterCollection)GetValue(ConvertersProperty)!; }
         set { SetValue(ConvertersProperty, value); }
     }
+
 #if ___WPF___
+    /// <summary>
+    /// The converters property
+    /// </summary>
     public static readonly DependencyProperty ConvertersProperty = DependencyProperty.Register(
         "Converters",
         typeof(ConverterCollection),
@@ -74,10 +82,12 @@ public class CompositeConverter :
     /// <summary>
     /// converter collection property
     /// </summary>
-    public static readonly AvaloniaProperty ConvertersProperty = AvaloniaProperty.Register<
-        CompositeConverter,
-        ConverterCollection
-    >("Converters", new ConverterCollection()!, false, BindingMode.OneWay);
+    public static readonly AvaloniaProperty ConvertersProperty = AvaloniaProperty.Register<CompositeConverter, ConverterCollection>(
+        "Converters",
+        new ConverterCollection()!,
+        false,
+        BindingMode.OneWay
+    );
 #endif
 
     /// <summary>
@@ -117,19 +127,13 @@ public class CompositeConverter :
     /// <param name="culture">The culture.</param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public object ConvertBack(
-        object? value,
-        Type targetType,
-        object? parameter,
-        CultureInfo culture
-    )
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         throw new NotImplementedException();
     }
 }
 
 /// <summary>
-///
+/// a class of <see cref="ConverterCollection"/>
 /// </summary>
-/// <seealso cref="System.Collections.ObjectModel.Collection&lt;System.Windows.Data.IValueConverter&gt;" />
 public class ConverterCollection : Collection<IValueConverter> { }

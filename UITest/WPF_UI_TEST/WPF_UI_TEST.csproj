@@ -13,8 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Animations\Toolkits.Animation.Wpf\Toolkits.Animation.Wpf.csproj" />
-    <ProjectReference Include="..\..\Controls\Toolkits.Controls.Wpf\Toolkits.Controls.Wpf.csproj" />
+    <ProjectReference Include="..\..\Toolkits.Wpf\Toolkits.Wpf.csproj" />
   </ItemGroup>
 
 </Project>

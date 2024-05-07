@@ -13,7 +13,7 @@ using global::Avalonia;
 using global::Avalonia.Data;
 using global::Avalonia.Data.Converters;
 #endif
-namespace Toolkits;
+namespace Toolkits.Converter;
 
 /// <summary>
 ///
@@ -183,34 +183,42 @@ public class CompareConverter :
     /// <summary>
     /// The matched property
     /// </summary>
-    public static readonly AvaloniaProperty MatchedProperty = AvaloniaProperty.Register<
-        CompareConverter,
-        object
-    >("Matched", (object)true, false, BindingMode.OneWay);
+    public static readonly AvaloniaProperty MatchedProperty = AvaloniaProperty.Register<CompareConverter, object>(
+        "Matched",
+        (object)true,
+        false,
+        BindingMode.OneWay
+    );
 
     /// <summary>
     /// The unmatched property
     /// </summary>
-    public static readonly AvaloniaProperty UnmatchedProperty = AvaloniaProperty.Register<
-        CompareConverter,
-        object
-    >("Unmatched", (object)false, false, BindingMode.OneWay);
+    public static readonly AvaloniaProperty UnmatchedProperty = AvaloniaProperty.Register<CompareConverter, object>(
+        "Unmatched",
+        (object)false,
+        false,
+        BindingMode.OneWay
+    );
 
     /// <summary>
     /// The compare value property
     /// </summary>
-    public static readonly AvaloniaProperty CompareProperty = AvaloniaProperty.Register<
-        CompareConverter,
-        IComparable
-    >("Compare", null!, false, BindingMode.OneWay);
+    public static readonly AvaloniaProperty CompareProperty = AvaloniaProperty.Register<CompareConverter, IComparable>(
+        "Compare",
+        null!,
+        false,
+        BindingMode.OneWay
+    );
 
     /// <summary>
     /// The compare mode property
     /// </summary>
-    public static readonly AvaloniaProperty ModeProperty = AvaloniaProperty.Register<
-        CompareConverter,
-        CompareMode
-    >("Mode", CompareMode.Equal!, false, BindingMode.OneWay);
+    public static readonly AvaloniaProperty ModeProperty = AvaloniaProperty.Register<CompareConverter, CompareMode>(
+        "Mode",
+        CompareMode.Equal!,
+        false,
+        BindingMode.OneWay
+    );
 #endif
 
     /// <summary>
@@ -235,12 +243,7 @@ public class CompareConverter :
 
     /// <summary>
     /// </summary>
-    object? IValueConverter.ConvertBack(
-        object? value,
-        Type targetType,
-        object? parameter,
-        CultureInfo culture
-    )
+    object? IValueConverter.ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         throw new NotImplementedException();
     }

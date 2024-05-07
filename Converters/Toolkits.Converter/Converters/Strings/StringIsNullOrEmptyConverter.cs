@@ -17,7 +17,7 @@ using Microsoft.Maui.Graphics.Converters;
 using Microsoft.Maui.Media;
 #endif
 
-namespace Toolkits;
+namespace Toolkits.Converter;
 
 /// <summary>
 ///
@@ -33,24 +33,14 @@ public class StringIsNullOrEmptyConverter : IValueConverter
     /// <param name="culture">The culture.</param>
     /// <returns></returns>
     /// <exception cref="ArgumentException">current value type is not {typeof(string)}</exception>
-    public object Convert(
-        object? value,
-        Type targetType,
-        object? parameter,
-        System.Globalization.CultureInfo culture
-    )
+    public object Convert(object? value, Type targetType, object? parameter, System.Globalization.CultureInfo culture)
     {
         return value is not string stringValue
             ? throw new ArgumentException($"current value type is not {typeof(string)}")
             : string.IsNullOrEmpty(stringValue);
     }
 
-    object IValueConverter.ConvertBack(
-        object? value,
-        Type targetType,
-        object? parameter,
-        CultureInfo culture
-    )
+    object IValueConverter.ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         throw new NotImplementedException();
     }

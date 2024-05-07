@@ -5,7 +5,7 @@ using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Toolkits;
+namespace Toolkits.Converter;
 
 /// <summary>
 /// enumerable converters
@@ -15,14 +15,12 @@ public static class EnumerableConverters
     /// <summary>
     /// determine whether the object is not null or empty
     /// </summary>
-    public static EnumerableIsNotNullOrEmptyConverter IsNotNullOrEmpty =
-        new EnumerableIsNotNullOrEmptyConverter();
+    public static EnumerableIsNotNullOrEmptyConverter IsNotNullOrEmpty = new EnumerableIsNotNullOrEmptyConverter();
 
     /// <summary>
     /// determine whether the object is null or empty
     /// </summary>
-    public static EnumerableIsNullOrEmptyConverter IsNullOrEmpty =
-        new EnumerableIsNullOrEmptyConverter();
+    public static EnumerableIsNullOrEmptyConverter IsNullOrEmpty = new EnumerableIsNullOrEmptyConverter();
 
     /// <summary>
     /// get enumerable count

@@ -17,25 +17,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".solutionItems", ".solution
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Toolkits.Converter", "Converters\Toolkits.Converter\Toolkits.Converter.shproj", "{EBD17EC9-7F1E-49A7-9B6D-2AAA571247FA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toolkits.Converter.Wpf", "Converters\Toolkits.Converter.Wpf\Toolkits.Converter.Wpf.csproj", "{3682A138-912C-42C8-96C3-73DB0C14E3F9}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toolkits.Converter.Avalonia", "Converters\Toolkits.Converter.Avalonia\Toolkits.Converter.Avalonia.csproj", "{44947AA8-86B2-40D5-9B79-314D2FA2CC9A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toolkits.Converter.MAUI", "Converters\Toolkits.Converter.MAUI\Toolkits.Converter.MAUI.csproj", "{A7745745-4E5F-4061-AE50-971F2A03EC88}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toolkits.Core", "Toolkits.Core\Toolkits.Core.csproj", "{4EB17102-D750-45A9-AEE4-3633451BE843}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Animations", "Animations", "{840FBAE9-24D8-410A-8E2C-E5FF6745CA76}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toolkits.Animation.Wpf", "Animations\Toolkits.Animation.Wpf\Toolkits.Animation.Wpf.csproj", "{10172348-7D5A-48AC-BFCE-EC77F22C4DC5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UITest", "UITest", "{FB038E2A-7B85-4752-B815-F06EE2664F70}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPF_UI_TEST", "UITest\WPF_UI_TEST\WPF_UI_TEST.csproj", "{80131B04-37BF-41C7-AAA4-F2BB910F0181}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Controls", "Controls", "{226D7634-E2E0-4DA9-AB1C-923F31189CD2}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toolkits.Controls.Wpf", "Controls\Toolkits.Controls.Wpf\Toolkits.Controls.Wpf.csproj", "{360BF363-8CEC-492B-97BB-3A1D8BD6F52F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toolkits.Controls.Core", "Controls\Toolkits.Controls.Core\Toolkits.Controls.Core.csproj", "{687171F8-7AF9-4431-9DA5-8E882A3CC0DF}"
 EndProject
@@ -45,40 +35,32 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{18F28F93-6
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toolkits.Configuration.Test", "Test\Toolkits.Configuration.Test\Toolkits.Configuration.Test.csproj", "{413B064D-48DF-4673-B941-6C35ACB4918A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Toolkits", "Toolkits", "{0AD35685-EFED-4B4A-98AD-544EE001A0C8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toolkits.Wpf", "Toolkits.Wpf\Toolkits.Wpf.csproj", "{23BE97C9-A85E-40AD-B8A2-46D3B516B036}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Toolkits.Animation.Wpf", "Animations\Toolkits.Animation.Wpf\Toolkits.Animation.Wpf.shproj", "{DA661D69-1FD0-437A-ADE8-168DAE8E2C51}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Toolkits.Controls.Wpf", "Controls\Toolkits.Controls.Wpf\Toolkits.Controls.Wpf.shproj", "{CF416B22-8CB1-4DD6-86F0-C40B2F383403}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toolkits.MAUI", "Toolkits.MAUI\Toolkits.MAUI.csproj", "{00F07564-9EE3-45FF-8624-AE1E7B73D751}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toolkits.Avalonia", "Toolkits.Avalonia\Toolkits.Avalonia.csproj", "{5696F77D-E502-4FF7-B112-F1622A1D3AF0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3682A138-912C-42C8-96C3-73DB0C14E3F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3682A138-912C-42C8-96C3-73DB0C14E3F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3682A138-912C-42C8-96C3-73DB0C14E3F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3682A138-912C-42C8-96C3-73DB0C14E3F9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{44947AA8-86B2-40D5-9B79-314D2FA2CC9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{44947AA8-86B2-40D5-9B79-314D2FA2CC9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{44947AA8-86B2-40D5-9B79-314D2FA2CC9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{44947AA8-86B2-40D5-9B79-314D2FA2CC9A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A7745745-4E5F-4061-AE50-971F2A03EC88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A7745745-4E5F-4061-AE50-971F2A03EC88}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A7745745-4E5F-4061-AE50-971F2A03EC88}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A7745745-4E5F-4061-AE50-971F2A03EC88}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4EB17102-D750-45A9-AEE4-3633451BE843}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4EB17102-D750-45A9-AEE4-3633451BE843}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4EB17102-D750-45A9-AEE4-3633451BE843}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4EB17102-D750-45A9-AEE4-3633451BE843}.Release|Any CPU.Build.0 = Release|Any CPU
-		{10172348-7D5A-48AC-BFCE-EC77F22C4DC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{10172348-7D5A-48AC-BFCE-EC77F22C4DC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{10172348-7D5A-48AC-BFCE-EC77F22C4DC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{10172348-7D5A-48AC-BFCE-EC77F22C4DC5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{80131B04-37BF-41C7-AAA4-F2BB910F0181}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{80131B04-37BF-41C7-AAA4-F2BB910F0181}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80131B04-37BF-41C7-AAA4-F2BB910F0181}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80131B04-37BF-41C7-AAA4-F2BB910F0181}.Release|Any CPU.Build.0 = Release|Any CPU
-		{360BF363-8CEC-492B-97BB-3A1D8BD6F52F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{360BF363-8CEC-492B-97BB-3A1D8BD6F52F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{360BF363-8CEC-492B-97BB-3A1D8BD6F52F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{360BF363-8CEC-492B-97BB-3A1D8BD6F52F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{687171F8-7AF9-4431-9DA5-8E882A3CC0DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{687171F8-7AF9-4431-9DA5-8E882A3CC0DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{687171F8-7AF9-4431-9DA5-8E882A3CC0DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -91,28 +73,44 @@ Global
 		{413B064D-48DF-4673-B941-6C35ACB4918A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{413B064D-48DF-4673-B941-6C35ACB4918A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{413B064D-48DF-4673-B941-6C35ACB4918A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23BE97C9-A85E-40AD-B8A2-46D3B516B036}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23BE97C9-A85E-40AD-B8A2-46D3B516B036}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23BE97C9-A85E-40AD-B8A2-46D3B516B036}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23BE97C9-A85E-40AD-B8A2-46D3B516B036}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00F07564-9EE3-45FF-8624-AE1E7B73D751}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00F07564-9EE3-45FF-8624-AE1E7B73D751}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00F07564-9EE3-45FF-8624-AE1E7B73D751}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00F07564-9EE3-45FF-8624-AE1E7B73D751}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5696F77D-E502-4FF7-B112-F1622A1D3AF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5696F77D-E502-4FF7-B112-F1622A1D3AF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5696F77D-E502-4FF7-B112-F1622A1D3AF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5696F77D-E502-4FF7-B112-F1622A1D3AF0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{EBD17EC9-7F1E-49A7-9B6D-2AAA571247FA} = {00B3E6E8-252F-4225-AD65-8E24B4F90715}
-		{3682A138-912C-42C8-96C3-73DB0C14E3F9} = {00B3E6E8-252F-4225-AD65-8E24B4F90715}
-		{44947AA8-86B2-40D5-9B79-314D2FA2CC9A} = {00B3E6E8-252F-4225-AD65-8E24B4F90715}
-		{A7745745-4E5F-4061-AE50-971F2A03EC88} = {00B3E6E8-252F-4225-AD65-8E24B4F90715}
-		{10172348-7D5A-48AC-BFCE-EC77F22C4DC5} = {840FBAE9-24D8-410A-8E2C-E5FF6745CA76}
 		{80131B04-37BF-41C7-AAA4-F2BB910F0181} = {FB038E2A-7B85-4752-B815-F06EE2664F70}
-		{360BF363-8CEC-492B-97BB-3A1D8BD6F52F} = {226D7634-E2E0-4DA9-AB1C-923F31189CD2}
 		{687171F8-7AF9-4431-9DA5-8E882A3CC0DF} = {226D7634-E2E0-4DA9-AB1C-923F31189CD2}
 		{413B064D-48DF-4673-B941-6C35ACB4918A} = {18F28F93-6579-4346-81AF-40948D90BBE8}
+		{23BE97C9-A85E-40AD-B8A2-46D3B516B036} = {0AD35685-EFED-4B4A-98AD-544EE001A0C8}
+		{DA661D69-1FD0-437A-ADE8-168DAE8E2C51} = {840FBAE9-24D8-410A-8E2C-E5FF6745CA76}
+		{CF416B22-8CB1-4DD6-86F0-C40B2F383403} = {226D7634-E2E0-4DA9-AB1C-923F31189CD2}
+		{00F07564-9EE3-45FF-8624-AE1E7B73D751} = {0AD35685-EFED-4B4A-98AD-544EE001A0C8}
+		{5696F77D-E502-4FF7-B112-F1622A1D3AF0} = {0AD35685-EFED-4B4A-98AD-544EE001A0C8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B45F90B8-3B2E-4915-8430-B929DFB383FC}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Converters\Toolkits.Converter\Toolkits.Converter.projitems*{3682a138-912c-42c8-96c3-73db0c14e3f9}*SharedItemsImports = 5
-		Converters\Toolkits.Converter\Toolkits.Converter.projitems*{44947aa8-86b2-40d5-9b79-314d2fa2cc9a}*SharedItemsImports = 5
-		Converters\Toolkits.Converter\Toolkits.Converter.projitems*{a7745745-4e5f-4061-ae50-971f2a03ec88}*SharedItemsImports = 5
+		Converters\Toolkits.Converter\Toolkits.Converter.projitems*{00f07564-9ee3-45ff-8624-ae1e7b73d751}*SharedItemsImports = 5
+		Animations\Toolkits.Animation.Wpf\Toolkits.Animation.Wpf.projitems*{23be97c9-a85e-40ad-b8a2-46d3b516b036}*SharedItemsImports = 5
+		Controls\Toolkits.Controls.Wpf\Toolkits.Controls.Wpf.projitems*{23be97c9-a85e-40ad-b8a2-46d3b516b036}*SharedItemsImports = 5
+		Converters\Toolkits.Converter\Toolkits.Converter.projitems*{23be97c9-a85e-40ad-b8a2-46d3b516b036}*SharedItemsImports = 5
+		Converters\Toolkits.Converter\Toolkits.Converter.projitems*{5696f77d-e502-4ff7-b112-f1622a1d3af0}*SharedItemsImports = 5
+		Controls\Toolkits.Controls.Wpf\Toolkits.Controls.Wpf.projitems*{cf416b22-8cb1-4dd6-86f0-c40b2f383403}*SharedItemsImports = 13
+		Animations\Toolkits.Animation.Wpf\Toolkits.Animation.Wpf.projitems*{da661d69-1fd0-437a-ade8-168dae8e2c51}*SharedItemsImports = 13
 		Converters\Toolkits.Converter\Toolkits.Converter.projitems*{ebd17ec9-7f1e-49a7-9b6d-2aaa571247fa}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal

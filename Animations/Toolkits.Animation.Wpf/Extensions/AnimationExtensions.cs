@@ -69,6 +69,7 @@ public static class AnimationExtensions
     /// </summary>
     /// <param name="storyboard">The storyboard.</param>
     /// <param name="completeCallback">The complete callback.</param>
+    /// <param name="autoRelease"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">storyboard</exception>
     public static Storyboard RegisterCompleted(this Storyboard? storyboard, Action? completeCallback, bool autoRelease = true)
@@ -278,7 +279,7 @@ public static class AnimationExtensions
     /// </summary>
     /// <param name="sender">The sender.</param>
     /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
-    private static void FrameworkElement_MouseLeave(object? sender, MouseEventArgs e)
+    private static void FrameworkElement_MouseLeave(object? sender, System.Windows.Input.MouseEventArgs e)
     {
         BeginAnimation(sender, EventMode.MouseLeave);
     }

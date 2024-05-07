@@ -11,7 +11,7 @@ using Microsoft.Maui.Graphics.Converters;
 using Microsoft.Maui.Media;
 #endif
 
-namespace Toolkits;
+namespace Toolkits.Converter;
 
 /// <summary>
 ///
@@ -26,12 +26,7 @@ public class ObjectIsNotNullConverter : IValueConverter
     /// <param name="parameter">The parameter.</param>
     /// <param name="culture">The culture.</param>
     /// <returns></returns>
-    public object Convert(
-        object? value,
-        Type targetType,
-        object? parameter,
-        System.Globalization.CultureInfo culture
-    )
+    public object Convert(object? value, Type targetType, object? parameter, System.Globalization.CultureInfo culture)
     {
         return value is not null;
     }
@@ -45,12 +40,7 @@ public class ObjectIsNotNullConverter : IValueConverter
     /// <param name="culture">The culture.</param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    object IValueConverter.ConvertBack(
-        object? value,
-        Type targetType,
-        object? parameter,
-        System.Globalization.CultureInfo culture
-    )
+    object IValueConverter.ConvertBack(object? value, Type targetType, object? parameter, System.Globalization.CultureInfo culture)
     {
         throw new NotImplementedException();
     }

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Toolkits.Core;
 
+/// <summary>
+/// a <see langword="interface" /> of <see cref="IDelegateRepeater"/>
+/// </summary>
 public interface IDelegateRepeater
 {
     /// <summary>

@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Toolkits;
+namespace Toolkits.Converter;
 
 #if ___AVALONIA___
 using global::Avalonia.Markup.Xaml;
@@ -202,7 +202,6 @@ public class Int32Extension : DataExtension<int>
 /// a class of <see cref="DataExtension{T}"/>
 /// </summary>
 /// <typeparam name="T"></typeparam>
-/// <seealso cref="System.Windows.Markup.MarkupExtension" />
 public abstract class DataExtension<T> : MarkupExtension
 {
     /// <summary>

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>
@@ -30,10 +30,11 @@
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.14" />
 	</ItemGroup>
 
-	<Import Project="..\Toolkits.Converter\Toolkits.Converter.projitems" Label="Shared" />
-
+	<Import Project="..\Converters\Toolkits.Converter\Toolkits.Converter.projitems" Label="Shared" />
 
 	<Import Project="$(SolutionDir)\GlobalCompileSettings.Targets" />
 
 
 </Project>
+
+

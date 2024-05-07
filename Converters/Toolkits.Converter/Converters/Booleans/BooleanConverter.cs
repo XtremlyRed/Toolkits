@@ -15,7 +15,7 @@ using global::Avalonia.Data;
 using global::Avalonia.Data.Converters;
 #endif
 
-namespace Toolkits;
+namespace Toolkits.Converter;
 
 /// <summary>
 /// a class of <see cref="BooleanConverter"/>
@@ -122,18 +122,22 @@ public class BooleanConverter :
     /// <summary>
     /// The true property
     /// </summary>
-    private static readonly AvaloniaProperty TrueProperty = AvaloniaProperty.Register<
-        CompareConverter,
-        object
-    >("True", true!, false, BindingMode.OneWay);
+    private static readonly AvaloniaProperty TrueProperty = AvaloniaProperty.Register<CompareConverter, object>(
+        "True",
+        true!,
+        false,
+        BindingMode.OneWay
+    );
 
     /// <summary>
     /// The false property
     /// </summary>
-    private static readonly AvaloniaProperty FalseProperty = AvaloniaProperty.Register<
-        CompareConverter,
-        object
-    >("False", false!, false, BindingMode.OneWay);
+    private static readonly AvaloniaProperty FalseProperty = AvaloniaProperty.Register<CompareConverter, object>(
+        "False",
+        false!,
+        false,
+        BindingMode.OneWay
+    );
 #endif
 
     /// <summary>
@@ -161,12 +165,7 @@ public class BooleanConverter :
     /// <param name="parameter">The parameter.</param>
     /// <param name="culture">The culture.</param>
     /// <returns></returns>
-    public object? ConvertBack(
-        object? value,
-        Type targetType,
-        object? parameter,
-        CultureInfo culture
-    )
+    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         return value == True
             ? TrueObject
