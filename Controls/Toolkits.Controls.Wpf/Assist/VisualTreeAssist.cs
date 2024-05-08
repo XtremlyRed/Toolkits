@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 
-namespace Toolkits.Controls;
+namespace Toolkits.Wpf;
 
 /// <summary>
 /// visual tree assist
@@ -99,10 +99,7 @@ public static partial class VisualTreeAssist
     /// <param name="dependencyObject"></param>
     /// <param name="parentType"></param>
     /// <returns></returns>
-    public static DependencyObject? FindParent(
-        this DependencyObject dependencyObject,
-        Type parentType
-    )
+    public static DependencyObject? FindParent(this DependencyObject dependencyObject, Type parentType)
     {
         while (true)
         {
@@ -130,10 +127,7 @@ public static partial class VisualTreeAssist
     /// <param name="dependencyObject"></param>
     /// <param name="elementName"></param>
     /// <returns></returns>
-    public static Target? FindParent<Target>(
-        this DependencyObject dependencyObject,
-        string elementName
-    )
+    public static Target? FindParent<Target>(this DependencyObject dependencyObject, string elementName)
         where Target : DependencyObject
     {
         DependencyObject dobj = VisualTreeHelper.GetParent(dependencyObject);
@@ -157,11 +151,7 @@ public static partial class VisualTreeAssist
         for (int i = 0; i < VisualTreeHelper.GetChildrenCount(dependencyObject); i++)
         {
             DependencyObject child = VisualTreeHelper.GetChild(dependencyObject, i);
-            if (
-                child != null
-                && child is Target
-                && ((System.Windows.FrameworkElement)child).Name.Equals(elementName)
-            )
+            if (child != null && child is Target && ((System.Windows.FrameworkElement)child).Name.Equals(elementName))
             {
                 return (Target)child;
             }
@@ -172,10 +162,7 @@ public static partial class VisualTreeAssist
                 {
                     Target? childOfChild = (Target)j.Current!;
 
-                    if (
-                        childOfChild != null
-                        && !(childOfChild! as FrameworkElement)!.Name.Equals(elementName)
-                    )
+                    if (childOfChild != null && !(childOfChild! as FrameworkElement)!.Name.Equals(elementName))
                     {
                         FindChild<Target>(childOfChild, elementName);
                     }

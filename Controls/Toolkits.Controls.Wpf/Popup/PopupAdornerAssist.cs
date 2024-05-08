@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Media.Animation;
-using Toolkits.Animation;
 using Toolkits.Core;
+using Toolkits.Wpf;
 
 namespace Toolkits.Controls.Assist;
 

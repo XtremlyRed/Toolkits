@@ -1,19 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-
-namespace Toolkits.Converter;
-
 using System.Globalization;
+using System.Text;
 #if ___WPF___
 using System.Windows;
 using System.Windows.Data;
 #endif
 #if ___AVALONIA___
 using Avalonia;
-using global::Avalonia;
 using global::Avalonia.Data;
 using global::Avalonia.Data.Converters;
+#endif
+
+#if ___WPF___
+namespace Toolkits.Wpf;
+
+#endif
+#if ___AVALONIA___
+namespace Toolkits.Avalonia;
+
+#endif
+#if ___MAUI___
+namespace Toolkits.Maui;
+
 #endif
 
 /// <summary>

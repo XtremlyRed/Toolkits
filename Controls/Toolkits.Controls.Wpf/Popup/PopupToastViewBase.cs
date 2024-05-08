@@ -1,9 +1,9 @@
 ﻿global using UserControl = System.Windows.Controls.UserControl;
 using System.Windows;
 using System.Windows.Media.Animation;
-using Toolkits.Animation;
+using Toolkits.Wpf;
 
-namespace Toolkits.Controls;
+namespace Toolkits.Wpf;
 
 /// <summary>
 /// The base class for all toast popup views.
@@ -29,12 +29,7 @@ public abstract class PopupToastViewBase : UserControl
     /// <param name="displayTimeSpan_Ms">The display time span ms.</param>
     /// <param name="objects">The objects.</param>
     /// <returns></returns>
-    internal void SetToastContent(
-        string title,
-        string message,
-        int displayTimeSpan_Ms,
-        params object[] @objects
-    )
+    internal void SetToastContent(string title, string message, int displayTimeSpan_Ms, params object[] @objects)
     {
         SetToastInfo(title, message, @objects);
         SizeChanged += PopupToastViewBase_SizeChanged;
@@ -63,10 +58,7 @@ public abstract class PopupToastViewBase : UserControl
         }
     }
 
-    private void PopupToastViewBase_SizeChanged(
-        object? sender,
-        System.Windows.SizeChangedEventArgs e
-    )
+    private void PopupToastViewBase_SizeChanged(object? sender, System.Windows.SizeChangedEventArgs e)
     {
         ResetSize();
     }

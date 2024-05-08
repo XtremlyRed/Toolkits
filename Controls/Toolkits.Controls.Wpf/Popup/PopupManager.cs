@@ -3,11 +3,12 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
+using Toolkits.Controls;
 using Toolkits.Controls.Assist;
 using Toolkits.Controls.PopupView;
 using Toolkits.Core;
 
-namespace Toolkits.Controls;
+namespace Toolkits.Wpf;
 
 /// <summary>
 /// a class of <see cref="PopupManager"/>
@@ -454,7 +455,6 @@ public class PopupManager : IPopupManager
 
     /// <summary>
     /// message container type
-    /// This type must inherit <see cref=" PopupMessageViewBase"/>
     /// </summary>
     public static readonly DependencyProperty MessageContainerTypeProperty = DependencyProperty.RegisterAttached(
         "MessageContainerType",
@@ -470,7 +470,6 @@ public class PopupManager : IPopupManager
 
     /// <summary>
     /// get toast container type
-    /// This type must inherit <see cref="PopupToastViewBase"/>
     /// </summary>
     /// <param name="adornerDecorator"></param>
     /// <returns></returns>
@@ -481,7 +480,6 @@ public class PopupManager : IPopupManager
 
     /// <summary>
     /// set toast container type
-    /// This type must inherit <see cref=" PopupToastViewBase"/>
     /// and must contain an parameterless constructor
     /// </summary>
     /// <param name="adornerDecorator"></param>

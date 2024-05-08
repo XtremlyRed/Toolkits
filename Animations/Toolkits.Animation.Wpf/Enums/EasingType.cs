@@ -1,4 +1,4 @@
-﻿namespace Toolkits.Animation;
+﻿namespace Toolkits.Wpf;
 
 /// <summary>
 /// easing type

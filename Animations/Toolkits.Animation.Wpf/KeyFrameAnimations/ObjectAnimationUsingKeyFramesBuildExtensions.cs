@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Media.Animation;
 using System.Xml.Linq;
 
-namespace Toolkits.Animation;
+namespace Toolkits.Wpf;
 
 /// <summary>
 ///
@@ -62,9 +62,7 @@ public static class ObjectAnimationUsingKeyFramesBuildExtensions
         where TObject : UIElement
     {
         _ = @object ?? throw new ArgumentNullException(nameof(@object));
-        _ = string.IsNullOrWhiteSpace(animationProperty)
-            ? throw new ArgumentNullException(nameof(animationProperty))
-            : 0;
+        _ = string.IsNullOrWhiteSpace(animationProperty) ? throw new ArgumentNullException(nameof(animationProperty)) : 0;
 
         var objectAnimation = new ObjectAnimationUsingKeyFrames();
 

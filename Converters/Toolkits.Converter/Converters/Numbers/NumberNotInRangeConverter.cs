@@ -1,6 +1,19 @@
-﻿namespace Toolkits.Converter;
+﻿using System.Globalization;
 
-using System.Globalization;
+#if ___WPF___
+namespace Toolkits.Wpf;
+
+#endif
+
+#if ___AVALONIA___
+namespace Toolkits.Avalonia;
+
+#endif
+
+#if ___MAUI___
+namespace Toolkits.Maui;
+
+#endif
 
 /// <summary>
 ///

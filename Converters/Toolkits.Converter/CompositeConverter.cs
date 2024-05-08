@@ -12,15 +12,28 @@ using System.Windows.Data;
 using System.Windows.Markup;
 #endif
 #if ___AVALONIA___
-using global::Avalonia;
-using global::Avalonia.Data;
-using global::Avalonia.Data.Converters;
+using Avalonia;
+using Avalonia.Data;
+using Avalonia.Data.Converters;
 #endif
 
-namespace Toolkits.Converter;
+//namespace Toolkits.Converter;
+
+#if ___WPF___
+namespace Toolkits.Wpf;
+
+#endif
+#if ___AVALONIA___
+namespace Toolkits.Avalonia;
+
+#endif
+#if ___MAUI___
+namespace Toolkits.Maui;
+
+#endif
 
 /// <summary>
-///  a class of <see cref="CompareConverter"/>
+///  a class of <see cref="CompositeConverter"/>
 /// </summary>
 
 #if ___WPF___

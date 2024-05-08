@@ -9,10 +9,21 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Toolkits.Converter;
+#if ___WPF___
+namespace Toolkits.Wpf;
+
+#endif
+#if ___AVALONIA___
+namespace Toolkits.Avalonia;
+
+#endif
+#if ___MAUI___
+namespace Toolkits.Maui;
+
+#endif
 
 /// <summary>
-/// a class of <see cref="BooleanConverter"/>
+/// a class of <see cref="BooleanToVisibilityConverter"/>
 /// </summary>
 /// <seealso cref="IValueConverter" />
 public class BooleanToVisibilityConverter : DependencyObject, IValueConverter

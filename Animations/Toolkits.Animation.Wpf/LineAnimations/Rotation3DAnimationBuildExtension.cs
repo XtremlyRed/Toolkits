@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
 
-namespace Toolkits.Animation;
+namespace Toolkits.Wpf;
 
 /// <summary>
 ///
@@ -31,16 +31,7 @@ public static class Rotation3DAnimationBuildExtension
     {
         var property = propertyExpression.GetPropertyName();
 
-        return BuildAnimation(
-            @object,
-            property,
-            null,
-            toValue,
-            null,
-            duration,
-            null,
-            completeCallback
-        );
+        return BuildAnimation(@object, property, null, toValue, null, duration, null, completeCallback);
     }
 
     /// <summary>
@@ -66,16 +57,7 @@ public static class Rotation3DAnimationBuildExtension
     {
         var property = propertyExpression.GetPropertyName();
 
-        return BuildAnimation(
-            @object,
-            property,
-            fromValue,
-            toValue,
-            null,
-            duration,
-            null,
-            completeCallback
-        );
+        return BuildAnimation(@object, property, fromValue, toValue, null, duration, null, completeCallback);
     }
 
     /// <summary>
@@ -101,16 +83,7 @@ public static class Rotation3DAnimationBuildExtension
     {
         var property = propertyExpression.GetPropertyName();
 
-        return BuildAnimation(
-            @object,
-            property,
-            null,
-            toValue,
-            beginTime,
-            duration,
-            null,
-            completeCallback
-        );
+        return BuildAnimation(@object, property, null, toValue, beginTime, duration, null, completeCallback);
     }
 
     /// <summary>
@@ -138,16 +111,7 @@ public static class Rotation3DAnimationBuildExtension
     {
         var property = propertyExpression.GetPropertyName();
 
-        return BuildAnimation(
-            @object,
-            property,
-            fromValue,
-            toValue,
-            beginTime,
-            duration,
-            null,
-            completeCallback
-        );
+        return BuildAnimation(@object, property, fromValue, toValue, beginTime, duration, null, completeCallback);
     }
 
     /// <summary>
@@ -179,9 +143,7 @@ public static class Rotation3DAnimationBuildExtension
     )
     {
         _ = @object ?? throw new ArgumentNullException(nameof(@object));
-        _ = string.IsNullOrWhiteSpace(animationProperty)
-            ? throw new ArgumentNullException(nameof(animationProperty))
-            : 0;
+        _ = string.IsNullOrWhiteSpace(animationProperty) ? throw new ArgumentNullException(nameof(animationProperty)) : 0;
 
         var animation = new Rotation3DAnimation();
 

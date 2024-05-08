@@ -17,7 +17,19 @@ using Avalonia.Media;
 using Microsoft.Maui.Graphics.Converters;
 using Microsoft.Maui.Media;
 #endif
-namespace Toolkits.Converter;
+
+#if ___WPF___
+namespace Toolkits.Wpf;
+
+#endif
+#if ___AVALONIA___
+namespace Toolkits.Avalonia;
+
+#endif
+#if ___MAUI___
+namespace Toolkits.Maui;
+
+#endif
 
 /// <summary>
 ///
@@ -49,6 +61,7 @@ public class BrushStringConverter : IValueConverter
         {
             return brushConverter.ConvertFrom(value)!;
         }
+        return default!;
 #endif
 #if ___AVALONIA___
         BrushConverter brushConverter = new BrushConverter();
@@ -58,7 +71,6 @@ public class BrushStringConverter : IValueConverter
         var colorString = new ColorStringConverter();
         return new SolidColorBrush() { Color = (Color)colorString.Convert(value, targetType, parameter!, culture)! };
 #endif
-        return default!;
     }
 
     object IValueConverter.ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)

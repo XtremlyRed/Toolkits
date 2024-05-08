@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace Toolkits.Controls;
+namespace Toolkits.Wpf;
 
 /// <summary>
 /// The base class for all message popup views.
@@ -27,11 +27,7 @@ public abstract class PopupMessageViewBase : UserControl
     /// <param name="message">Popup message</param>
     /// <param name="title">Popup Title</param>
     /// <param name="buttonContents">Popup Button Contents</param>
-    protected abstract void SetPopupMessageInfo(
-        string message,
-        string title,
-        string[] buttonContents
-    );
+    protected abstract void SetPopupMessageInfo(string message, string title, string[] buttonContents);
 
     internal void SetMessageInfo(string message, string title, string[] buttonContents)
     {

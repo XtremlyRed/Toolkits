@@ -5,7 +5,18 @@ using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Toolkits.Converter;
+#if ___WPF___
+namespace Toolkits.Wpf;
+
+#endif
+#if ___AVALONIA___
+namespace Toolkits.Avalonia;
+
+#endif
+#if ___MAUI___
+namespace Toolkits.Maui;
+
+#endif
 
 /// <summary>
 /// bool converter

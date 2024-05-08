@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Toolkits.Animation;
+namespace Toolkits.Wpf;
 
 internal static class CommonExtensions
 {
@@ -35,11 +35,7 @@ internal static class CommonExtensions
     /// <param name="minValue">min value</param>
     /// <param name="maxValue">max value</param>
     /// <returns></returns>
-    public static double FromRange(
-        this double value,
-        double minValue = double.MinValue,
-        double maxValue = double.MaxValue
-    )
+    public static double FromRange(this double value, double minValue = double.MinValue, double maxValue = double.MaxValue)
     {
         return value < minValue
             ? minValue
@@ -56,9 +52,7 @@ internal static class CommonExtensions
     /// <param name="propertySelector">property Selector</param>
     /// <returns></returns>
     /// <Exception cref="ArgumentNullException"></Exception>
-    public static string GetPropertyName<TSource, TPropertyType>(
-        this Expression<Func<TSource, TPropertyType>> propertySelector
-    )
+    public static string GetPropertyName<TSource, TPropertyType>(this Expression<Func<TSource, TPropertyType>> propertySelector)
     {
         if (propertySelector is null)
         {
@@ -72,8 +66,6 @@ internal static class CommonExtensions
 
         UnaryExpression? unaryExpression = propertySelector.Body as UnaryExpression;
 
-        return unaryExpression?.Operand is MemberExpression memberExpression2
-            ? memberExpression2.Member.Name
-            : string.Empty;
+        return unaryExpression?.Operand is MemberExpression memberExpression2 ? memberExpression2.Member.Name : string.Empty;
     }
 }

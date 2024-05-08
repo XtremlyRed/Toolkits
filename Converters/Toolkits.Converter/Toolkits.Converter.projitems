@@ -38,6 +38,5 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\Strings\StringIsNullOrEmptyConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\Strings\StringIsNullOrWhiteSpaceConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\Strings\StringLengthConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)XAML\DataExtension.cs" />
   </ItemGroup>
 </Project>

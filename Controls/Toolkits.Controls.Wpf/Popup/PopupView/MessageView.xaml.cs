@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using Toolkits.Wpf;
 
 namespace Toolkits.Controls.PopupView;
 
@@ -25,11 +26,7 @@ internal partial class MessageView : PopupMessageViewBase
     /// <param name="message"></param>
     /// <param name="title"></param>
     /// <param name="buttonContents"></param>
-    protected override void SetPopupMessageInfo(
-        string message,
-        string title,
-        string[] buttonContents
-    )
+    protected override void SetPopupMessageInfo(string message, string title, string[] buttonContents)
     {
         TitleBox.Text = title;
         MessageBox.Text = message;

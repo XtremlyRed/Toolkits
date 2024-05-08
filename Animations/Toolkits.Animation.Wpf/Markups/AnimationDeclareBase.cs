@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Animation;
 
-namespace Toolkits.Animation;
+namespace Toolkits.Wpf;
 
 /// <summary>
 /// a class of <see cref="AnimationDeclareBase"/>

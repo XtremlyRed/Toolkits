@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using static System.Reflection.BindingFlags;
 
-namespace Toolkits.Animation;
+namespace Toolkits.Wpf;
 
 /// <summary>
 ///

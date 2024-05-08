@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media.Animation;
-using Toolkits.Animation;
 using Toolkits.Core;
+using Toolkits.Wpf;
 
 namespace Toolkits.Controls.Assist;
 

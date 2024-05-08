@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Xml.Linq;
 using Toolkits.Core;
 
-namespace Toolkits.Controls;
+namespace Toolkits.Wpf;
 
 /// <summary>
 /// pick from file system
@@ -29,11 +29,7 @@ public class FileSystemPicker : IFileSystemPicker
     /// <param name="title"></param>
     /// <param name="showNewFolderButton"></param>
     /// <returns></returns>
-    public string? FolderPicker(
-        string? defaultPath = null,
-        string title = "please select folder",
-        bool showNewFolderButton = false
-    )
+    public string? FolderPicker(string? defaultPath = null, string title = "please select folder", bool showNewFolderButton = false)
     {
         folderBrowserDialog.Description = title;
         folderBrowserDialog.ShowNewFolderButton = showNewFolderButton;
@@ -55,11 +51,7 @@ public class FileSystemPicker : IFileSystemPicker
     /// <param name="showNewFolderButton"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public async Task<string?> FolderPickerAsync(
-        string? defaultPath = null,
-        string title = "please select folder",
-        bool showNewFolderButton = false
-    )
+    public async Task<string?> FolderPickerAsync(string? defaultPath = null, string title = "please select folder", bool showNewFolderButton = false)
     {
         return await await (
             Application.Current?.Dispatcher?.InvokeAsync(async () =>
@@ -179,11 +171,7 @@ public class FileSystemPicker : IFileSystemPicker
     /// <param name="rootFolder"></param>
     /// <returns></returns>
 
-    public string? FilePicker(
-        string filter = "all file|*.*",
-        string title = "please select files",
-        string? rootFolder = null
-    )
+    public string? FilePicker(string filter = "all file|*.*", string title = "please select files", string? rootFolder = null)
     {
         rootFolder ??= Folder.Desktop;
         openFileDialog.Multiselect = false;
@@ -208,11 +196,7 @@ public class FileSystemPicker : IFileSystemPicker
     /// <param name="title"></param>
     /// <param name="rootFolder"></param>
     /// <returns></returns>
-    public string[]? FilesPicker(
-        string filter = "all file|*.*",
-        string? title = "please select files",
-        string? rootFolder = null
-    )
+    public string[]? FilesPicker(string filter = "all file|*.*", string? title = "please select files", string? rootFolder = null)
     {
         rootFolder ??= Folder.Desktop;
         openFileDialog.Multiselect = true;
@@ -238,11 +222,7 @@ public class FileSystemPicker : IFileSystemPicker
     /// <param name="rootFolder"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public async Task<string?> FilePickerAsync(
-        string filter = "all file|*.*",
-        string title = "please select files",
-        string? rootFolder = null
-    )
+    public async Task<string?> FilePickerAsync(string filter = "all file|*.*", string title = "please select files", string? rootFolder = null)
     {
         return await await (
             Application.Current?.Dispatcher?.InvokeAsync(async () =>
@@ -280,11 +260,7 @@ public class FileSystemPicker : IFileSystemPicker
     /// <param name="rootFolder"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public async Task<string[]?> FilesPickerAsync(
-        string filter = "all file|*.*",
-        string title = "please select files",
-        string? rootFolder = null
-    )
+    public async Task<string[]?> FilesPickerAsync(string filter = "all file|*.*", string title = "please select files", string? rootFolder = null)
     {
         return await await (
             Application.Current?.Dispatcher?.InvokeAsync(async () =>

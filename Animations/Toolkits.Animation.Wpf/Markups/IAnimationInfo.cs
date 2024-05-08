@@ -10,7 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Xml.Linq;
 
-namespace Toolkits.Animation;
+namespace Toolkits.Wpf;
 
 internal interface IAnimationInfo
 {

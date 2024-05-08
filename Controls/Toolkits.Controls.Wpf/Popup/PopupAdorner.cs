@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using Toolkits.Core;
+using Toolkits.Wpf;
 
 namespace Toolkits.Controls.Assist;
 
@@ -25,18 +26,8 @@ internal class PopupAdorner : Adorner
     internal readonly PopupMessageViewBase? messageView;
 
     internal readonly bool[] shown = new[] { false, false, false };
-    internal readonly AsyncLocker[] DisplaysemaphoreSlims = new[]
-    {
-        new AsyncLocker(10, 10),
-        new AsyncLocker(1, 1),
-        new AsyncLocker(1, 1)
-    };
-    internal readonly AsyncLocker[] InteropsemaphoreSlims = new[]
-    {
-        new AsyncLocker(0, 1),
-        new AsyncLocker(0, 1),
-        new AsyncLocker(0, 1)
-    };
+    internal readonly AsyncLocker[] DisplaysemaphoreSlims = new[] { new AsyncLocker(10, 10), new AsyncLocker(1, 1), new AsyncLocker(1, 1) };
+    internal readonly AsyncLocker[] InteropsemaphoreSlims = new[] { new AsyncLocker(0, 1), new AsyncLocker(0, 1), new AsyncLocker(0, 1) };
     internal readonly System.Reflection.ConstructorInfo? toastContainerTypeConstructor;
 
     internal object? contentResult;
@@ -46,20 +37,11 @@ internal class PopupAdorner : Adorner
     internal int contentCounter;
     internal int toastCounter;
 
-    public PopupAdorner(
-        Type messageContainerType,
-        Type toastContainerType,
-        UIElement adornedElement,
-        Brush maskBrush
-    )
+    public PopupAdorner(Type messageContainerType, Type toastContainerType, UIElement adornedElement, Brush maskBrush)
         : base(adornedElement)
     {
-        System.Reflection.ConstructorInfo[] cs = messageContainerType.GetConstructors(
-            BF.Instance | BF.Public | BF.NonPublic
-        );
-        System.Reflection.ConstructorInfo[] cs1 = toastContainerType.GetConstructors(
-            BF.Instance | BF.Public | BF.NonPublic
-        );
+        System.Reflection.ConstructorInfo[] cs = messageContainerType.GetConstructors(BF.Instance | BF.Public | BF.NonPublic);
+        System.Reflection.ConstructorInfo[] cs1 = toastContainerType.GetConstructors(BF.Instance | BF.Public | BF.NonPublic);
 
         toastContainerTypeConstructor = cs1.OrderBy(i => i.GetParameters().Length).FirstOrDefault();
 
@@ -76,9 +58,7 @@ internal class PopupAdorner : Adorner
         contentContainer.Background = maskBrush;
         messageContainer.Background = maskBrush;
 
-        messageView =
-            cs.OrderBy(i => i.GetParameters().Length).FirstOrDefault()?.Invoke(null)
-            as PopupMessageViewBase;
+        messageView = cs.OrderBy(i => i.GetParameters().Length).FirstOrDefault()?.Invoke(null) as PopupMessageViewBase;
         messageContainer.Children.Add(messageView);
 
         AddVisualChild(popupContainer);

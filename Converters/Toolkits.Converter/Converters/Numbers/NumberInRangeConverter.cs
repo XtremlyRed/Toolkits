@@ -1,10 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
-namespace Toolkits.Converter;
+#if ___WPF___
+namespace Toolkits.Wpf;
 
-using System.Globalization;
+#endif
+#if ___AVALONIA___
+namespace Toolkits.Avalonia;
+
+#endif
+#if ___MAUI___
+namespace Toolkits.Maui;
+
+#endif
 
 /// <summary>
 ///

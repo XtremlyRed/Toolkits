@@ -5,12 +5,12 @@ using System.Windows;
 using System.Windows.Media.Animation;
 using static System.Reflection.BindingFlags;
 
-namespace Toolkits.Animation;
+namespace Toolkits.Wpf;
 
 /// <summary>
 /// a class of <see cref="AnimationDeclare"/>
 /// </summary>
-/// <seealso cref="Toolkits.Animation.AnimationDeclareBase" />
+/// <seealso cref="Toolkits.Wpf.AnimationDeclareBase" />
 public abstract partial class AnimationDeclare : AnimationDeclareBase
 {
     /// <summary>

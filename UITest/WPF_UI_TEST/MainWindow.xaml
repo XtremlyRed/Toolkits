@@ -11,40 +11,38 @@
     Height="450"
     mc:Ignorable="d">
 
-    <AdornerDecorator PopupManager.ContainerName="MainPopupContainer" PopupManager.IsMainContainer="True">
+    <AdornerDecorator toolkit:PopupManager.ContainerName="MainPopupContainer" toolkit:PopupManager.IsMainContainer="True">
         <Button
+            Width="{Double Value=100}"
             Background="Red"
             Click="Button_Click"
             Content="Open Popup">
 
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <RotateTransform Angle="{Binding Angle}" />
-                </TransformGroup>
-            </Button.RenderTransform>
 
-            <Animation.Declare>
-                <SlideXAnimation
-                        Play="{Binding Play}"
+            <toolkit:Animation.Declare>
+
+                <toolkit:AnimationDeclareGroup Play="{Binding Play}">
+
+
+
+                    <toolkit:SlideXAnimation
                         SlideMode="Left"
                         From="-200"
                         To="0"
                         Duration="0:0:01" />
-                <!--<AnimationDeclareGroup>
-
-                    <SlideYAnimation
+                    <toolkit:SlideYAnimation
                         SlideMode="Top"
                         From="200"
                         To="0"
                         Duration="0:0:01" />
 
-                    <ThicknessAnimationDeclare
+                    <toolkit:ThicknessAnimationDeclare
                         Property="{x:Static Button.MarginProperty}"
                         From="0,0,0,0"
                         To="100"
                         Duration="0:0:01" />
-                </AnimationDeclareGroup>-->
-            </Animation.Declare>
+                </toolkit:AnimationDeclareGroup>
+            </toolkit:Animation.Declare>
         </Button>
     </AdornerDecorator>
 

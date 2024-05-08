@@ -3,14 +3,13 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Xml.Linq;
-using static Toolkits.Animation.RenderTransfromAnimationExtensions;
+using static Toolkits.Wpf.RenderTransfromAnimationExtensions;
 
-namespace Toolkits.Animation;
+namespace Toolkits.Wpf;
 
 /// <summary>
 /// a class of <see cref="RenderTransfromAnimationDeclare"/>
 /// </summary>
-/// <seealso cref="Toolkits.Animation.AnimationDeclareGeneric&lt;T&gt;" />
 [EditorBrowsable(EditorBrowsableState.Never)]
 public abstract class RenderTransfromAnimationDeclare : AnimationDeclareGeneric<double?>
 {
@@ -55,27 +54,27 @@ public abstract class RenderTransfromAnimationDeclare : AnimationDeclareGeneric<
     }
 }
 
-/// <summary>
-///  a class of <see cref="FadeAnimation"/>
-/// </summary>
-/// <seealso cref="Toolkits.Animation.RenderTransfromAnimationDeclare" />
-public class FadeAnimation : RenderTransfromAnimationDeclare
-{
-    /// <summary>
-    ///  animation property.
-    /// </summary>
-    protected override DependencyProperty Property => FrameworkElement.OpacityProperty;
+///// <summary>
+/////  a class of <see cref="FadeAnimation"/>
+///// </summary>
+///// <seealso cref="Toolkits.Wpf.RenderTransfromAnimationDeclare" />
+//public class FadeAnimation : RenderTransfromAnimationDeclare
+//{
+//    /// <summary>
+//    ///  animation property.
+//    /// </summary>
+//    protected override DependencyProperty Property => FrameworkElement.OpacityProperty;
 
-    /// <summary>
-    ///  animation path.
-    /// </summary>
-    protected override string AnimationPath => "(FrameworkElement.Opacity)";
-}
+//    /// <summary>
+//    ///  animation path.
+//    /// </summary>
+//    protected override string AnimationPath => "(FrameworkElement.Opacity)";
+//}
 
 /// <summary>
 /// a class of <see cref="RotateAnimation"/>
 /// </summary>
-/// <seealso cref="Toolkits.Animation.RenderTransfromAnimationDeclare" />
+/// <seealso cref="Toolkits.Wpf.RenderTransfromAnimationDeclare" />
 public class RotateAnimation : RenderTransfromAnimationDeclare
 {
     /// <summary>
@@ -109,7 +108,7 @@ public class RotateAnimation : RenderTransfromAnimationDeclare
 /// <summary>
 /// a class of <see cref="SlideXAnimation"/>
 /// </summary>
-/// <seealso cref="Toolkits.Animation.RenderTransfromAnimationDeclare" />
+/// <seealso cref="Toolkits.Wpf.RenderTransfromAnimationDeclare" />
 public class SlideXAnimation : RenderTransfromAnimationDeclare
 {
     /// <summary>
@@ -177,7 +176,7 @@ public class SlideXAnimation : RenderTransfromAnimationDeclare
 /// <summary>
 ///  a class of <see cref="SlideYAnimation"/>
 /// </summary>
-/// <seealso cref="Toolkits.Animation.RenderTransfromAnimationDeclare" />
+/// <seealso cref="Toolkits.Wpf.RenderTransfromAnimationDeclare" />
 public class SlideYAnimation : RenderTransfromAnimationDeclare
 {
     /// <summary>
@@ -245,7 +244,7 @@ public class SlideYAnimation : RenderTransfromAnimationDeclare
 /// <summary>
 ///  a class of <see cref="ScaleXAnimatio"/>
 /// </summary>
-/// <seealso cref="Toolkits.Animation.RenderTransfromAnimationDeclare" />
+/// <seealso cref="Toolkits.Wpf.RenderTransfromAnimationDeclare" />
 public class ScaleXAnimatio : RenderTransfromAnimationDeclare
 {
     /// <summary>
@@ -294,7 +293,7 @@ public class ScaleXAnimatio : RenderTransfromAnimationDeclare
 /// <summary>
 ///  a class of <see cref="ScaleYAnimatio"/>
 /// </summary>
-/// <seealso cref="Toolkits.Animation.RenderTransfromAnimationDeclare" />
+/// <seealso cref="Toolkits.Wpf.RenderTransfromAnimationDeclare" />
 public class ScaleYAnimatio : RenderTransfromAnimationDeclare
 {
     /// <summary>

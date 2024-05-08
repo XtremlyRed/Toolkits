@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Data;
 using Toolkits.Core;
 
-namespace Toolkits.Controls;
+namespace Toolkits.Wpf;
 
 /// <summary>
 /// dependency property assist
@@ -26,10 +26,7 @@ public static partial class PropertyAssist
     /// <returns></returns>
     public static DependencyProperty PropertyRegister<TDependencyObject, TPropertyType>(
         Expression<Func<TDependencyObject, TPropertyType>> propertyNameSelector,
-        Action<
-            TDependencyObject,
-            PropertyChangedEventArgs<TPropertyType>
-        >? propertyChangedCallback = null
+        Action<TDependencyObject, PropertyChangedEventArgs<TPropertyType>>? propertyChangedCallback = null
     )
         where TDependencyObject : DependencyObject
     {
@@ -46,11 +43,7 @@ public static partial class PropertyAssist
                     {
                         propertyChangedCallback.Invoke(
                             (s as TDependencyObject)!,
-                            new PropertyChangedEventArgs<TPropertyType>(
-                                e.Property,
-                                e.NewValue,
-                                e.OldValue
-                            )
+                            new PropertyChangedEventArgs<TPropertyType>(e.Property, e.NewValue, e.OldValue)
                         );
                     }
             )
@@ -70,10 +63,7 @@ public static partial class PropertyAssist
     public static DependencyProperty PropertyRegister<TDependencyObject, TPropertyType>(
         Expression<Func<TDependencyObject, TPropertyType>> propertyNameSelector,
         TPropertyType defaultValue,
-        Action<
-            TDependencyObject,
-            PropertyChangedEventArgs<TPropertyType>
-        >? propertyChangedCallback = null
+        Action<TDependencyObject, PropertyChangedEventArgs<TPropertyType>>? propertyChangedCallback = null
     )
         where TDependencyObject : DependencyObject
     {
@@ -90,11 +80,7 @@ public static partial class PropertyAssist
                     {
                         propertyChangedCallback.Invoke(
                             (s as TDependencyObject)!,
-                            new PropertyChangedEventArgs<TPropertyType>(
-                                e.Property,
-                                e.NewValue,
-                                e.OldValue
-                            )
+                            new PropertyChangedEventArgs<TPropertyType>(e.Property, e.NewValue, e.OldValue)
                         );
                     }
             )
@@ -116,16 +102,12 @@ public static partial class PropertyAssist
         Expression<Func<TDependencyObject, TPropertyType>> propertyNameSelector,
         TPropertyType defaultValue,
         UpdateSourceTrigger updateSourceTrigger,
-        Action<
-            TDependencyObject,
-            PropertyChangedEventArgs<TPropertyType>
-        >? propertyChangedCallback = null
+        Action<TDependencyObject, PropertyChangedEventArgs<TPropertyType>>? propertyChangedCallback = null
     )
         where TDependencyObject : DependencyObject
     {
         string propertyName = ReflectionExtensions.GetPropertyName(propertyNameSelector);
-        FrameworkPropertyMetadataOptions flags =
-            FrameworkPropertyMetadataOptions.BindsTwoWayByDefault;
+        FrameworkPropertyMetadataOptions flags = FrameworkPropertyMetadataOptions.BindsTwoWayByDefault;
         DependencyProperty property = DependencyProperty.Register(
             propertyName,
             typeof(TPropertyType),
@@ -139,11 +121,7 @@ public static partial class PropertyAssist
                     {
                         propertyChangedCallback.Invoke(
                             (s as TDependencyObject)!,
-                            new PropertyChangedEventArgs<TPropertyType>(
-                                e.Property,
-                                e.NewValue,
-                                e.OldValue
-                            )
+                            new PropertyChangedEventArgs<TPropertyType>(e.Property, e.NewValue, e.OldValue)
                         );
                     },
                 null,
@@ -170,10 +148,7 @@ public static partial class PropertyAssist
         TPropertyType defaultValue,
         FrameworkPropertyMetadataOptions flags,
         UpdateSourceTrigger updateSourceTrigger,
-        Action<
-            TDependencyObject,
-            PropertyChangedEventArgs<TPropertyType>
-        >? propertyChangedCallback = null
+        Action<TDependencyObject, PropertyChangedEventArgs<TPropertyType>>? propertyChangedCallback = null
     )
         where TDependencyObject : DependencyObject
     {
@@ -191,11 +166,7 @@ public static partial class PropertyAssist
                     {
                         propertyChangedCallback.Invoke(
                             (s as TDependencyObject)!,
-                            new PropertyChangedEventArgs<TPropertyType>(
-                                e.Property,
-                                e.NewValue,
-                                e.OldValue
-                            )
+                            new PropertyChangedEventArgs<TPropertyType>(e.Property, e.NewValue, e.OldValue)
                         );
                     },
                 null,
@@ -220,10 +191,7 @@ public static partial class PropertyAssist
         Expression<Func<TDependencyObject, TPropertyType>> propertyNameSelector,
         TPropertyType defaultValue,
         FrameworkPropertyMetadataOptions flags,
-        Action<
-            TDependencyObject,
-            PropertyChangedEventArgs<TPropertyType>
-        >? propertyChangedCallback = null
+        Action<TDependencyObject, PropertyChangedEventArgs<TPropertyType>>? propertyChangedCallback = null
     )
         where TDependencyObject : DependencyObject
     {
@@ -242,11 +210,7 @@ public static partial class PropertyAssist
                     {
                         propertyChangedCallback.Invoke(
                             (s as TDependencyObject)!,
-                            new PropertyChangedEventArgs<TPropertyType>(
-                                e.Property,
-                                e.NewValue,
-                                e.OldValue
-                            )
+                            new PropertyChangedEventArgs<TPropertyType>(e.Property, e.NewValue, e.OldValue)
                         );
                     }
             )
@@ -266,10 +230,7 @@ public static partial class PropertyAssist
     public static DependencyProperty PropertyRegister<TDependencyObject, TPropertyType>(
         Expression<Func<TDependencyObject, TPropertyType>> propertyNameSelector,
         FrameworkPropertyMetadataOptions flags,
-        Action<
-            TDependencyObject?,
-            PropertyChangedEventArgs<TPropertyType>
-        >? propertyChangedCallback = null
+        Action<TDependencyObject?, PropertyChangedEventArgs<TPropertyType>>? propertyChangedCallback = null
     )
         where TDependencyObject : DependencyObject
     {
@@ -288,11 +249,7 @@ public static partial class PropertyAssist
                     {
                         propertyChangedCallback.Invoke(
                             (s as TDependencyObject)!,
-                            new PropertyChangedEventArgs<TPropertyType>(
-                                e.Property,
-                                e.NewValue,
-                                e.OldValue
-                            )
+                            new PropertyChangedEventArgs<TPropertyType>(e.Property, e.NewValue, e.OldValue)
                         );
                     }
             )
@@ -333,22 +290,10 @@ public static partial class PropertyAssist
                 default(TPropertyType),
                 (s, e) =>
                 {
-                    propertyChangedCallback?.Invoke(
-                        s,
-                        new PropertyChangedEventArgs<TPropertyType>(
-                            e.Property,
-                            e.NewValue,
-                            e.OldValue
-                        )
-                    );
+                    propertyChangedCallback?.Invoke(s, new PropertyChangedEventArgs<TPropertyType>(e.Property, e.NewValue, e.OldValue));
                 }
             );
-        DependencyProperty property = DependencyProperty.RegisterAttached(
-            propertyName,
-            typeof(TPropertyType),
-            ownerType,
-            mata
-        );
+        DependencyProperty property = DependencyProperty.RegisterAttached(propertyName, typeof(TPropertyType), ownerType, mata);
         return property;
     }
 
@@ -384,23 +329,11 @@ public static partial class PropertyAssist
                 defaultValue,
                 (s, e) =>
                 {
-                    propertyChangedCallback?.Invoke(
-                        s,
-                        new PropertyChangedEventArgs<TPropertyType>(
-                            e.Property,
-                            e.NewValue,
-                            e.OldValue
-                        )
-                    );
+                    propertyChangedCallback?.Invoke(s, new PropertyChangedEventArgs<TPropertyType>(e.Property, e.NewValue, e.OldValue));
                 }
             );
 
-        DependencyProperty property = DependencyProperty.RegisterAttached(
-            propertyName,
-            typeof(TPropertyType),
-            ownerType,
-            mata
-        );
+        DependencyProperty property = DependencyProperty.RegisterAttached(propertyName, typeof(TPropertyType), ownerType, mata);
         return property;
     }
 
@@ -442,14 +375,7 @@ public static partial class PropertyAssist
                 flags,
                 (s, e) =>
                 {
-                    propertyChangedCallback?.Invoke(
-                        s,
-                        new PropertyChangedEventArgs<TPropertyType>(
-                            e.Property,
-                            e.NewValue,
-                            e.OldValue
-                        )
-                    );
+                    propertyChangedCallback?.Invoke(s, new PropertyChangedEventArgs<TPropertyType>(e.Property, e.NewValue, e.OldValue));
                 },
                 null,
                 false
@@ -498,14 +424,7 @@ public static partial class PropertyAssist
                 flags,
                 (s, e) =>
                 {
-                    propertyChangedCallback?.Invoke(
-                        s,
-                        new PropertyChangedEventArgs<TPropertyType>(
-                            e.Property,
-                            e.NewValue,
-                            e.OldValue
-                        )
-                    );
+                    propertyChangedCallback?.Invoke(s, new PropertyChangedEventArgs<TPropertyType>(e.Property, e.NewValue, e.OldValue));
                 },
                 null,
                 false,
@@ -525,10 +444,7 @@ public static partial class PropertyAssist
     /// <returns></returns>
     public static DependencyProperty? GetDependencyProperty(Type type, string propertyName)
     {
-        FieldInfo? fieldInfo = type.GetField(
-            propertyName + "Property",
-            BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy
-        );
+        FieldInfo? fieldInfo = type.GetField(propertyName + "Property", BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy);
         return fieldInfo?.GetValue(null) as DependencyProperty;
     }
 
@@ -550,11 +466,7 @@ public static partial class PropertyAssist
     [EditorBrowsable(EditorBrowsableState.Never)]
     public class PropertyChangedEventArgs<TargetType> : EventArgs
     {
-        internal PropertyChangedEventArgs(
-            DependencyProperty property,
-            object newValue,
-            object oldValue
-        )
+        internal PropertyChangedEventArgs(DependencyProperty property, object newValue, object oldValue)
         {
             Property = property;
             if (oldValue is TargetType old)

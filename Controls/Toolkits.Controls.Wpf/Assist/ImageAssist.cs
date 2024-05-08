@@ -7,7 +7,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace Toolkits.Controls;
+namespace Toolkits.Wpf;
 
 /// <summary>
 ///
@@ -56,12 +56,7 @@ public static class ImageAssist
     public static BitmapSource ToBitmapSource2(this Bitmap bitmap)
     {
         IntPtr ptr = bitmap.GetHbitmap(); //obtain the Hbitmap
-        BitmapSource bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(
-            ptr,
-            IntPtr.Zero,
-            Int32Rect.Empty,
-            BitmapSizeOptions.FromEmptyOptions()
-        );
+        BitmapSource bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(ptr, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
         DeleteObject(ptr); //release the HBitmap
         return bitmapSource;
     }
@@ -102,14 +97,9 @@ public static class ImageAssist
     /// <param name="action">The action.</param>
     /// <param name="action1">The action1.</param>
     /// <returns></returns>
-    public static WriteableBitmap ToWriteableBitmap1(
-        this Bitmap bitmap,
-        Action<Graphics>? action = null,
-        Action<WriteableBitmap>? action1 = null
-    )
+    public static WriteableBitmap ToWriteableBitmap1(this Bitmap bitmap, Action<Graphics>? action = null, Action<WriteableBitmap>? action1 = null)
     {
-        WriteableBitmap writeableBitmap =
-            new(bitmap.Width, bitmap.Height, 96.0, 96.0, PixelFormats.Pbgra32, null);
+        WriteableBitmap writeableBitmap = new(bitmap.Width, bitmap.Height, 96.0, 96.0, PixelFormats.Pbgra32, null);
         writeableBitmap.Lock();
         using (
             Bitmap bitmap2 =
@@ -125,11 +115,7 @@ public static class ImageAssist
             using (Graphics graphics = Graphics.FromImage(bitmap2))
             {
                 graphics.Clear(System.Drawing.Color.Black);
-                Rectangle rectangle =
-                    new(
-                        default(System.Drawing.Point),
-                        new System.Drawing.Size(bitmap.Width, bitmap.Height)
-                    );
+                Rectangle rectangle = new(default(System.Drawing.Point), new System.Drawing.Size(bitmap.Width, bitmap.Height));
                 graphics.DrawImage(bitmap, rectangle, rectangle, GraphicsUnit.Pixel);
                 action?.Invoke(graphics);
             }
@@ -151,14 +137,9 @@ public static class ImageAssist
     /// <param name="action">The action.</param>
     /// <param name="action1">The action1.</param>
     /// <returns></returns>
-    public static WriteableBitmap ToWriteableBitmap2(
-        this Bitmap bitmap,
-        Action<Graphics>? action = null,
-        Action<Bitmap>? action1 = null
-    )
+    public static WriteableBitmap ToWriteableBitmap2(this Bitmap bitmap, Action<Graphics>? action = null, Action<Bitmap>? action1 = null)
     {
-        WriteableBitmap writeableBitmap =
-            new(bitmap.Width, bitmap.Height, 96.0, 96.0, PixelFormats.Pbgra32, null);
+        WriteableBitmap writeableBitmap = new(bitmap.Width, bitmap.Height, 96.0, 96.0, PixelFormats.Pbgra32, null);
         writeableBitmap.Lock();
         using (
             Bitmap bitmap2 =
@@ -174,11 +155,7 @@ public static class ImageAssist
             using (Graphics graphics = Graphics.FromImage(bitmap2))
             {
                 graphics.Clear(System.Drawing.Color.Black);
-                Rectangle rectangle =
-                    new(
-                        default(System.Drawing.Point),
-                        new System.Drawing.Size(bitmap.Width, bitmap.Height)
-                    );
+                Rectangle rectangle = new(default(System.Drawing.Point), new System.Drawing.Size(bitmap.Width, bitmap.Height));
                 graphics.DrawImage(bitmap, rectangle, rectangle, GraphicsUnit.Pixel);
                 action?.Invoke(graphics);
             }

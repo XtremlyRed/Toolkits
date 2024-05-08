@@ -9,13 +9,12 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
 
-namespace Toolkits.Animation;
+namespace Toolkits.Wpf;
 
 /// <summary>
 ///  a class of <see cref="PropertyAnimationDeclareGenerice{T}"/>
 /// </summary>
 /// <typeparam name="T"></typeparam>
-/// <seealso cref="Toolkits.Animation.AnimationDeclareGeneric&lt;T&gt;" />
 [EditorBrowsable(EditorBrowsableState.Never)]
 public abstract class PropertyAnimationDeclareGenerice<T> : AnimationDeclareGeneric<T>
 {
