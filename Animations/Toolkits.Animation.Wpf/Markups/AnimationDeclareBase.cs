@@ -14,7 +14,6 @@ namespace Toolkits.Wpf;
 /// a class of <see cref="AnimationDeclareBase"/>
 /// </summary>
 /// <seealso cref="System.Windows.Freezable" />
-[EditorBrowsable(EditorBrowsableState.Never)]
 public abstract class AnimationDeclareBase : Animatable
 {
     /// <summary>
@@ -60,7 +59,6 @@ public abstract class AnimationDeclareBase : Animatable
 /// </summary>
 /// <typeparam name="T"></typeparam>
 /// <seealso cref="System.Windows.Freezable" />
-[EditorBrowsable(EditorBrowsableState.Never)]
 public abstract class AnimationDeclareGeneric<T> : AnimationDeclare
 {
     /// <summary>

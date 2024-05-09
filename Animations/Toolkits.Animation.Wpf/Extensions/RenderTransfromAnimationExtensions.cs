@@ -13,7 +13,7 @@ namespace Toolkits.Wpf;
 ///
 /// </summary>
 [EditorBrowsable(EditorBrowsableState.Never)]
-public static class RenderTransfromAnimationExtensions
+internal static class RenderTransfromAnimationExtensions
 {
     #region Transform
 

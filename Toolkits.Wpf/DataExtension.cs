@@ -266,7 +266,7 @@ public class Int32Extension : DataExtension<int>
 /// </summary>
 /// <typeparam name="T"></typeparam>
 
-[EditorBrowsable(EditorBrowsableState.Never)]
+
 public abstract class DataExtension<T> : MarkupExtension
 {
     /// <summary>

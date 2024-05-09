@@ -10,7 +10,6 @@ namespace Toolkits.Wpf;
 /// <summary>
 /// a class of <see cref="RenderTransfromAnimationDeclare"/>
 /// </summary>
-[EditorBrowsable(EditorBrowsableState.Never)]
 public abstract class RenderTransfromAnimationDeclare : AnimationDeclareGeneric<double?>
 {
     /// <summary>

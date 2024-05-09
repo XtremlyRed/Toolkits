@@ -14,7 +14,7 @@
 	</ItemGroup>
 
 	<PropertyGroup>
-		<Version>1.2.1</Version> 
+		<Version>1.2.1.1</Version> 
 		<LangVersion>11.0</LangVersion>
 		<PackageProjectUrl>https://github.com/xtremlyred/Toolkits</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/xtremlyred/Toolkits</RepositoryUrl>

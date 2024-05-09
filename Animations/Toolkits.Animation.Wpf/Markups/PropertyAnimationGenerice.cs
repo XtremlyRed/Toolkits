@@ -15,7 +15,6 @@ namespace Toolkits.Wpf;
 ///  a class of <see cref="PropertyAnimationDeclareGenerice{T}"/>
 /// </summary>
 /// <typeparam name="T"></typeparam>
-[EditorBrowsable(EditorBrowsableState.Never)]
 public abstract class PropertyAnimationDeclareGenerice<T> : AnimationDeclareGeneric<T>
 {
     /// <summary>

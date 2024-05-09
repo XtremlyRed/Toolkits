@@ -81,6 +81,10 @@ public static class EnumerableExtensions
         {
             return true;
         }
+        if (source is IReadOnlyCollection<TSource> @readonly)
+        {
+            return @readonly.Count == 0;
+        }
 
         if (source is ICollection<TSource> collection)
         {
@@ -147,11 +151,7 @@ public static class EnumerableExtensions
     /// or
     /// filter
     /// </exception>
-    public static IEnumerable<Target> WhereIf<Target>(
-        this IEnumerable<Target> source,
-        bool condition,
-        Func<Target, bool> filter
-    )
+    public static IEnumerable<Target> WhereIf<Target>(this IEnumerable<Target> source, bool condition, Func<Target, bool> filter)
     {
         _ = source ?? throw new ArgumentNullException(nameof(source));
         _ = filter ?? throw new ArgumentNullException(nameof(filter));
@@ -209,10 +209,7 @@ public static class EnumerableExtensions
     /// or
     /// filter
     /// </exception>
-    public static IEnumerable<int> IndexOfMany<TSource>(
-        this IEnumerable<TSource> source,
-        Func<TSource, bool> filter
-    )
+    public static IEnumerable<int> IndexOfMany<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> filter)
     {
         _ = source ?? throw new ArgumentNullException(nameof(source));
         _ = filter ?? throw new ArgumentNullException(nameof(filter));
@@ -241,11 +238,7 @@ public static class EnumerableExtensions
     /// <returns></returns>
     /// 2024/2/1 11:00
     /// <exception cref="System.ArgumentNullException">source</exception>
-    public static IEnumerable<Target> Paginate<Target>(
-        this IEnumerable<Target> source,
-        int pageIndex,
-        int pageSize
-    )
+    public static IEnumerable<Target> Paginate<Target>(this IEnumerable<Target> source, int pageIndex, int pageSize)
     {
         _ = source ?? throw new ArgumentNullException(nameof(source));
 
@@ -279,10 +272,7 @@ public static class EnumerableExtensions
     /// <param name="source">The source.</param>
     /// <param name="action">The action.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static async Task ForEachAsync<Target>(
-        this IEnumerable<Target> source,
-        Func<Target, Task> action
-    )
+    public static async Task ForEachAsync<Target>(this IEnumerable<Target> source, Func<Target, Task> action)
     {
         if (source is null || action is null)
         {
@@ -302,10 +292,7 @@ public static class EnumerableExtensions
     /// <param name="source">The source.</param>
     /// <param name="action">The action.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static async Task ForEachAsync<Target>(
-        this IEnumerable<Target> source,
-        Func<Target, int, Task> action
-    )
+    public static async Task ForEachAsync<Target>(this IEnumerable<Target> source, Func<Target, int, Task> action)
     {
         if (source is null || action is null)
         {
@@ -382,11 +369,7 @@ public static class EnumerableExtensions
     /// or
     /// comparer
     /// </exception>
-    public static void Sort<Target>(
-        this List<Target> source,
-        Func<Target, IComparable> comparer,
-        bool isDescending = false
-    )
+    public static void Sort<Target>(this List<Target> source, Func<Target, IComparable> comparer, bool isDescending = false)
     {
         _ = source ?? throw new ArgumentNullException(nameof(source));
         _ = comparer ?? throw new ArgumentNullException(nameof(comparer));
@@ -413,11 +396,7 @@ public static class EnumerableExtensions
     /// or
     /// comparer
     /// </exception>
-    public static void Sort<Target>(
-        this Target[] source,
-        Func<Target, IComparable> comparer,
-        bool isDescending = false
-    )
+    public static void Sort<Target>(this Target[] source, Func<Target, IComparable> comparer, bool isDescending = false)
     {
         _ = source ?? throw new ArgumentNullException(nameof(source));
         _ = comparer ?? throw new ArgumentNullException(nameof(comparer));
@@ -438,9 +417,7 @@ public static class EnumerableExtensions
     ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    private record DescendingSortIComparer<T>(Func<T, IComparable> Selector)
-        : IComparer<T>,
-            IComparer
+    private record DescendingSortIComparer<T>(Func<T, IComparable> Selector) : IComparer<T>, IComparer
     {
         public int Compare(T? x, T? y)
         {
@@ -501,10 +478,7 @@ public static class EnumerableExtensions
     /// <param name="segmentSize">The segment capacity.</param>
     /// <returns></returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static IEnumerable<TSource[]> Chunk<TSource>(
-        this IEnumerable<TSource> targets,
-        int segmentSize
-    )
+    public static IEnumerable<TSource[]> Chunk<TSource>(this IEnumerable<TSource> targets, int segmentSize)
     {
         if (targets is null || segmentSize < 1)
         {
@@ -558,10 +532,7 @@ public static class EnumerableExtensions
 
         if (fieldMaps.TryGetValue(typeof(T), out FieldInfo? fieldInfo) == false)
         {
-            fieldMaps[typeof(T)] = fieldInfo = typeof(List<T>).GetField(
-                "_items",
-                BindingFlags.Instance | BindingFlags.NonPublic
-            )!;
+            fieldMaps[typeof(T)] = fieldInfo = typeof(List<T>).GetField("_items", BindingFlags.Instance | BindingFlags.NonPublic)!;
         }
 
         if (fieldInfo is null)
