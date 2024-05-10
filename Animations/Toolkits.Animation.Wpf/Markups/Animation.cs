@@ -11,24 +11,14 @@ namespace Toolkits.Wpf;
 /// <summary>
 ///
 /// </summary>
-public static class Animation
+public partial class Animation
 {
-    ///// <summary>
-    /////   the declare.
-    ///// </summary>
-    ///// <param name="obj">The object.</param>
-    ///// <returns></returns>
-    //public static AnimationDeclareBase GetDeclare(FrameworkElement obj)
-    //{
-    //    return (AnimationDeclareBase)obj.GetValue(DeclareProperty);
-    //}
-
     /// <summary>
     ///  the declare.
     /// </summary>
     /// <param name="obj">The object.</param>
     /// <param name="value">The value.</param>
-    public static void SetDeclare(FrameworkElement obj, AnimationDeclareBase value)
+    public static void SetDeclare(FrameworkElement obj, Animation value)
     {
         obj.SetValue(DeclareProperty, value);
     }
@@ -38,29 +28,23 @@ public static class Animation
     /// </summary>
     public static readonly DependencyProperty DeclareProperty = DependencyProperty.RegisterAttached(
         "Declare",
-        typeof(AnimationDeclareBase),
-        typeof(AnimationDeclare),
+        typeof(Animation),
+        typeof(Animation),
         new PropertyMetadata(
             null,
             (s, e) =>
             {
-                if (s is not FrameworkElement frameworkElement || e.NewValue is not AnimationDeclareBase animationBase)
+                if (s is not FrameworkElement frameworkElement || e.NewValue is not AnimationGroup animationBase)
                 {
                     return;
                 }
 
-                if (animationBase is AnimationDeclareGroup declareGroup)
+                if (animationBase is AnimationGroup declareGroup)
                 {
-                    //var propertyInfo = declareGroup.GetType().GetProperty("ContextList", Instance | Public | NonPublic);
-
-                    //var value = propertyInfo?.GetValue(declareGroup);
-
-                    if (declareGroup.Children is not null && declareGroup.Children.Count > 0)
+                    if (declareGroup is not null && declareGroup.Children.Count > 0)
                     {
                         foreach (var item in declareGroup.Children)
                         {
-                            // propertyInfo?.SetValue(item, value);
-
                             Register(frameworkElement, item);
                         }
                     }
@@ -70,21 +54,26 @@ public static class Animation
                     Register(frameworkElement, animationBase);
                 }
 
-                static void Register(FrameworkElement frameworkElement, AnimationDeclareBase animationBase)
+                static void Register(FrameworkElement frameworkElement, Animation animationBase)
                 {
-                    var animation = animationBase.CreateAnimation(frameworkElement, out var owner);
+                    //var animation = animationBase.CreateAnimation(frameworkElement, out var owner);
 
                     var animationType = animationBase.GetType();
 
                     var defaultValue = animationType.GetProperty("DefaultValue", Instance | Public | NonPublic)?.GetValue(animationBase);
-                    var fromValue = animation.GetType().GetProperty("From", Instance | Public | NonPublic)?.GetValue(animation);
+                    // var fromValue = animation.GetType().GetProperty("From", Instance | Public | NonPublic)?.GetValue(animation);
+
+                    DependencyProperty? property = animationBase is IPropertyAnimation propertyAnimation
+                        ? propertyAnimation.Property
+                        : animationType.GetProperty("Property", Instance | Public | NonPublic)?.GetValue(animationBase) as DependencyProperty;
 
                     var info = new AnimationInfo()
                     {
-                        EventMode = animationBase.EventMode,
-                        Animation = animation,
-                        ElementRef = new WeakReference(owner),
-                        Property = animationType.GetProperty("Property", Instance | Public | NonPublic)?.GetValue(animationBase) as DependencyProperty
+                        // EventMode = animationBase.EventMode,
+                        Animation = animationBase,
+                        //ElementRef = new WeakReference(owner),
+                        UIElementRef = new WeakReference(frameworkElement),
+                        Property = property
                     };
 
                     AnimationExtensions.SetAnimationInfo(animationBase, info);

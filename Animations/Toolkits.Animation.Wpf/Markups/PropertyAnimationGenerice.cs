@@ -12,10 +12,10 @@ using System.Windows.Media.Media3D;
 namespace Toolkits.Wpf;
 
 /// <summary>
-///  a class of <see cref="PropertyAnimationDeclareGenerice{T}"/>
+///  a class of <see cref="PropertyAnimationGenerice{T}"/>
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public abstract class PropertyAnimationDeclareGenerice<T> : AnimationDeclareGeneric<T>
+public abstract class PropertyAnimationGenerice<T> : AnimationGeneric<T>, IPropertyAnimation
 {
     /// <summary>
     /// animation property.
@@ -32,31 +32,25 @@ public abstract class PropertyAnimationDeclareGenerice<T> : AnimationDeclareGene
     public static readonly DependencyProperty PropertyProperty = DependencyProperty.Register(
         "Property",
         typeof(DependencyProperty),
-        typeof(PropertyAnimationDeclareGenerice<T>),
+        typeof(PropertyAnimationGenerice<T>),
         new PropertyMetadata(null)
     );
 }
 
 /// <summary>
-/// a class of <see cref="BrushAnimationDeclare"/>
+/// a class of <see cref="BrushPropertyAnimation"/>
 /// </summary>
-public class BrushAnimationDeclare : PropertyAnimationDeclareGenerice<Color>
+public class BrushPropertyAnimation : PropertyAnimationGenerice<Color>, IPropertyAnimation
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="BrushAnimationDeclare"/> class.
+    /// Initializes a new instance of the <see cref="BrushPropertyAnimation"/> class.
     /// </summary>
-    public BrushAnimationDeclare()
+    public BrushPropertyAnimation()
     {
         SetCurrentValue(PropertyProperty, SolidColorBrush.ColorProperty);
     }
 
-    /// <summary>
-    /// the property.
-    /// </summary>
-    public override DependencyProperty Property
-    {
-        get => base.Property;
-    }
+    DependencyProperty IPropertyAnimation.Property => SolidColorBrush.ColorProperty;
 
     /// <summary>
     /// Animations the build.
@@ -68,7 +62,11 @@ public class BrushAnimationDeclare : PropertyAnimationDeclareGenerice<Color>
     {
         SolidColorBrush brush = new SolidColorBrush(From);
 
-        ColorAnimation animation = element.BuildAnimation(Property!.Name, From, To, TimeSpan.Zero, Duration.TimeSpan);
+        var property = SolidColorBrush.ColorProperty;
+
+        element.SetCurrentValue(base.Property, brush);
+
+        ColorAnimation animation = element.BuildAnimation(property!.Name, From, To, TimeSpan.Zero, Duration.TimeSpan);
 
         propertyOwner = brush;
 
@@ -77,9 +75,9 @@ public class BrushAnimationDeclare : PropertyAnimationDeclareGenerice<Color>
 }
 
 /// <summary>
-///  a class of <see cref="ThicknessAnimationDeclare"/>
+///  a class of <see cref="ThicknessPropertyAnimation"/>
 /// </summary>
-public class ThicknessAnimationDeclare : PropertyAnimationDeclareGenerice<Thickness>
+public class ThicknessPropertyAnimation : PropertyAnimationGenerice<Thickness>
 {
     /// <summary>
     /// Creates the animation.
@@ -99,9 +97,9 @@ public class ThicknessAnimationDeclare : PropertyAnimationDeclareGenerice<Thickn
 }
 
 /// <summary>
-///  a class of <see cref="Int32AnimationDeclare"/>
+///  a class of <see cref="Int32PropertyAnimation"/>
 /// </summary>
-public class Int32AnimationDeclare : PropertyAnimationDeclareGenerice<int>
+public class Int32PropertyAnimation : PropertyAnimationGenerice<int>
 {
     /// <summary>
     /// Creates the animation.
@@ -121,9 +119,9 @@ public class Int32AnimationDeclare : PropertyAnimationDeclareGenerice<int>
 }
 
 /// <summary>
-///  a class of <see cref="DoubleAnimationDeclare"/>
+///  a class of <see cref="DoublePropertyAnimation"/>
 /// </summary>
-public class DoubleAnimationDeclare : PropertyAnimationDeclareGenerice<double>
+public class DoublePropertyAnimation : PropertyAnimationGenerice<double>
 {
     /// <summary>
     /// Creates the animation.
@@ -143,9 +141,9 @@ public class DoubleAnimationDeclare : PropertyAnimationDeclareGenerice<double>
 }
 
 /// <summary>
-///  a class of <see cref="ColorAnimationDeclare"/>
+///  a class of <see cref="ColorPropertyAnimation"/>
 /// </summary>
-public class ColorAnimationDeclare : PropertyAnimationDeclareGenerice<Color>
+public class ColorPropertyAnimation : PropertyAnimationGenerice<Color>
 {
     /// <summary>
     /// Creates the animation.
@@ -165,9 +163,9 @@ public class ColorAnimationDeclare : PropertyAnimationDeclareGenerice<Color>
 }
 
 /// <summary>
-///  a class of <see cref="Point3DAnimationDeclare"/>
+///  a class of <see cref="Point3DPropertyAnimation"/>
 /// </summary>
-public class Point3DAnimationDeclare : PropertyAnimationDeclareGenerice<Point3D>
+public class Point3DPropertyAnimation : PropertyAnimationGenerice<Point3D>
 {
     /// <summary>
     /// Creates the animation.
@@ -187,9 +185,9 @@ public class Point3DAnimationDeclare : PropertyAnimationDeclareGenerice<Point3D>
 }
 
 /// <summary>
-///  a class of <see cref="QuaternionAnimationDeclare"/>
+///  a class of <see cref="QuaternionPropertyAnimation"/>
 /// </summary>
-public class QuaternionAnimationDeclare : PropertyAnimationDeclareGenerice<Quaternion>
+public class QuaternionPropertyAnimation : PropertyAnimationGenerice<Quaternion>
 {
     /// <summary>
     /// Creates the animation.
@@ -209,9 +207,9 @@ public class QuaternionAnimationDeclare : PropertyAnimationDeclareGenerice<Quate
 }
 
 /// <summary>
-///  a class of <see cref="Rotation3DAnimationDeclare"/>
+///  a class of <see cref="Rotation3DPropertyAnimation"/>
 /// </summary>
-public class Rotation3DAnimationDeclare : PropertyAnimationDeclareGenerice<Rotation3D>
+public class Rotation3DPropertyAnimation : PropertyAnimationGenerice<Rotation3D>
 {
     /// <summary>
     /// Creates the animation.
@@ -231,9 +229,9 @@ public class Rotation3DAnimationDeclare : PropertyAnimationDeclareGenerice<Rotat
 }
 
 /// <summary>
-///  a class of <see cref="VectorAnimationDeclare"/>
+///  a class of <see cref="VectorPropertyAnimation"/>
 /// </summary>
-public class VectorAnimationDeclare : PropertyAnimationDeclareGenerice<Vector>
+public class VectorPropertyAnimation : PropertyAnimationGenerice<Vector>
 {
     /// <summary>
     /// Creates the animation.
@@ -253,9 +251,9 @@ public class VectorAnimationDeclare : PropertyAnimationDeclareGenerice<Vector>
 }
 
 /// <summary>
-///  a class of <see cref="Vector3DAnimationDeclare"/>
+///  a class of <see cref="Vector3DPropertyAnimation"/>
 /// </summary>
-public class Vector3DAnimationDeclare : PropertyAnimationDeclareGenerice<Vector3D>
+public class Vector3DPropertyAnimation : PropertyAnimationGenerice<Vector3D>
 {
     /// <summary>
     /// Creates the animation.
@@ -275,9 +273,9 @@ public class Vector3DAnimationDeclare : PropertyAnimationDeclareGenerice<Vector3
 }
 
 /// <summary>
-///  a class of <see cref="SizeAnimationDeclare"/>
+///  a class of <see cref="SizePropertyAnimation"/>
 /// </summary>
-public class SizeAnimationDeclare : PropertyAnimationDeclareGenerice<Size>
+public class SizePropertyAnimation : PropertyAnimationGenerice<Size>
 {
     /// <summary>
     /// Creates the animation.

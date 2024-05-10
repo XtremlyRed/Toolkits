@@ -8,43 +8,11 @@ using static System.Reflection.BindingFlags;
 namespace Toolkits.Wpf;
 
 /// <summary>
-/// a class of <see cref="AnimationDeclare"/>
+/// a class of <see cref="Animation"/>
 /// </summary>
-/// <seealso cref="Toolkits.Wpf.AnimationDeclareBase" />
-public abstract partial class AnimationDeclare : AnimationDeclareBase
+/// <seealso cref="Toolkits.Wpf.Animation" />
+public abstract partial class AnimationBase : Animation
 {
-    /// <summary>
-    /// the play.
-    /// </summary>
-    public bool? Play
-    {
-        get { return (bool?)GetValue(PlayProperty); }
-        set { SetValue(PlayProperty, value); }
-    }
-
-    /// <summary>
-    ///   play property
-    /// </summary>
-    public static readonly DependencyProperty PlayProperty = DependencyProperty.Register(
-        "Play",
-        typeof(bool?),
-        typeof(AnimationDeclare),
-        new FrameworkPropertyMetadata(
-            null,
-            FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-            (s, e) =>
-            {
-                if (e.NewValue is not true || s is not AnimationDeclare animationDeclare)
-                {
-                    return;
-                }
-
-                AnimationExtensions.GetAnimationInfo(animationDeclare).Invoke();
-                animationDeclare.SetCurrentValue(PlayProperty, false);
-            }
-        )
-    );
-
     /// <summary>
     /// animation begin time
     /// </summary>
@@ -60,7 +28,7 @@ public abstract partial class AnimationDeclare : AnimationDeclareBase
     public static readonly DependencyProperty BeginTimeProperty = DependencyProperty.Register(
         "BeginTime",
         typeof(TimeSpan),
-        typeof(AnimationDeclare),
+        typeof(Animation),
         new PropertyMetadata(TimeSpan.Zero)
     );
 
@@ -79,7 +47,7 @@ public abstract partial class AnimationDeclare : AnimationDeclareBase
     public static readonly DependencyProperty DurationProperty = DependencyProperty.Register(
         "Duration",
         typeof(Duration),
-        typeof(AnimationDeclare),
+        typeof(Animation),
         new PropertyMetadata(new Duration(TimeSpan.FromSeconds(1)))
     );
 
@@ -98,7 +66,7 @@ public abstract partial class AnimationDeclare : AnimationDeclareBase
     public static readonly DependencyProperty EasingTypeProperty = DependencyProperty.Register(
         "EasingType",
         typeof(EasingType),
-        typeof(AnimationDeclare),
+        typeof(Animation),
         new PropertyMetadata(EasingType.None)
     );
 
@@ -117,7 +85,7 @@ public abstract partial class AnimationDeclare : AnimationDeclareBase
     public static readonly DependencyProperty EasingModeProperty = DependencyProperty.Register(
         "EasingMode",
         typeof(EasingMode),
-        typeof(AnimationDeclare),
+        typeof(Animation),
         new PropertyMetadata(EasingMode.EaseOut)
     );
 

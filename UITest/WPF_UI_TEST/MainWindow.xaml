@@ -13,17 +13,27 @@
 
     <AdornerDecorator toolkit:PopupManager.ContainerName="MainPopupContainer" toolkit:PopupManager.IsMainContainer="True">
         <Button
-            Width="{Double Value=100}"
-            Background="Red"
+            Width="{Double 200}"
+            Background="Transparent"
             Click="Button_Click"
             Content="Open Popup">
 
 
             <toolkit:Animation.Declare>
 
-                <toolkit:AnimationDeclareGroup Play="{Binding Play}">
+                <toolkit:AnimationGroup Play="{Binding Play}">
 
 
+                    <toolkit:BrushPropertyAnimation
+                        Property="{x:Static Button.BackgroundProperty}"
+                        From="Transparent"
+                        To="Green"
+                        Duration="0:0:01" />
+                    <toolkit:ThicknessPropertyAnimation
+                        Property="{x:Static Button.MarginProperty}"
+                        From="0,0,0,0"
+                        To="100"
+                        Duration="0:0:01" />
 
                     <toolkit:SlideXAnimation
                         SlideMode="Left"
@@ -36,12 +46,8 @@
                         To="0"
                         Duration="0:0:01" />
 
-                    <toolkit:ThicknessAnimationDeclare
-                        Property="{x:Static Button.MarginProperty}"
-                        From="0,0,0,0"
-                        To="100"
-                        Duration="0:0:01" />
-                </toolkit:AnimationDeclareGroup>
+
+                </toolkit:AnimationGroup>
             </toolkit:Animation.Declare>
         </Button>
     </AdornerDecorator>

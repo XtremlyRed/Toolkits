@@ -11,10 +11,10 @@ using System.Windows.Media.Animation;
 namespace Toolkits.Wpf;
 
 /// <summary>
-/// a class of <see cref="AnimationDeclareBase"/>
+/// a class of <see cref="Animation"/>
 /// </summary>
 /// <seealso cref="System.Windows.Freezable" />
-public abstract class AnimationDeclareBase : Animatable
+public abstract partial class Animation : Freezable
 {
     /// <summary>
     /// </summary>
@@ -49,17 +49,57 @@ public abstract class AnimationDeclareBase : Animatable
     public static readonly DependencyProperty EventModeProperty = DependencyProperty.Register(
         "EventMode",
         typeof(EventMode),
-        typeof(AnimationDeclareBase),
+        typeof(Animation),
         new PropertyMetadata(EventMode.Loaded)
     );
+
+    /// <summary>
+    /// the play.
+    /// </summary>
+    public bool? Play
+    {
+        get { return (bool?)GetValue(PlayProperty); }
+        set { SetValue(PlayProperty, value); }
+    }
+
+    /// <summary>
+    ///   play property
+    /// </summary>
+    public static readonly DependencyProperty PlayProperty = DependencyProperty.Register(
+        "Play",
+        typeof(bool?),
+        typeof(Animation),
+        new FrameworkPropertyMetadata(
+            null,
+            FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+            (s, e) =>
+            {
+                if (e.NewValue is not true || s is not Animation animation)
+                {
+                    return;
+                }
+
+                animation.AnimationPlay();
+            },
+            null,
+            true,
+            System.Windows.Data.UpdateSourceTrigger.Explicit
+        )
+    );
+
+    protected virtual void AnimationPlay()
+    {
+        AnimationExtensions.GetAnimationInfo(this).Invoke();
+        this.SetCurrentValue(PlayProperty, false);
+    }
 }
 
 /// <summary>
-/// a class of <see cref="AnimationDeclareGeneric{T}"/>
+/// a class of <see cref="AnimationGeneric{T}"/>
 /// </summary>
 /// <typeparam name="T"></typeparam>
 /// <seealso cref="System.Windows.Freezable" />
-public abstract class AnimationDeclareGeneric<T> : AnimationDeclare
+public abstract class AnimationGeneric<T> : AnimationBase
 {
     /// <summary>
     /// to value
@@ -76,7 +116,7 @@ public abstract class AnimationDeclareGeneric<T> : AnimationDeclare
     public static readonly DependencyProperty ToProperty = DependencyProperty.Register(
         "To",
         typeof(T?),
-        typeof(AnimationDeclareGeneric<T>),
+        typeof(AnimationGeneric<T>),
         new PropertyMetadata(null)
     );
 
@@ -95,7 +135,7 @@ public abstract class AnimationDeclareGeneric<T> : AnimationDeclare
     public static readonly DependencyProperty FromProperty = DependencyProperty.Register(
         "From",
         typeof(T?),
-        typeof(AnimationDeclareGeneric<T>),
+        typeof(AnimationGeneric<T>),
         new PropertyMetadata(null)
     );
 }

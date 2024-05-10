@@ -27,9 +27,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)LineAnimations\Vector3DAnimationBuildExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LineAnimations\VectorAnimationBuildExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Markups\Animation.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Markups\AnimationDeclare.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Markups\AnimationDeclareBase.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Markups\AnimationDeclareGroup.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Markups\AnimationBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Markups\Animation.Impl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Markups\AnimationGroup.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Markups\IAnimationInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Markups\PropertyAnimationGenerice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Markups\RenderTransfromAnimationGenerice.cs" />

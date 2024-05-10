@@ -69,10 +69,14 @@ public static class AnimationExtensions
     /// </summary>
     /// <param name="storyboard">The storyboard.</param>
     /// <param name="completeCallback">The complete callback.</param>
-    /// <param name="autoRelease"></param>
+    /// <param name="removeCallbackWhenStoryboardCompleted"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">storyboard</exception>
-    public static Storyboard RegisterCompleted(this Storyboard? storyboard, Action? completeCallback, bool autoRelease = true)
+    public static Storyboard RegisterCompleted(
+        this Storyboard? storyboard,
+        Action? completeCallback,
+        bool removeCallbackWhenStoryboardCompleted = true
+    )
     {
         _ = storyboard ?? throw new ArgumentNullException(nameof(storyboard));
 
@@ -86,7 +90,7 @@ public static class AnimationExtensions
             SetCompleteCallback(storyboard, actions = new HashSet<CompleteInfo>());
         }
 
-        actions.Add(new CompleteInfo(completeCallback, autoRelease));
+        actions.Add(new CompleteInfo(completeCallback, removeCallbackWhenStoryboardCompleted));
 
         storyboard.Completed += Storyboard_Completed;
 
@@ -113,7 +117,7 @@ public static class AnimationExtensions
 
                 if (info.AutoRelease)
                 {
-                    ss.Completed -= Storyboard_Completed;
+                    clockGroup.Dispatcher.InvokeAsync(() => ss.Completed -= Storyboard_Completed);
                 }
 
                 info.Callback();
@@ -140,12 +144,12 @@ public static class AnimationExtensions
 
     private record CompleteInfo(Action Callback, bool AutoRelease);
 
-    internal static IAnimationInfo GetAnimationInfo(AnimationDeclareBase obj)
+    internal static IAnimationInfo GetAnimationInfo(Animation obj)
     {
         return (IAnimationInfo)obj.GetValue(AnimationInfoProperty);
     }
 
-    internal static void SetAnimationInfo(AnimationDeclareBase obj, IAnimationInfo value)
+    internal static void SetAnimationInfo(Animation obj, IAnimationInfo value)
     {
         obj.SetValue(AnimationInfoProperty, value);
     }

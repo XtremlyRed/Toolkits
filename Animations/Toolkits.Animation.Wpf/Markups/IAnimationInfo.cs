@@ -20,16 +20,30 @@ internal interface IAnimationInfo
 }
 
 /// <summary>
+/// a <see langword="interface" of <see cref="IPropertyAnimation"/>/>
+/// </summary>
+public interface IPropertyAnimation
+{
+    /// <summary>
+    /// Gets the property.
+    /// </summary>
+    /// <value>
+    /// The property.
+    /// </value>
+    DependencyProperty Property { get; }
+}
+
+/// <summary>
 ///
 /// </summary>
 internal class AnimationInfo : IAnimationInfo
 {
     public MethodInfo Method = default!;
     public PropertyInfo PropertyInfo = default!;
-    public AnimationTimeline Animation = default!;
+    public Animation Animation = default!;
     public DependencyProperty? Property = default!;
-    public WeakReference ElementRef = default!;
-    public EventMode EventMode { get; set; }
+    public WeakReference UIElementRef = default!;
+    public EventMode EventMode => Animation?.EventMode ?? EventMode.Loaded;
 
     /// <summary>
     /// The paramter types
@@ -38,12 +52,14 @@ internal class AnimationInfo : IAnimationInfo
 
     public void Invoke()
     {
-        if (ElementRef.Target is null)
+        if (UIElementRef.Target is not FrameworkElement element)
         {
             return;
         }
 
-        //if (Property is not null && element.IsLoaded)
+        var animation = Animation.CreateAnimation(element, out var propertyOwner);
+
+        //if (Property is not null && ElementRef.Target is DependencyObject element)
         //{
         //    object currentValue = element.GetValue(Property);
 
@@ -52,8 +68,8 @@ internal class AnimationInfo : IAnimationInfo
         //    property?.SetValue(Animation, currentValue);
         //}
 
-        Method ??= ElementRef.Target?.GetType().GetMethod(nameof(UIElement.BeginAnimation), paramterTypes)!;
+        Method ??= propertyOwner?.GetType().GetMethod(nameof(UIElement.BeginAnimation), paramterTypes)!;
 
-        Method?.Invoke(ElementRef.Target, new object[] { Property!, Animation });
+        Method?.Invoke(propertyOwner, new object[] { Property!, animation });
     }
 }

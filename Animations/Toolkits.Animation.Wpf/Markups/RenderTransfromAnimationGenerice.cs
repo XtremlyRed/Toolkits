@@ -10,7 +10,7 @@ namespace Toolkits.Wpf;
 /// <summary>
 /// a class of <see cref="RenderTransfromAnimationDeclare"/>
 /// </summary>
-public abstract class RenderTransfromAnimationDeclare : AnimationDeclareGeneric<double?>
+public abstract class RenderTransfromAnimationDeclare : AnimationGeneric<double?>, IPropertyAnimation
 {
     /// <summary>
     ///  animation property.
@@ -21,6 +21,7 @@ public abstract class RenderTransfromAnimationDeclare : AnimationDeclareGeneric<
     ///  animation path.
     /// </summary>
     protected abstract string AnimationPath { get; }
+    DependencyProperty IPropertyAnimation.Property => Property;
 
     /// <summary>
     /// Creates the animation.
@@ -52,23 +53,6 @@ public abstract class RenderTransfromAnimationDeclare : AnimationDeclareGeneric<
         return animation;
     }
 }
-
-///// <summary>
-/////  a class of <see cref="FadeAnimation"/>
-///// </summary>
-///// <seealso cref="Toolkits.Wpf.RenderTransfromAnimationDeclare" />
-//public class FadeAnimation : RenderTransfromAnimationDeclare
-//{
-//    /// <summary>
-//    ///  animation property.
-//    /// </summary>
-//    protected override DependencyProperty Property => FrameworkElement.OpacityProperty;
-
-//    /// <summary>
-//    ///  animation path.
-//    /// </summary>
-//    protected override string AnimationPath => "(FrameworkElement.Opacity)";
-//}
 
 /// <summary>
 /// a class of <see cref="RotateAnimation"/>
@@ -241,10 +225,10 @@ public class SlideYAnimation : RenderTransfromAnimationDeclare
 }
 
 /// <summary>
-///  a class of <see cref="ScaleXAnimatio"/>
+///  a class of <see cref="ScaleXAnimation"/>
 /// </summary>
 /// <seealso cref="Toolkits.Wpf.RenderTransfromAnimationDeclare" />
-public class ScaleXAnimatio : RenderTransfromAnimationDeclare
+public class ScaleXAnimation : RenderTransfromAnimationDeclare
 {
     /// <summary>
     /// animation property.
@@ -290,10 +274,10 @@ public class ScaleXAnimatio : RenderTransfromAnimationDeclare
 }
 
 /// <summary>
-///  a class of <see cref="ScaleYAnimatio"/>
+///  a class of <see cref="ScaleYAnimation"/>
 /// </summary>
 /// <seealso cref="Toolkits.Wpf.RenderTransfromAnimationDeclare" />
-public class ScaleYAnimatio : RenderTransfromAnimationDeclare
+public class ScaleYAnimation : RenderTransfromAnimationDeclare
 {
     /// <summary>
     /// animation property.

@@ -15,7 +15,7 @@
 		<UseWPF>true</UseWPF>
 		<LangVersion>11</LangVersion>
 		<DefineConstants>$(DefineConstants);___WPF___</DefineConstants>
-		<Description>wpf converters</Description>
+		<Description>wpf converters,animation,controls</Description>
 	</PropertyGroup>
 
 
