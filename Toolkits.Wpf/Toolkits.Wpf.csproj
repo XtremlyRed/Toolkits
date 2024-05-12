@@ -31,6 +31,12 @@
 	<Import Project="$(SolutionDir)\GlobalCompileSettings.Targets" />
 
 
+	<ItemGroup>
+	  <None Remove="FodyWeavers.xml" />
+	  <None Remove="FodyWeavers.xsd" />
+	</ItemGroup>
+
+
  
 
 	<ItemGroup>

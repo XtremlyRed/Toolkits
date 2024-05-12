@@ -12,7 +12,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<LangVersion>11</LangVersion>
-		<Description>controls core</Description>
+		<Description>controls core, IFileSystemPicker,IPopupManager </Description>
 	</PropertyGroup>
 
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
@@ -10,6 +11,8 @@ namespace Toolkits.Wpf;
 /// <summary>
 /// The base class for all message popup views.
 /// </summary>
+
+[EditorBrowsable(EditorBrowsableState.Never)]
 public abstract class PopupMessageViewBase : UserControl
 {
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -73,4 +76,19 @@ public abstract class PopupMessageViewBase : UserControl
             messageSemaphoreSlim.Release(1);
         }
     }
+
+    #region hide base function
+
+
+    /// <summary>
+    /// Returns a string that represents the current object.
+    /// </summary>
+    /// <returns>A string that represents the current object.</returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override string? ToString()
+    {
+        return base.ToString();
+    }
+
+    #endregion
 }

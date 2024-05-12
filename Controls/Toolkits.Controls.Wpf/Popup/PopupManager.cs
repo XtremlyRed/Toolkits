@@ -425,6 +425,8 @@ public class PopupManager : IPopupManager
     /// </summary>
     /// <param name="element"></param>
     /// <returns></returns>
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public static Type GetMessageContainerType(AdornerDecorator element)
     {
         return (Type)element.GetValue(MessageContainerTypeProperty);
@@ -437,6 +439,8 @@ public class PopupManager : IPopupManager
     /// </summary>
     /// <param name="element"></param>
     /// <param name="messageContainerType"></param>
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public static void SetMessageContainerType(AdornerDecorator element, Type messageContainerType)
     {
         if (messageContainerType is null)
@@ -473,6 +477,8 @@ public class PopupManager : IPopupManager
     /// </summary>
     /// <param name="adornerDecorator"></param>
     /// <returns></returns>
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     private static Type GetToastContainerType(AdornerDecorator adornerDecorator)
     {
         return (Type)adornerDecorator.GetValue(ToastContainerTypeProperty);
@@ -484,6 +490,8 @@ public class PopupManager : IPopupManager
     /// </summary>
     /// <param name="adornerDecorator"></param>
     /// <param name="toastContainerType"></param>
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     private static void SetToastContainerType(AdornerDecorator adornerDecorator, Type toastContainerType)
     {
         if (toastContainerType is null)
@@ -550,8 +558,7 @@ public class PopupManager : IPopupManager
     #endregion
 
 
-
-    #region Container
+    #region container
 
     /// <summary>
     /// get mask maskBrush of popup container
@@ -597,6 +604,32 @@ public class PopupManager : IPopupManager
     {
         ThemeDataContext.themeDataContext.ChangedTheme(isDarkTheme);
     }
+
+    /// <summary>
+    /// Sets the theme brush.
+    /// </summary>
+    /// <param name="obj">The object.</param>
+    /// <param name="value">The value.</param>
+    public static void SetThemeBrush(DependencyObject obj, ThemeBrush value)
+    {
+        obj.SetValue(ThemeBrushProperty, value);
+    }
+
+    /// <summary>
+    /// The theme brush property
+    /// </summary>
+    public static readonly DependencyProperty ThemeBrushProperty = DependencyProperty.RegisterAttached(
+        "ThemeBrush",
+        typeof(ThemeBrush),
+        typeof(PopupManager),
+        new PropertyMetadata(
+            null,
+            (s, e) =>
+            {
+                ThemeDataContext.themeDataContext.ChangedTheme(e.NewValue as ThemeBrush);
+            }
+        )
+    );
 
     #endregion
 }

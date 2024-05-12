@@ -1,4 +1,5 @@
 ﻿global using UserControl = System.Windows.Controls.UserControl;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Media.Animation;
 using Toolkits.Wpf;
@@ -8,6 +9,7 @@ namespace Toolkits.Wpf;
 /// <summary>
 /// The base class for all toast popup views.
 /// </summary>
+[EditorBrowsable(EditorBrowsableState.Never)]
 public abstract class PopupToastViewBase : UserControl
 {
     internal Action? CloseCallback { get; set; }
@@ -100,4 +102,19 @@ public abstract class PopupToastViewBase : UserControl
 
         story.Begin();
     }
+
+    #region hide base function
+
+
+    /// <summary>
+    /// Returns a string that represents the current object.
+    /// </summary>
+    /// <returns>A string that represents the current object.</returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override string? ToString()
+    {
+        return base.ToString();
+    }
+
+    #endregion
 }

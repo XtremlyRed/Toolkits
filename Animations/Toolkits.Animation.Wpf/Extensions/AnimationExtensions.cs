@@ -87,12 +87,12 @@ public static class AnimationExtensions
             return storyboard;
         }
 
-        if (GetCompleteCallback(storyboard) is not HashSet<CompleteInfo> actions)
+        if (GetCompleteCallback(storyboard) is not HashSet<CompleteInfo> completeInfos)
         {
-            SetCompleteCallback(storyboard, actions = new HashSet<CompleteInfo>());
+            SetCompleteCallback(storyboard, completeInfos = new HashSet<CompleteInfo>());
         }
 
-        actions.Add(new CompleteInfo(completeCallback, removeCallbackWhenStoryboardCompleted));
+        completeInfos.Add(new CompleteInfo(completeCallback, removeCallbackWhenStoryboardCompleted));
 
         storyboard.Completed += Storyboard_Completed;
 
@@ -100,29 +100,32 @@ public static class AnimationExtensions
 
         static async void Storyboard_Completed(object? sender, EventArgs e)
         {
-            if (sender is not ClockGroup clockGroup || clockGroup.Timeline is not Storyboard ss)
+            if (sender is not ClockGroup clockGroup || clockGroup.Timeline is not Storyboard storyboard)
             {
                 return;
             }
 
-            if (GetCompleteCallback(ss) is not HashSet<CompleteInfo> infos)
+            if (GetCompleteCallback(storyboard) is not HashSet<CompleteInfo> completeInfos)
             {
                 return;
             }
 
-            foreach (var info in infos)
+            foreach (var completeInfo in completeInfos)
             {
-                if (info is null || info.Callback is null)
+                if (completeInfo is null || completeInfo.Callback is null)
                 {
                     continue;
                 }
 
-                if (info.AutoRelease)
+                if (completeInfo.AutoRelease)
                 {
-                    await clockGroup.Dispatcher.InvokeAsync(() => ss.Completed -= Storyboard_Completed);
+                    await clockGroup.Dispatcher.InvokeAsync(() =>
+                    {
+                        storyboard.Completed -= Storyboard_Completed;
+                    });
                 }
 
-                info.Callback();
+                completeInfo.Callback();
             }
         }
     }

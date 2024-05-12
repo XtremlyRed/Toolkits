@@ -1,5 +1,6 @@
 ﻿using System.Windows.Media;
 using Toolkits.Core;
+using Toolkits.Wpf;
 using ColorConverter = System.Windows.Media.ColorConverter;
 
 namespace Toolkits.Controls.PopupView;
@@ -37,6 +38,20 @@ internal class ThemeDataContext : BindableBase
     private ThemeDataContext()
     {
         ChangedTheme(false);
+    }
+
+    public void ChangedTheme(ThemeBrush? themeBrush)
+    {
+        if (themeBrush is null)
+        {
+            return;
+        }
+
+        Foreground = themeBrush.Foreground;
+        Background = themeBrush.Background;
+
+        BorderBrush = themeBrush.BorderBrush;
+        OperationAreaBrush = themeBrush.OperationAreaBrush;
     }
 
     public void ChangedTheme(bool isDarkTheme)

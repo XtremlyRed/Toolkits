@@ -11,12 +11,33 @@
     Height="450"
     mc:Ignorable="d">
 
-    <AdornerDecorator toolkit:PopupManager.ContainerName="MainPopupContainer" toolkit:PopupManager.IsMainContainer="True">
+    <Window.Resources>
+
+        <SolidColorBrush x:Key="TestBrush" Color="Red" />
+
+
+        <toolkit:ThemeBrush
+            x:Key="DefaultThemeBrush"
+            Background="{DynamicResource TestBrush}"
+            Foreground="{DynamicResource TestBrush}" />
+
+    </Window.Resources>
+
+    <AdornerDecorator
+        toolkit:PopupManager.ContainerName="MainPopupContainer"
+        toolkit:PopupManager.IsMainContainer="True"
+        toolkit:PopupManager.MaskBrush="{SolidColorBrush Color=Brown,
+                                                         Opacity=0.5}"
+        toolkit:PopupManager.ThemeBrush="{DynamicResource DefaultThemeBrush}">
+
+
         <Button
             Width="{Double 200}"
             Background="Transparent"
+            BorderBrush="{SolidColorBrush Red}"
             Click="Button_Click"
-            Content="Open Popup">
+            Content="Open Popup"
+            Tag="{SolidColorBrush Color=Aqua}">
 
 
             <toolkit:Interaction.Animations>
@@ -39,7 +60,7 @@
 
                     <toolkit:SlideXAnimation
                         Play="{Binding Play}"
-                        SlideMode="Left" 
+                        SlideMode="Left"
                         To="0"
                         Duration="0:0:01" />
                     <toolkit:SlideYAnimation
