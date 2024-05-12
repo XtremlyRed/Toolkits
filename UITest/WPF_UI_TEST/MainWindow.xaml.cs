@@ -34,7 +34,7 @@ public partial class MainWindow : Window
         // Angle = 90;
 
         Play = true;
-
+        Play = false;
         //PopupManager popupManager = new PopupManager();
 
         //for (int i = 0; i < 5; i++)

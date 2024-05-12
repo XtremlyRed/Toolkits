@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Xml.Linq;
-using static Toolkits.Wpf.RenderTransfromAnimationExtensions;
+using static Toolkits.Wpf.Internal.RenderTransfromAnimationExtensions;
 
 namespace Toolkits.Wpf;
 

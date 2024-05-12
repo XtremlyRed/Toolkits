@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Animation;
 using System.Xml.Linq;
+using Toolkits.Wpf.Internal;
 
 namespace Toolkits.Wpf;
 

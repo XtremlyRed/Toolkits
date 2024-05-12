@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
+using Toolkits.Wpf.Internal;
 
 namespace Toolkits.Wpf;
 

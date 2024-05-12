@@ -1,18 +1,38 @@
 ﻿using System.Windows.Media;
-using PropertyChanged;
+using Toolkits.Core;
 using ColorConverter = System.Windows.Media.ColorConverter;
 
 namespace Toolkits.Controls.PopupView;
 
-[AddINotifyPropertyChangedInterface]
-internal class ThemeDataContext
+internal class ThemeDataContext : BindableBase
 {
     public static ThemeDataContext themeDataContext = new();
 
-    public Brush? BorderBrush { get; set; }
-    public Brush? Background { get; set; }
-    public Brush? Foreground { get; set; }
-    public Brush? OperationAreaBrush { get; set; }
+    Brush? borderBrush;
+    Brush? background;
+    Brush? foreground;
+    Brush? operationAreaBrush;
+
+    public Brush? BorderBrush
+    {
+        get => borderBrush;
+        set => SetProperty(ref borderBrush, value);
+    }
+    public Brush? Background
+    {
+        get => background;
+        set => SetProperty(ref background, value);
+    }
+    public Brush? Foreground
+    {
+        get => foreground;
+        set => SetProperty(ref foreground, value);
+    }
+    public Brush? OperationAreaBrush
+    {
+        get => operationAreaBrush;
+        set => SetProperty(ref operationAreaBrush, value);
+    }
 
     private ThemeDataContext()
     {
@@ -21,9 +41,7 @@ internal class ThemeDataContext
 
     public void ChangedTheme(bool isDarkTheme)
     {
-        Foreground = isDarkTheme
-            ? new SolidColorBrush(Colors.White)
-            : new SolidColorBrush(Colors.Black);
+        Foreground = isDarkTheme ? new SolidColorBrush(Colors.White) : new SolidColorBrush(Colors.Black);
         Background = isDarkTheme
             ? new SolidColorBrush((Color)ColorConverter.ConvertFromString("#1e1e1e"))
             : new SolidColorBrush((Color)ColorConverter.ConvertFromString("#fafafa"));

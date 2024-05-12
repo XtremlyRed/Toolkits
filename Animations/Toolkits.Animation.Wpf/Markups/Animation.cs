@@ -1,93 +1,155 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
+using System.Windows.Media.Animation;
+using Toolkits.Wpf.Internal;
 using static System.Reflection.BindingFlags;
 
 namespace Toolkits.Wpf;
 
 /// <summary>
-///
+/// a class of <see cref="Animation"/>
 /// </summary>
-public partial class Animation
+/// <seealso cref="System.Windows.Freezable" />
+public abstract class Animation : Freezable
 {
     /// <summary>
-    ///  the declare.
+    /// Creates the instance core.
     /// </summary>
-    /// <param name="obj">The object.</param>
-    /// <param name="value">The value.</param>
-    public static void SetDeclare(FrameworkElement obj, Animation value)
+    /// <returns></returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    protected override Freezable? CreateInstanceCore()
     {
-        obj.SetValue(DeclareProperty, value);
+        return Activator.CreateInstance(this.GetType()) as Freezable;
     }
 
     /// <summary>
-    /// The declare property
+    /// Creates the animation.
     /// </summary>
-    public static readonly DependencyProperty DeclareProperty = DependencyProperty.RegisterAttached(
-        "Declare",
+    /// <param name="element">The element.</param>
+    /// <param name="propertyOwner">The property owner.</param>
+    /// <returns></returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    internal abstract AnimationTimeline CreateAnimation(FrameworkElement element, out object propertyOwner);
+
+    /// <summary>
+    ///  event mode.
+    /// </summary>
+    public virtual EventMode EventMode
+    {
+        get { return (EventMode)GetValue(EventModeProperty); }
+        set { SetValue(EventModeProperty, value); }
+    }
+
+    /// <summary>
+    ///  event mode.
+    /// </summary>
+    public static readonly DependencyProperty EventModeProperty = DependencyProperty.Register(
+        "EventMode",
+        typeof(EventMode),
         typeof(Animation),
+        new PropertyMetadata(EventMode.Loaded)
+    );
+
+    /// <summary>
+    /// the play.
+    /// </summary>
+    public bool? Play
+    {
+        get { return (bool?)GetValue(PlayProperty); }
+        set { SetValue(PlayProperty, value); }
+    }
+
+    /// <summary>
+    ///   play property
+    /// </summary>
+    public static readonly DependencyProperty PlayProperty = DependencyProperty.Register(
+        "Play",
+        typeof(bool?),
         typeof(Animation),
-        new PropertyMetadata(
+        new FrameworkPropertyMetadata(
             null,
+            FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
             (s, e) =>
             {
-                if (s is not FrameworkElement frameworkElement || e.NewValue is not AnimationGroup animationBase)
+                if (e.NewValue is not true || s is null)
                 {
                     return;
                 }
 
-                if (animationBase is AnimationGroup declareGroup)
+                if (s is Animation animation)
                 {
-                    if (declareGroup is not null && declareGroup.Children.Count > 0)
-                    {
-                        foreach (var item in declareGroup.Children)
-                        {
-                            Register(frameworkElement, item);
-                        }
-                    }
+                    animation.AnimationInvoke();
                 }
-                else
+                else if (s is AnimationCollection animations)
                 {
-                    Register(frameworkElement, animationBase);
+                    animations.AnimationInvoke();
                 }
-
-                static void Register(FrameworkElement frameworkElement, Animation animationBase)
-                {
-                    //var animation = animationBase.CreateAnimation(frameworkElement, out var owner);
-
-                    var animationType = animationBase.GetType();
-
-                    var defaultValue = animationType.GetProperty("DefaultValue", Instance | Public | NonPublic)?.GetValue(animationBase);
-                    // var fromValue = animation.GetType().GetProperty("From", Instance | Public | NonPublic)?.GetValue(animation);
-
-                    DependencyProperty? property = animationBase is IPropertyAnimation propertyAnimation
-                        ? propertyAnimation.Property
-                        : animationType.GetProperty("Property", Instance | Public | NonPublic)?.GetValue(animationBase) as DependencyProperty;
-
-                    var info = new AnimationInfo()
-                    {
-                        // EventMode = animationBase.EventMode,
-                        Animation = animationBase,
-                        //ElementRef = new WeakReference(owner),
-                        UIElementRef = new WeakReference(frameworkElement),
-                        Property = property
-                    };
-
-                    AnimationExtensions.SetAnimationInfo(animationBase, info);
-
-                    if (info.Property is not null && defaultValue is not null)
-                    {
-                        frameworkElement.SetCurrentValue(info.Property, defaultValue);
-                    }
-
-                    AnimationExtensions.GetAnimations(frameworkElement).Add(info);
-
-                    AnimationExtensions.RegisterEvent(frameworkElement, animationBase.EventMode);
-                }
-            }
+            },
+            null,
+            true,
+            UpdateSourceTrigger.PropertyChanged
         )
+    );
+
+    /// <summary>
+    /// Animations the invoke.
+    /// </summary>
+    internal void AnimationInvoke()
+    {
+        this.SetCurrentValue(PlayProperty, false);
+        Extensions.GetAnimationInfo(this).Invoke();
+    }
+}
+
+/// <summary>
+/// a class of <see cref="AnimationGeneric{T}"/>
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <seealso cref="System.Windows.Freezable" />
+public abstract class AnimationGeneric<T> : AnimationBase
+{
+    /// <summary>
+    /// to value
+    /// </summary>
+    public T? To
+    {
+        get { return (T?)GetValue(ToProperty); }
+        set { SetValue(ToProperty, value); }
+    }
+
+    /// <summary>
+    /// to value
+    /// </summary>
+    public static readonly DependencyProperty ToProperty = DependencyProperty.Register(
+        "To",
+        typeof(T?),
+        typeof(AnimationGeneric<T>),
+        new PropertyMetadata(null)
+    );
+
+    /// <summary>
+    ///  from value.
+    /// </summary>
+    public T? From
+    {
+        get { return (T?)GetValue(FromProperty); }
+        set { SetValue(FromProperty, value); }
+    }
+
+    /// <summary>
+    ///  from value.
+    /// </summary>
+    public static readonly DependencyProperty FromProperty = DependencyProperty.Register(
+        "From",
+        typeof(T?),
+        typeof(AnimationGeneric<T>),
+        new PropertyMetadata(null)
     );
 }

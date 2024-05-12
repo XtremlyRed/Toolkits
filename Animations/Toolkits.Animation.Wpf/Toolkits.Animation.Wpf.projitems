@@ -12,8 +12,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Enums\EasingType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums\EventMode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\AnimationExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Extensions\CommonExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Extensions\RenderTransfromAnimationExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\CommonExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\Extensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\RenderTransfromAnimationExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)KeyFrameAnimations\ObjectAnimationUsingKeyFramesBuildExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LineAnimations\ColorAnimationBuildExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LineAnimations\DoubleAnimationBuildExtension.cs" />
@@ -26,10 +27,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)LineAnimations\ThicknessAnimationBuildExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LineAnimations\Vector3DAnimationBuildExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LineAnimations\VectorAnimationBuildExtension.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Markups\Animation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Markups\Interaction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Markups\AnimationBase.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Markups\Animation.Impl.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Markups\AnimationGroup.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Markups\Animation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Markups\AnimationCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Markups\IAnimationInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Markups\PropertyAnimationGenerice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Markups\RenderTransfromAnimationGenerice.cs" />

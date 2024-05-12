@@ -19,36 +19,40 @@
             Content="Open Popup">
 
 
-            <toolkit:Animation.Declare>
+            <toolkit:Interaction.Animations>
 
-                <toolkit:AnimationGroup Play="{Binding Play}">
+                <AnimationCollection>
 
 
                     <toolkit:BrushPropertyAnimation
+                        Play="{Binding Play}"
                         Property="{x:Static Button.BackgroundProperty}"
                         From="Transparent"
                         To="Green"
                         Duration="0:0:01" />
                     <toolkit:ThicknessPropertyAnimation
+                        Play="{Binding Play}"
                         Property="{x:Static Button.MarginProperty}"
                         From="0,0,0,0"
                         To="100"
                         Duration="0:0:01" />
 
                     <toolkit:SlideXAnimation
-                        SlideMode="Left"
-                        From="-200"
+                        Play="{Binding Play}"
+                        SlideMode="Left" 
                         To="0"
                         Duration="0:0:01" />
                     <toolkit:SlideYAnimation
+                        Play="{Binding Play}"
                         SlideMode="Top"
                         From="200"
                         To="0"
                         Duration="0:0:01" />
 
+                </AnimationCollection>
 
-                </toolkit:AnimationGroup>
-            </toolkit:Animation.Declare>
+
+            </toolkit:Interaction.Animations>
         </Button>
     </AdornerDecorator>
 

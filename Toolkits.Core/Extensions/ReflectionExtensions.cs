@@ -172,18 +172,9 @@ public static class ReflectionExtensions
     /// <param name="setValue"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentException"></exception>
-    private static object? FindMemberValueIgnoreCase(
-        object instance,
-        string memberName,
-        bool isSetValue = false,
-        object? setValue = null
-    )
+    private static object? FindMemberValueIgnoreCase(object instance, string memberName, bool isSetValue = false, object? setValue = null)
     {
-        const BindingFlags bindingFlags =
-            BindingFlags.Public
-            | BindingFlags.NonPublic
-            | BindingFlags.Instance
-            | BindingFlags.IgnoreCase;
+        const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.IgnoreCase;
 
         Type type = instance.GetType();
 
@@ -211,9 +202,7 @@ public static class ReflectionExtensions
             return field.GetValue(instance);
         }
 
-        throw new ArgumentException(
-            $"Property or Field '{memberName}' does not exist in object type '{type}'."
-        );
+        throw new ArgumentException($"Property or Field '{memberName}' does not exist in object type '{type}'.");
     }
 
     private static bool IsCollectionType(this Type type, bool containsStringType = false)
@@ -224,6 +213,269 @@ public static class ReflectionExtensions
         }
 
         return typeof(IEnumerable).IsAssignableFrom(type);
+    }
+
+    #endregion
+
+
+
+    #region get/set member value
+
+    /// <summary>
+    /// Gets the member value.
+    /// </summary>
+    /// <param name="source">The source.</param>
+    /// <param name="memberPath">The member path.</param>
+    /// <param name="ignoreCase">if set to <c>true</c> [ignore case].</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">source</exception>
+    /// <exception cref="ArgumentException">Member path cannot be null or empty. - memberPath</exception>
+    public static object GetMemberValue(object source, string memberPath, bool ignoreCase = false)
+    {
+        if (source is null)
+        {
+            throw new ArgumentNullException(nameof(source));
+        }
+
+        if (string.IsNullOrWhiteSpace(memberPath))
+        {
+            throw new ArgumentException("Member path cannot be null or empty.", nameof(memberPath));
+        }
+
+        return InnerGetValue(source, memberPath.ToCharArray(), 0, ignoreCase);
+
+        static object InnerGetValue(object source, char[] chars, int index = 0, bool ignoreCase = false)
+        {
+            int last = chars.Length - 1;
+
+            for (int i = index, length = chars.Length; i < length; i++)
+            {
+                // member
+                if (chars[i] is '.' or '[')
+                {
+                    string memberName = new string(chars, index, i - index);
+
+                    object currentValue = GetValue(source, memberName, ignoreCase);
+
+                    return InnerGetValue(currentValue, chars, i + 1, ignoreCase);
+                }
+
+                //collection
+                if (chars[i] == ']')
+                {
+                    string memberName = new string(chars, index, i - index);
+                    int offset = int.Parse(memberName);
+
+                    object currentValue = GetCollectionValue(source as IEnumerable, offset);
+
+                    offset = i + 1;
+
+                    if (offset < length && (chars[offset] is '[' or '.'))
+                    {
+                        offset += 1;
+                    }
+
+                    return InnerGetValue(currentValue, chars, offset, ignoreCase);
+                }
+
+                // member
+                if (i == last)
+                {
+                    string memberName = new string(chars, index, i - index + 1);
+
+                    object currentValue = GetValue(source, memberName, ignoreCase);
+
+                    return currentValue;
+                }
+            }
+
+            return source;
+        }
+    }
+
+    /// <summary>
+    /// Sets the member value.
+    /// </summary>
+    /// <param name="source">The source.</param>
+    /// <param name="memberPath">The member path.</param>
+    /// <param name="value">The value.</param>
+    /// <param name="ignoreCase">if set to <c>true</c> [ignore case].</param>
+    /// <exception cref="ArgumentNullException">source</exception>
+    /// <exception cref="ArgumentException">Member path cannot be null or empty. - memberPath</exception>
+    public static void SetMemberValue(object source, string memberPath, object value, bool ignoreCase = false)
+    {
+        if (source is null)
+        {
+            throw new ArgumentNullException(nameof(source));
+        }
+
+        if (string.IsNullOrWhiteSpace(memberPath))
+        {
+            throw new ArgumentException("Member path cannot be null or empty.", nameof(memberPath));
+        }
+
+        InnerSetValue(source, memberPath.ToCharArray(), 0, value, ignoreCase);
+
+        static void InnerSetValue(object source, char[] chars, int index, object value, bool ignoreCase)
+        {
+            int last = chars.Length - 1;
+
+            for (int i = index, length = chars.Length; i < length; i++)
+            {
+                // member
+                if (chars[i] is '.' or '[')
+                {
+                    string memberName = new string(chars, index, i - index);
+
+                    object currentValue = GetValue(source, memberName, ignoreCase);
+
+                    InnerSetValue(currentValue, chars, i + 1, value, ignoreCase);
+
+                    return;
+                }
+
+                // collection
+                if (chars[i] == ']')
+                {
+                    string memberName = new string(chars, index, i - index);
+                    int offset = int.Parse(memberName);
+
+                    if (i == last)
+                    {
+                        if (source is IList list)
+                        {
+                            list[offset] = value;
+                            return;
+                        }
+
+                        throw new InvalidOperationException($"object type must be {typeof(IList).FullName}");
+                    }
+
+                    object currentValue = GetCollectionValue(source as IEnumerable, offset);
+
+                    offset = i + 1;
+
+                    if (offset < length && (chars[offset] is '[' or '.'))
+                    {
+                        offset += 1;
+                    }
+
+                    InnerSetValue(currentValue, chars, offset, value, ignoreCase);
+
+                    return;
+                }
+
+                // member
+                if (i == last)
+                {
+                    string memberName = new string(chars, index, i - index + 1);
+
+                    SetValue(source, memberName, value, ignoreCase);
+
+                    return;
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Sets the value.
+    /// </summary>
+    /// <param name="obj">The object.</param>
+    /// <param name="memberName">Name of the member.</param>
+    /// <param name="value">The value.</param>
+    /// <param name="ignoreCase">if set to <c>true</c> [ignore case].</param>
+    /// <exception cref="InvalidOperationException">Member variable '{memberName}' not found.</exception>
+    private static void SetValue(object obj, string memberName, object value, bool ignoreCase = false)
+    {
+        BindingFlags bindingFlag = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+        if (ignoreCase)
+        {
+            bindingFlag |= BindingFlags.IgnoreCase;
+        }
+
+        Type dataType = obj.GetType();
+
+        PropertyInfo? property = dataType.GetProperty(memberName, bindingFlag);
+
+        if (property is not null)
+        {
+            property.SetValue(obj, value);
+            return;
+        }
+
+        FieldInfo? field = dataType.GetField(memberName, bindingFlag);
+
+        if (field is not null)
+        {
+            field.SetValue(obj, value);
+            return;
+        }
+
+        throw new InvalidOperationException($"Member variable '{memberName}' not found.");
+    }
+
+    /// <summary>
+    /// Gets the collection value.
+    /// </summary>
+    /// <param name="objects">The objects.</param>
+    /// <param name="offset">The offset.</param>
+    /// <returns></returns>
+    /// <exception cref="IndexOutOfRangeException"></exception>
+    private static object GetCollectionValue(IEnumerable? objects, int offset)
+    {
+        if (objects is null)
+        {
+            return null!;
+        }
+
+        int index = 0;
+        foreach (object? item in objects)
+        {
+            if (index == offset)
+            {
+                return item!;
+            }
+            index++;
+        }
+
+        throw new IndexOutOfRangeException($"{offset}: out of range");
+    }
+
+    /// <summary>
+    /// Gets the value.
+    /// </summary>
+    /// <param name="obj">The object.</param>
+    /// <param name="memberName">Name of the member.</param>
+    /// <param name="ignoreCase">if set to <c>true</c> [ignore case].</param>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException">member variable:{memberName} not found</exception>
+    private static object GetValue(object obj, string memberName, bool ignoreCase = false)
+    {
+        BindingFlags bindingFlag = Instance | Public | NonPublic;
+
+        if (ignoreCase)
+        {
+            bindingFlag |= IgnoreCase;
+        }
+
+        Type dataType = obj.GetType();
+
+        PropertyInfo? property = dataType.GetProperty(memberName, bindingFlag);
+
+        if (property is not null)
+        {
+            return property.GetValue(obj)!;
+        }
+
+        FieldInfo? field = dataType.GetField(memberName, bindingFlag);
+
+        if (field is not null)
+        {
+            return field.GetValue(obj)!;
+        }
+
+        throw new InvalidOperationException($"member variable:{memberName} not found");
     }
 
     #endregion
@@ -244,10 +496,7 @@ public static class ReflectionExtensions
         {
             typeName = type.Name.Replace($"`{typeArguments.Length}", "");
 
-            string typeArgumentString = string.Join(
-                ",",
-                typeArguments.Select(genericType => GetExplicitName(genericType))
-            );
+            string typeArgumentString = string.Join(",", typeArguments.Select(genericType => GetExplicitName(genericType)));
 
             return $"{typeName}<{typeArgumentString}>";
         }
@@ -269,10 +518,7 @@ public static class ReflectionExtensions
         StringComparison stringComparison = StringComparison.OrdinalIgnoreCase
     )
     {
-        string? resourceFullName = assembly
-            .GetManifestResourceNames()
-            .Where(i => i.IndexOf(resourceName, stringComparison) > 0)
-            .SingleOrDefault();
+        string? resourceFullName = assembly.GetManifestResourceNames().Where(i => i.IndexOf(resourceName, stringComparison) > 0).SingleOrDefault();
 
         if (string.IsNullOrWhiteSpace(resourceFullName))
         {
@@ -297,11 +543,7 @@ public static class ReflectionExtensions
     /// <param name="methodName"></param>
     /// <param name="params"></param>
 
-    public static object? InvokeMethod<Target>(
-        Target target,
-        string methodName,
-        params object[] @params
-    )
+    public static object? InvokeMethod<Target>(Target target, string methodName, params object[] @params)
         where Target : class
     {
         if (target is null)
@@ -311,11 +553,7 @@ public static class ReflectionExtensions
 
         Type[]? types = @params?.Select(i => i.GetType()).ToArray();
 
-        BindingFlags binf =
-            BindingFlags.NonPublic
-            | BindingFlags.Public
-            | BindingFlags.Instance
-            | BindingFlags.Static;
+        BindingFlags binf = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static;
 
         Type type = target.GetType()!;
 
@@ -350,11 +588,7 @@ public static class ReflectionExtensions
     /// <param name="target"></param>
     /// <param name="methodName"></param>
     /// <param name="params"></param>
-    public static async Task InvokeMethodAsync<Target>(
-        Target target,
-        string methodName,
-        params object[] @params
-    )
+    public static async Task InvokeMethodAsync<Target>(Target target, string methodName, params object[] @params)
         where Target : class
     {
         if (target is null)
@@ -364,15 +598,9 @@ public static class ReflectionExtensions
 
         Type[]? types = @params?.Select(i => i.GetType()).ToArray();
 
-        BindingFlags binf =
-            BindingFlags.NonPublic
-            | BindingFlags.Public
-            | BindingFlags.Instance
-            | BindingFlags.Static;
+        BindingFlags binf = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static;
 
-        System.Reflection.MethodInfo? methodInfo = target
-            .GetType()
-            .GetMethod(methodName, binf, null, types!, null);
+        System.Reflection.MethodInfo? methodInfo = target.GetType().GetMethod(methodName, binf, null, types!, null);
         if (methodInfo is null)
         {
             return;
@@ -454,11 +682,7 @@ public static class ReflectionExtensions
     /// <param name="filter">The filter.</param>
     /// <param name="value">The value.</param>
     /// 2024/2/19 14:33
-    public static void SetPropertyValue<TObject, TProperty>(
-        TObject target,
-        Expression<Func<TObject, TProperty>> filter,
-        TProperty value
-    )
+    public static void SetPropertyValue<TObject, TProperty>(TObject target, Expression<Func<TObject, TProperty>> filter, TProperty value)
     {
         if (target is null || filter is null)
         {
@@ -482,9 +706,7 @@ public static class ReflectionExtensions
     /// <param name="propertySelector">property Selector</param>
     /// <returns></returns>
     /// <Exception cref="ArgumentNullException"></Exception>
-    public static string GetPropertyName<TSource, TPropertyType>(
-        Expression<Func<TSource, TPropertyType>> propertySelector
-    )
+    public static string GetPropertyName<TSource, TPropertyType>(Expression<Func<TSource, TPropertyType>> propertySelector)
     {
         if (propertySelector is null)
         {
@@ -498,18 +720,13 @@ public static class ReflectionExtensions
 
         UnaryExpression? unaryExpression = propertySelector.Body as UnaryExpression;
 
-        return unaryExpression?.Operand is MemberExpression memberExpression2
-            ? memberExpression2.Member.Name
-            : string.Empty;
+        return unaryExpression?.Operand is MemberExpression memberExpression2 ? memberExpression2.Member.Name : string.Empty;
     }
 
     /// <summary>
     /// all exist attribute map
     /// </summary>
-    private static readonly ConcurrentDictionary<
-        Type,
-        Dictionary<string, Attribute[]>
-    > attributeMapper = new();
+    private static readonly ConcurrentDictionary<Type, Dictionary<string, Attribute[]>> attributeMapper = new();
 
     /// <summary>
     /// get all attributes from <see cref="Enum"/>
@@ -529,10 +746,7 @@ public static class ReflectionExtensions
             throw new InvalidOperationException("invalid data type");
         }
 
-        if (
-            attributeMapper.TryGetValue(enumType, out Dictionary<string, Attribute[]>? mapper)
-            == false
-        )
+        if (attributeMapper.TryGetValue(enumType, out Dictionary<string, Attribute[]>? mapper) == false)
         {
             Type type = enumValue.GetType();
             string[] allNames = Enum.GetNames(type);
@@ -544,10 +758,7 @@ public static class ReflectionExtensions
                 FieldInfo field = type.GetField(item)!;
                 string currentLongValue = field.GetValue(null)!.ToString()!;
 
-                valueAttributes[currentLongValue] = field
-                    .GetCustomAttributes()
-                    .OfType<Attribute>()
-                    .ToArray();
+                valueAttributes[currentLongValue] = field.GetCustomAttributes().OfType<Attribute>().ToArray();
             }
 
             attributeMapper[enumType] = mapper = valueAttributes;
@@ -563,16 +774,11 @@ public static class ReflectionExtensions
     /// <typeparam name="TAttribute">The type of the attribute.</typeparam>
     /// <returns></returns>
     /// 2024/1/26 11:59
-    public static IDictionary<PropertyInfo, TAttribute> GetPropertyAttributes<
-        TObjectType,
-        TAttribute
-    >(bool removeNull = false)
+    public static IDictionary<PropertyInfo, TAttribute> GetPropertyAttributes<TObjectType, TAttribute>(bool removeNull = false)
         where TAttribute : Attribute
         where TObjectType : class
     {
-        PropertyInfo[] fields = typeof(TObjectType)
-            .GetProperties(BindingFlags.Instance | BindingFlags.Public)
-            .ToArray();
+        PropertyInfo[] fields = typeof(TObjectType).GetProperties(BindingFlags.Instance | BindingFlags.Public).ToArray();
 
         Dictionary<PropertyInfo, TAttribute> dict = fields
             .Select(i => new { Mode = i, Attribute = i.GetCustomAttribute<TAttribute>() })
@@ -597,13 +803,9 @@ public static class ReflectionExtensions
         where TAttribute : Attribute
         where TObjectType : class
     {
-        FieldInfo[] fields = typeof(TObjectType)
-            .GetFields(BindingFlags.Instance | BindingFlags.Public)
-            .ToArray();
+        FieldInfo[] fields = typeof(TObjectType).GetFields(BindingFlags.Instance | BindingFlags.Public).ToArray();
 
-        return fields
-            .Select(i => new { Mode = i, Attribute = i.GetCustomAttribute<TAttribute>() })
-            .ToDictionary(i => i.Mode, i => i.Attribute!);
+        return fields.Select(i => new { Mode = i, Attribute = i.GetCustomAttribute<TAttribute>() }).ToDictionary(i => i.Mode, i => i.Attribute!);
     }
 
     /// <summary>
@@ -620,11 +822,7 @@ public static class ReflectionExtensions
         FieldInfo[] fields = typeof(TEnum).GetFields().Where(i => i.IsStatic).ToArray();
 
         return fields
-            .Select(i => new
-            {
-                Mode = (TEnum)i.GetValue(null)!,
-                Attribute = i.GetCustomAttribute<TAttribute>()
-            })
+            .Select(i => new { Mode = (TEnum)i.GetValue(null)!, Attribute = i.GetCustomAttribute<TAttribute>() })
             .ToDictionary(i => i.Mode, i => i.Attribute!);
     }
 
@@ -637,9 +835,7 @@ public static class ReflectionExtensions
     /// <param name="selector"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static IDictionary<TEnum, TResult> GetEnumAttributes<TEnum, TAttribute, TResult>(
-        Func<TAttribute, TResult> selector
-    )
+    public static IDictionary<TEnum, TResult> GetEnumAttributes<TEnum, TAttribute, TResult>(Func<TAttribute, TResult> selector)
         where TAttribute : Attribute
         where TEnum : struct, Enum
     {
@@ -651,11 +847,7 @@ public static class ReflectionExtensions
         FieldInfo[] fields = typeof(TEnum).GetFields().Where(i => i.IsStatic).ToArray();
 
         return fields
-            .Select(i => new
-            {
-                Mode = (TEnum)i.GetValue(null)!,
-                Attribute = i.GetCustomAttribute<TAttribute>()
-            })
+            .Select(i => new { Mode = (TEnum)i.GetValue(null)!, Attribute = i.GetCustomAttribute<TAttribute>() })
             .ToDictionary(i => i.Mode, i => selector(i.Attribute!));
     }
 }
