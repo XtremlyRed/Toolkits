@@ -16,7 +16,7 @@
         <SolidColorBrush x:Key="TestBrush" Color="Red" />
 
 
-        <toolkit:ThemeBrush
+        <toolkit:PopupTheme
             x:Key="DefaultThemeBrush"
             Background="{DynamicResource TestBrush}"
             Foreground="{DynamicResource TestBrush}" />
@@ -28,7 +28,7 @@
         toolkit:PopupManager.IsMainContainer="True"
         toolkit:PopupManager.MaskBrush="{SolidColorBrush Color=Brown,
                                                          Opacity=0.5}"
-        toolkit:PopupManager.ThemeBrush="{DynamicResource DefaultThemeBrush}">
+        toolkit:PopupManager.PopupTheme="{StaticResource DefaultThemeBrush}">
 
 
         <Button
@@ -39,18 +39,25 @@
             Content="Open Popup"
             Tag="{SolidColorBrush Color=Aqua}">
 
-
             <toolkit:Interaction.Animations>
 
                 <AnimationCollection>
 
 
+                    <toolkit:ThicknessPropertyAnimation
+                        Play="{Binding Play}"
+                        Property="{x:Static Button.BorderThicknessProperty}"
+                        From="1"
+                        To="0"
+                        Duration="0:0:01" />
+
                     <toolkit:BrushPropertyAnimation
                         Play="{Binding Play}"
                         Property="{x:Static Button.BackgroundProperty}"
-                        From="Transparent"
-                        To="Green"
+                        From="DeepSkyBlue"
+                        To="LightGray"
                         Duration="0:0:01" />
+
                     <toolkit:ThicknessPropertyAnimation
                         Play="{Binding Play}"
                         Property="{x:Static Button.MarginProperty}"
@@ -69,9 +76,7 @@
                         From="200"
                         To="0"
                         Duration="0:0:01" />
-
                 </AnimationCollection>
-
 
             </toolkit:Interaction.Animations>
         </Button>

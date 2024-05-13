@@ -9,7 +9,7 @@ public interface IPopupManager
 {
     /// <summary>
     /// show message with <paramref name="message"/>,<paramref name="title"/>,<paramref name="buttonContents"/>,
-    /// when using, there must be a popup container with the <see cref="PopupManager.IsMainContainerProperty"/> attribute set to true
+    /// when using, there must be a popup container with the PopupManager.IsMainContainerProperty attribute set to true
     /// </summary>
     /// <param name="message">the message content of the pop-up box</param>
     /// <param name="title">the title of the pop-up box</param>
@@ -19,7 +19,7 @@ public interface IPopupManager
 
     /// <summary>
     /// comfirm message with <paramref name="message"/>,<paramref name="title"/>,<paramref name="buttonContents"/>
-    /// when using, there must be a popup container with the <code><see cref="PopupManager.IsMainContainerProperty"/></code>  attribute set to true
+    /// when using, there must be a popup container with the <code> PopupManager.IsMainContainerProperty </code>  attribute set to true
     /// </summary>
     /// <param name="message">the message content of the pop-up box</param>
     /// <param name="title">the title of the pop-up box</param>
@@ -29,7 +29,7 @@ public interface IPopupManager
 
     /// <summary>
     ///
-    /// when using, there must be a popup container with the <see cref="PopupManager.IsMainContainerProperty"/> attribute set to true
+    /// when using, there must be a popup container with the PopupManager.IsMainContainerProperty attribute set to true
     /// </summary>
     /// <param name="message">the message content of the pop-up box</param>
     /// <param name="title">the title of the pop-up box</param>
@@ -71,7 +71,7 @@ public interface IPopupManager
 
     /// <summary>
     /// popup view with <paramref name="parameters"/> from  main container
-    /// when using, there must be a popup container with the <see cref="PopupManager.IsMainContainerProperty"/> attribute set to true
+    /// when using, there must be a popup container with the PopupManager.IsMainContainerProperty attribute set to true
     /// </summary>
     /// <param name="view">view</param>
     /// <param name="parameters">parameters</param>
@@ -80,7 +80,7 @@ public interface IPopupManager
 
     /// <summary>
     /// popup view with <paramref name="parameters"/> from  main container
-    /// when using, there must be a popup container with the <see cref="PopupManager.IsMainContainerProperty"/> attribute set to true
+    /// when using, there must be a popup container with the PopupManager.IsMainContainerProperty attribute set to true
     /// </summary>
     /// <param name="viewCreator">view creator</param>
     /// <param name="parameters">parameters</param>

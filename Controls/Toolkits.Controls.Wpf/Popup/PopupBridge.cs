@@ -9,6 +9,7 @@ using System.Windows.Documents;
 using System.Windows.Media.Animation;
 using Toolkits.Core;
 using Toolkits.Wpf;
+using Toolkits.Wpf.Internal;
 
 namespace Toolkits.Controls.Assist;
 

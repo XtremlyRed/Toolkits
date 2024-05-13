@@ -53,12 +53,16 @@ public class AnimationCollection : FreezableCollection<Animation>, IList, IColle
     /// <param name="animation">The animation.</param>
     void ICollection<Animation>.Add(Animation animation)
     {
-        if (animation is not null && uiSourceRefrence.Target is FrameworkElement element)
+        if (animation is null)
+        {
+            return;
+        }
+
+        if (uiSourceRefrence is not null && uiSourceRefrence.Target is FrameworkElement element)
         {
             Extensions.Register(element!, animation);
-
-            base.Add(animation);
         }
+        base.Add(animation);
     }
 
     /// <summary>

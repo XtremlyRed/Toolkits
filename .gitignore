@@ -22,3 +22,5 @@
 /Toolkits.MAUI/obj
 /Toolkits.Wpf/obj
 /Toolkits.Wpf.Core/obj
+/Test/Toolkits.Core.Test/bin
+/Test/Toolkits.Core.Test/obj

@@ -51,7 +51,7 @@ public class CompareConverter :
     /// </value>
     public object Matched
     {
-        get => GetValue(MatchedProperty);
+        get => GetValue(MatchedProperty)!;
         set => SetValue(MatchedProperty, value);
     }
 
@@ -63,7 +63,7 @@ public class CompareConverter :
     /// </value>
     public object Unmatched
     {
-        get => GetValue(UnmatchedProperty);
+        get => GetValue(UnmatchedProperty)!;
         set => SetValue(UnmatchedProperty, value);
     }
 
@@ -87,7 +87,7 @@ public class CompareConverter :
     /// </value>
     public CompareMode Mode
     {
-        get => (CompareMode)GetValue(ModeProperty);
+        get => (CompareMode)GetValue(ModeProperty)!;
         set => SetValue(ModeProperty, value);
     }
 

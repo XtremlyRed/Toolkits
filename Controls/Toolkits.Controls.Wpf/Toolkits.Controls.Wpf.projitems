@@ -12,7 +12,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Assist\ImageAssist.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Assist\PropertyAssist.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Assist\VisualTreeAssist.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\AsyncLocker.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\ReflectionExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Picker\FileSystemPicker.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Popup\PopupThemes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Popup\PopupAdorner.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Popup\PopupAdornerAssist.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Popup\PopupBridge.cs" />

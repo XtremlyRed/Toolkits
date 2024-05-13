@@ -94,13 +94,13 @@ public class FileSystemPicker : IFileSystemPicker
         string? rootFolder = null
     )
     {
-        rootFolder ??= Folder.Desktop;
+        rootFolder ??= Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         saveFileDialog.Filter = filter;
         saveFileDialog.SupportMultiDottedExtensions = false;
         saveFileDialog.Title = title;
         saveFileDialog.InitialDirectory = rootFolder;
 
-        if (defaultFileName!.IsNullOrWhiteSpace() == false)
+        if (string.IsNullOrWhiteSpace(defaultFileName) == false)
         {
             saveFileDialog.FileName = defaultFileName;
         }
@@ -133,13 +133,13 @@ public class FileSystemPicker : IFileSystemPicker
         return await await (
             Application.Current?.Dispatcher?.InvokeAsync(async () =>
             {
-                rootFolder ??= Folder.Desktop;
+                rootFolder ??= Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                 saveFileDialog.Filter = filter;
                 saveFileDialog.SupportMultiDottedExtensions = false;
                 saveFileDialog.Title = title;
                 saveFileDialog.InitialDirectory = rootFolder;
 
-                if (defaultFileName!.IsNullOrWhiteSpace() == false)
+                if (string.IsNullOrWhiteSpace(defaultFileName) == false)
                 {
                     saveFileDialog.FileName = defaultFileName;
                 }
@@ -173,7 +173,7 @@ public class FileSystemPicker : IFileSystemPicker
 
     public string? FilePicker(string filter = "all file|*.*", string title = "please select files", string? rootFolder = null)
     {
-        rootFolder ??= Folder.Desktop;
+        rootFolder ??= Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         openFileDialog.Multiselect = false;
         openFileDialog.Filter = filter;
         openFileDialog.Title = title;
@@ -198,7 +198,7 @@ public class FileSystemPicker : IFileSystemPicker
     /// <returns></returns>
     public string[]? FilesPicker(string filter = "all file|*.*", string? title = "please select files", string? rootFolder = null)
     {
-        rootFolder ??= Folder.Desktop;
+        rootFolder ??= Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         openFileDialog.Multiselect = true;
         openFileDialog.Filter = filter;
         openFileDialog.Title = title;
@@ -227,7 +227,7 @@ public class FileSystemPicker : IFileSystemPicker
         return await await (
             Application.Current?.Dispatcher?.InvokeAsync(async () =>
             {
-                rootFolder ??= Folder.Desktop;
+                rootFolder ??= Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                 openFileDialog.Multiselect = false;
                 openFileDialog.Filter = filter;
                 openFileDialog.Title = title;
@@ -265,7 +265,7 @@ public class FileSystemPicker : IFileSystemPicker
         return await await (
             Application.Current?.Dispatcher?.InvokeAsync(async () =>
             {
-                rootFolder ??= Folder.Desktop;
+                rootFolder ??= Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                 openFileDialog.Multiselect = true;
                 openFileDialog.Filter = filter;
                 openFileDialog.Title = title;

@@ -7,6 +7,8 @@ namespace Toolkits.Core;
 /// <summary>
 /// <see cref="Folder"/>
 /// </summary>
+
+[DebuggerDisplay("{folder}")]
 public readonly struct Folder : IEquatable<object>, IEquatable<Folder>
 {
     /// <summary>
@@ -317,32 +319,16 @@ public readonly struct Folder : IEquatable<object>, IEquatable<Folder>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public Folder TryCreateFolder()
     {
-        string dir = Path.GetDirectoryName(folder!)!;
-        if (Directory.Exists(dir) == false)
+        DirectoryInfo directoryInfo = new DirectoryInfo(folder);
+
+        if (directoryInfo.Exists == false)
         {
-            Directory.CreateDirectory(dir);
+            directoryInfo.Create();
         }
 
+        directoryInfo = default!;
+
         return this;
-    }
-
-    /// <summary>
-    /// Gets the relative path.
-    /// </summary>
-    /// <param name="basePath">The base path.</param>
-    /// <param name="targetPath">The target path.</param>
-    /// <returns></returns>
-    public static string GetRelativePath(string basePath, string targetPath)
-    {
-        Uri baseUri = new(basePath);
-        Uri targetUri = new(targetPath);
-        Uri relativeUri = baseUri.MakeRelativeUri(targetUri);
-
-        string relativePath = Uri.UnescapeDataString(relativeUri.ToString());
-
-        baseUri = targetUri = relativeUri = null!;
-
-        return relativePath.Replace('/', '\\');
     }
 
     /// <summary>
@@ -373,6 +359,19 @@ public readonly struct Folder : IEquatable<object>, IEquatable<Folder>
     public override bool Equals(object? obj)
     {
         return obj is Folder easyFolder && string.Compare(easyFolder.folder, folder, true) == 0;
+    }
+
+    /// <summary>
+    /// Converts to string.
+    /// </summary>
+    /// <returns>
+    /// A <see cref="System.String" /> that represents this instance.
+    /// </returns>
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override string ToString()
+    {
+        return folder;
     }
 
     /// <summary>

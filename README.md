@@ -32,32 +32,44 @@
 ### 2. Animation
 
 ``` XAML
-<Button
-    Background="Red"
-    Click="Button_Click"
-    Content="Open Popup">
+  <Button
+      Width="{Double 200}"
+      Background="Transparent"
+      BorderBrush="{SolidColorBrush Red}"
+      Click="Button_Click"
+      Content="Open Popup"
+      Tag="{SolidColorBrush Color=Aqua}">
 
-    <Animation.Declare>
-        <AnimationDeclareGroup>
-            <SlideXAnimation
-                SlideMode="Left"
-                From="-200"
-                To="0"
-                Duration="0:0:01" />
-            <SlideYAnimation
-                SlideMode="Top"
-                From="200"
-                To="0"
-                Duration="0:0:01" />
+      <toolkit:Interaction.Animations>
 
-            <ThicknessAnimationDeclare
-                Property="{x:Static Button.MarginProperty}"
-                From="0,0,0,0"
-                To="100"
-                Duration="0:0:01" />
-        </AnimationDeclareGroup>
-    </Animation.Declare>
-</Button>
+          <toolkit:BrushPropertyAnimation
+              Play="{Binding Play}"
+              Property="{x:Static Button.BackgroundProperty}"
+              From="Transparent"
+              To="Green"
+              Duration="0:0:01" />
+          <toolkit:ThicknessPropertyAnimation
+              Play="{Binding Play}"
+              Property="{x:Static Button.MarginProperty}"
+              From="0,0,0,0"
+              To="100"
+              Duration="0:0:01" />
+
+          <toolkit:SlideXAnimation
+              Play="{Binding Play}"
+              SlideMode="Left"
+              To="0"
+              Duration="0:0:01" />
+          <toolkit:SlideYAnimation
+              Play="{Binding Play}"
+              SlideMode="Top"
+              From="200"
+              To="0"
+              Duration="0:0:01" />
+
+      </toolkit:Interaction.Animations>
+
+  </Button>
 ```
 
 

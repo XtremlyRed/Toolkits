@@ -52,12 +52,12 @@ public static class Interaction
             {
                 var animation = animations[i];
 
-                if (animation is null || Extensions.GetHasRegistered(animation))
+                if (animations[i] is null)
                 {
                     continue;
                 }
 
-                Extensions.Register(element!, animation);
+                Extensions.Register(element!, animations[i]);
             }
         }
 
@@ -71,6 +71,6 @@ public static class Interaction
         "ShadowAnimations",
         typeof(AnimationCollection),
         typeof(Interaction),
-        new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault)
+        new FrameworkPropertyMetadata(null)
     );
 }

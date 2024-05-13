@@ -51,7 +51,7 @@ public sealed class Ref<T>
     }
 
     /// <summary>
-    /// Performs an implicit conversion from <see cref="T"/> to <see cref="Ref{T}"/>.
+    /// Performs an implicit conversion from <typeparamref name="T"/> to <see cref="Ref{T}"/>.
     /// </summary>
     /// <param name="targetValue">The target value.</param>
     /// <returns>

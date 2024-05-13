@@ -12,6 +12,7 @@ namespace Toolkits.Wpf;
 /// a class of <see cref="SolidColorBrushExtension"/>
 /// </summary>
 /// <seealso cref="System.Windows.Markup.MarkupExtension" />
+[MarkupExtensionReturnType(typeof(SolidColorBrush))]
 public class SolidColorBrushExtension : MarkupExtension
 {
     /// <summary>

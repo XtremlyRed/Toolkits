@@ -600,7 +600,7 @@ public class PopupManager : IPopupManager
     /// Determines whether [is dark theme] [the specified is dark theme].
     /// </summary>
     /// <param name="isDarkTheme">if set to <c>true</c> [is dark theme].</param>
-    public static void SetPopupTheme(bool isDarkTheme)
+    public static void MdifyPopupTheme(bool isDarkTheme)
     {
         ThemeDataContext.themeDataContext.ChangedTheme(isDarkTheme);
     }
@@ -610,23 +610,23 @@ public class PopupManager : IPopupManager
     /// </summary>
     /// <param name="obj">The object.</param>
     /// <param name="value">The value.</param>
-    public static void SetThemeBrush(DependencyObject obj, ThemeBrush value)
+    public static void SetPopupTheme(DependencyObject obj, PopupTheme value)
     {
-        obj.SetValue(ThemeBrushProperty, value);
+        obj.SetValue(PopupThemeProperty, value);
     }
 
     /// <summary>
     /// The theme brush property
     /// </summary>
-    public static readonly DependencyProperty ThemeBrushProperty = DependencyProperty.RegisterAttached(
-        "ThemeBrush",
-        typeof(ThemeBrush),
+    public static readonly DependencyProperty PopupThemeProperty = DependencyProperty.RegisterAttached(
+        "PopupTheme",
+        typeof(PopupTheme),
         typeof(PopupManager),
         new PropertyMetadata(
             null,
             (s, e) =>
             {
-                ThemeDataContext.themeDataContext.ChangedTheme(e.NewValue as ThemeBrush);
+                ThemeDataContext.themeDataContext.ChangedTheme(e.NewValue as PopupTheme);
             }
         )
     );

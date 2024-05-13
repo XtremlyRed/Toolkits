@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Data;
-using Toolkits.Core;
+using Toolkits.Wpf.Internal;
 
 namespace Toolkits.Wpf;
 

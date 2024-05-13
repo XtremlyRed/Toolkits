@@ -27,6 +27,12 @@ public static class TypeConverterExtensions
     {
         try
         {
+            if (from is TOut @out)
+            {
+                outValue = @out;
+                return true;
+            }
+
             outValue = from.ConvertTo<TOut>();
 
             return true;
@@ -56,6 +62,11 @@ public static class TypeConverterExtensions
     /// </exception>
     public static To ConvertTo<To>(this object from)
     {
+        if (from is To to)
+        {
+            return to;
+        }
+
         Type fromType = from?.GetType() ?? throw new InvalidCastException("null values cannot be converted");
 
         if (typeConvertMaps.TryGetValue(fromType, out ConcurrentDictionary<Type, TypeConverter>? targetTypeConverterMaps) == false)

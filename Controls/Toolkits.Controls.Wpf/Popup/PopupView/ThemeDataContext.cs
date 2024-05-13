@@ -1,11 +1,13 @@
-﻿using System.Windows.Media;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows.Media;
 using Toolkits.Core;
 using Toolkits.Wpf;
 using ColorConverter = System.Windows.Media.ColorConverter;
 
 namespace Toolkits.Controls.PopupView;
 
-internal class ThemeDataContext : BindableBase
+internal class ThemeDataContext : INotifyPropertyChanged
 {
     public static ThemeDataContext themeDataContext = new();
 
@@ -13,6 +15,17 @@ internal class ThemeDataContext : BindableBase
     Brush? background;
     Brush? foreground;
     Brush? operationAreaBrush;
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    private void SetProperty<T>(ref T value, T newValue, [CallerMemberName] string? propertyName = null)
+    {
+        if (EqualityComparer<T>.Default.Equals(value, newValue) == false)
+        {
+            value = newValue;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
 
     public Brush? BorderBrush
     {
@@ -40,18 +53,18 @@ internal class ThemeDataContext : BindableBase
         ChangedTheme(false);
     }
 
-    public void ChangedTheme(ThemeBrush? themeBrush)
+    public void ChangedTheme(PopupTheme? popupTheme)
     {
-        if (themeBrush is null)
+        if (popupTheme is null)
         {
             return;
         }
 
-        Foreground = themeBrush.Foreground;
-        Background = themeBrush.Background;
+        Foreground = popupTheme.Foreground;
+        Background = popupTheme.Background;
 
-        BorderBrush = themeBrush.BorderBrush;
-        OperationAreaBrush = themeBrush.OperationAreaBrush;
+        BorderBrush = popupTheme.BorderBrush;
+        OperationAreaBrush = popupTheme.OperationAreaBrush;
     }
 
     public void ChangedTheme(bool isDarkTheme)

@@ -6,8 +6,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
-using Toolkits.Core;
 using Toolkits.Wpf;
+using Toolkits.Wpf.Internal;
 
 namespace Toolkits.Controls.Assist;
 

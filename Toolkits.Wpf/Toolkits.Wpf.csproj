@@ -9,6 +9,9 @@
 			net7.0-windows;
 			net8.0-windows;
 		</TargetFrameworks>
+
+		<AssemblyName>Toolkits.Wpf</AssemblyName>
+		
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<UseWindowsForms>true</UseWindowsForms>
@@ -39,8 +42,7 @@
 
  
 
-	<ItemGroup>
-	  <ProjectReference Include="..\Toolkits.Core\Toolkits.Core.csproj" />
+	<ItemGroup> 
 	  <ProjectReference Include="..\Toolkits.Wpf.Core\Toolkits.Wpf.Core.csproj" />
 	</ItemGroup>
 

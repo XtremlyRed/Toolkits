@@ -55,7 +55,7 @@ internal class Extensions
     /// <param name="animation">The animation base.</param>
     internal static void Register(FrameworkElement element, Animation animation)
     {
-        if (element is null)
+        if (element is null || GetHasRegistered(animation))
         {
             return;
         }
