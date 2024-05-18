@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Toolkits.Core;
+namespace Toolkits.Core.UI;
 
 /// <summary>
 /// request close popup event

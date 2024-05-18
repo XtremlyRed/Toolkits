@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using Toolkits.Core;
 
+namespace Toolkits.Core.Tests;
+
 [TestClass]
 public class EnumerableExtensionsTests
 {

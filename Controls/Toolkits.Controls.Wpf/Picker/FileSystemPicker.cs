@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Xml.Linq;
 using Toolkits.Core;
+using Toolkits.Core.UI;
 
 namespace Toolkits.Wpf;
 

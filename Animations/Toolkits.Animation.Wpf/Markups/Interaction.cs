@@ -39,8 +39,8 @@ public static class Interaction
     /// <summary>
     /// Sets the animations.
     /// </summary>
-    /// <param name="element">The object.</param>
-    /// <param name="value">The value.</param>
+    /// <param name="element">The element.</param>
+    /// <param name="animations">The animations.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static void SetAnimations(FrameworkElement element, AnimationCollection animations)
     {

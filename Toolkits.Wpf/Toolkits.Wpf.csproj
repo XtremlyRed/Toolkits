@@ -40,10 +40,8 @@
 	</ItemGroup>
 
 
- 
-
-	<ItemGroup> 
-	  <ProjectReference Include="..\Toolkits.Wpf.Core\Toolkits.Wpf.Core.csproj" />
+	<ItemGroup>
+	  <ProjectReference Include="..\Toolkits.Core\Toolkits.Core.csproj" />
 	</ItemGroup>
 
 

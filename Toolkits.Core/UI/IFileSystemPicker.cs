@@ -1,4 +1,4 @@
-﻿namespace Toolkits.Core;
+﻿namespace Toolkits.Core.UI;
 
 /// <summary>
 ///

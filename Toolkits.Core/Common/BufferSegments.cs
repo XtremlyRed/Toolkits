@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,27 +12,74 @@ namespace Toolkits.Core;
 /// a class of <see cref="BufferSegments{T}"/>
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public class BufferSegments<T>
+[DebuggerDisplay("{Count}")]
+public class BufferSegments<T> : IDisposable
 {
-    private volatile int rwInterlockedIndex;
-    private readonly int segmentCapacity;
+    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+    private int segmentCapacity;
+
+    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private Segment readSegment = default!;
+
+    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private Segment writeSegment = default!;
-    private readonly Queue<Segment> segments = new Queue<Segment>();
-    private static readonly Queue<Segment> recycleSegments = new Queue<Segment>();
+
+    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+    private Awaiter awaiter = new Awaiter(0);
+
+    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+    private Queue<Segment> segments;
+
+    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+    private Queue<Segment> recycleSegments;
+
+    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+    private int count;
+
+    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+    private bool isDisposed;
 
     /// <summary>
     /// buffer count.
     /// </summary>
-    public int Count { get; private set; }
+    public int Count => count;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="BufferSegments{T}"/> class.
     /// </summary>
+    /// <param name="bufferSize">Size of the buffer.</param>
     /// <param name="segmentCapacity">The segment capacity.</param>
-    public BufferSegments(int segmentCapacity = 1024)
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// bufferSize
+    /// or
+    /// segmentCapacity
+    /// </exception>
+    public BufferSegments(int bufferSize = 1024, int segmentCapacity = 1024)
     {
+        _ = bufferSize <= 0 ? throw new ArgumentOutOfRangeException(nameof(bufferSize)) : 0;
+        _ = segmentCapacity <= 0 ? throw new ArgumentOutOfRangeException(nameof(segmentCapacity)) : 0;
+        segments = new Queue<Segment>(bufferSize);
+        recycleSegments = new Queue<Segment>();
         this.segmentCapacity = segmentCapacity;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    void IDisposable.Dispose()
+    {
+        isDisposed = true;
+
+        awaiter?.Dispose();
+        awaiter = null!;
+
+        segments?.Clear();
+        segments = null!;
+
+        count = default!;
+
+        segmentCapacity = default!;
+
+        readSegment = default!;
+        writeSegment = default!;
     }
 
     /// <summary>
@@ -41,10 +90,7 @@ public class BufferSegments<T>
     /// <exception cref="ArgumentOutOfRangeException">readLength</exception>
     public T[] Read(int readLength)
     {
-        if (readLength > Count)
-        {
-            throw new ArgumentOutOfRangeException(nameof(readLength));
-        }
+        _ = isDisposed ? throw new ObjectDisposedException(nameof(BufferSegments<T>)) : 0;
 
         T[] buffer = new T[readLength];
 
@@ -76,6 +122,53 @@ public class BufferSegments<T>
             }
         }
 
+        Interlocked.Add(ref count, -readLength);
+
+        return buffer;
+    }
+
+    /// <summary>
+    /// Reads the specified read length.
+    /// </summary>
+    /// <param name="readLength">Length of the read.</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentOutOfRangeException">readLength</exception>
+    public async Task<T[]> ReadAsync(int readLength)
+    {
+        _ = isDisposed ? throw new ObjectDisposedException(nameof(BufferSegments<T>)) : 0;
+
+        T[] buffer = new T[readLength];
+
+        await GetReadSegmentAsync();
+
+        if (readSegment.ReadRemainLength > readLength)
+        {
+            readSegment.Read(buffer, 0, readLength);
+        }
+        else
+        {
+            int readLengthTemp = readLength;
+            int readedLength = 0;
+            while (readSegment.ReadRemainLength < readLengthTemp)
+            {
+                int readSegmentLength = readSegment.ReadRemainLength;
+
+                readSegment.Read(buffer, readedLength, readSegmentLength);
+
+                readedLength += readSegmentLength;
+                readLengthTemp -= readSegmentLength;
+
+                await GetReadSegmentAsync();
+            }
+
+            if (readLengthTemp > 0)
+            {
+                readSegment.Read(buffer, readedLength, readLengthTemp);
+            }
+        }
+
+        Interlocked.Add(ref count, -readLength);
+
         return buffer;
     }
 
@@ -88,10 +181,9 @@ public class BufferSegments<T>
     /// <exception cref="ArgumentNullException">buffer</exception>
     public void Write(T[] buffer, int offset, int length)
     {
-        if (buffer is null)
-        {
-            throw new ArgumentNullException(nameof(buffer));
-        }
+        _ = isDisposed ? throw new ObjectDisposedException(nameof(BufferSegments<T>)) : 0;
+
+        _ = buffer ?? throw new ArgumentNullException(nameof(buffer));
 
         GetWriteSegment();
 
@@ -120,7 +212,9 @@ public class BufferSegments<T>
             }
         }
 
-        Count += length;
+        Interlocked.Add(ref count, length);
+
+        awaiter.Release();
     }
 
     private void GetWriteSegment()
@@ -130,33 +224,9 @@ public class BufferSegments<T>
             return;
         }
 
-        try
-        {
-            SpinLock();
+        Segment segment = recycleSegments.Count > 0 ? recycleSegments.Dequeue() : new Segment(segmentCapacity);
 
-            Segment? segment = default!;
-
-#if NET451 || NET48
-            if (recycleSegments.Count > 0)
-            {
-                segment = recycleSegments.Dequeue();
-            }
-            else
-            {
-                segment = new Segment(segmentCapacity);
-            }
-#else
-            if (recycleSegments.TryDequeue(out segment) == false)
-            {
-                segment = new Segment(segmentCapacity);
-            }
-#endif
-            segments.Enqueue(writeSegment = segment);
-        }
-        finally
-        {
-            Interlocked.Exchange(ref rwInterlockedIndex, 0);
-        }
+        segments.Enqueue(writeSegment = segment);
     }
 
     private void GetReadSegment()
@@ -166,51 +236,41 @@ public class BufferSegments<T>
             return;
         }
 
-        try
+        Segment? innerSegment = default!;
+
+        if (segments.Count == 0)
         {
-            SpinLock();
-
-            Segment? innerSegment = default!;
-
-#if NET451 || NET48
-            if (segments.Count == 0)
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-            innerSegment = segments.Dequeue();
-#else
-            if (segments.TryDequeue(out innerSegment) == false)
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-#endif
-
-            if (readSegment is not null)
-            {
-                readSegment.Clear();
-                recycleSegments.Enqueue(readSegment);
-            }
-
-            readSegment = innerSegment;
+            awaiter.Wait();
         }
-        finally
+
+        if (readSegment is not null)
         {
-            Interlocked.Exchange(ref rwInterlockedIndex, 0);
+            readSegment.Clear();
+            recycleSegments.Enqueue(readSegment);
         }
+
+        readSegment = innerSegment;
     }
 
-    private void SpinLock()
+    private async Task GetReadSegmentAsync()
     {
-        int count = 0;
-        while (Interlocked.CompareExchange(ref rwInterlockedIndex, 1, 0) == 1)
+        if (readSegment is not null && readSegment.ReadRemainLength > 0)
         {
-            count++;
-            if (count > 1000)
-            {
-                Thread.SpinWait(10);
-                count = 0;
-            }
+            return;
         }
+
+        if (segments.Count == 0)
+        {
+            await awaiter.WaitAsync();
+        }
+
+        if (readSegment is not null)
+        {
+            readSegment.Clear();
+            recycleSegments.Enqueue(readSegment);
+        }
+
+        readSegment = segments.Dequeue();
     }
 
     private class Segment

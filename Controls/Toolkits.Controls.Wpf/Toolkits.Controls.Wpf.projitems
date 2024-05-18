@@ -23,7 +23,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Popup\PopupManagerAssist.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Popup\PopupMessageViewBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Popup\PopupToastViewBase.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ThemeBrush.cs" />
     <Compile Include="..\Controls\Toolkits.Controls.Wpf\ThemeBrush.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Popup\PopupView\MessageView.xaml.cs">
       <DependentUpon>MessageView.xaml</DependentUpon>

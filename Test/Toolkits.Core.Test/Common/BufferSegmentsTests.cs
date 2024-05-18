@@ -66,4 +66,18 @@ public class BufferSegmentsTests
         // Assert
         Assert.AreEqual(3, bufferSegments.Count);
     }
+
+    [Test]
+    public async Task Write_WritesBufferToMultipleSegments_WhenWriteLengthIsGreaterThanSegmentCapacity2()
+    {
+        // Arrange
+        var bufferSegments = new BufferSegments<int>();
+
+        // Act
+        //     bufferSegments.Write(new int[] { 1, 2, 3 }, 0, 3);
+        var uffer = await bufferSegments.ReadAsync(3);
+
+        // Assert
+        Assert.AreEqual(3, uffer.Length);
+    }
 }
