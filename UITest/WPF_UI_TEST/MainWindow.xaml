@@ -23,64 +23,68 @@
 
     </Window.Resources>
 
-    <AdornerDecorator
-        toolkit:PopupManager.ContainerName="MainPopupContainer"
-        toolkit:PopupManager.IsMainContainer="True"
-        toolkit:PopupManager.MaskBrush="{SolidColorBrush Color=Brown,
-                                                         Opacity=0.5}"
-        toolkit:PopupManager.PopupTheme="{StaticResource DefaultThemeBrush}">
+    <Grid  GridExtensions.RowDefinitions="">
 
 
-        <Button
-            Width="{Double 200}"
-            Background="Transparent"
-            BorderBrush="{SolidColorBrush Red}"
-            Click="Button_Click"
-            Content="Open Popup"
-            Tag="{SolidColorBrush Color=Aqua}">
-
-            <toolkit:Interaction.Animations>
-
-                <AnimationCollection>
+        <AdornerDecorator
+            toolkit:PopupManager.ContainerName="MainPopupContainer"
+            toolkit:PopupManager.IsMainContainer="True"
+            toolkit:PopupManager.MaskBrush="{SolidColorBrush Color=Brown,
+                                                             Opacity=0.5}"
+            toolkit:PopupManager.PopupTheme="{StaticResource DefaultThemeBrush}">
 
 
-                    <toolkit:ThicknessPropertyAnimation
-                        Play="{Binding Play}"
-                        Property="{x:Static Button.BorderThicknessProperty}"
-                        From="1"
-                        To="0"
-                        Duration="0:0:01" />
+            <Button
+                Width="{Double 200}"
+                Background="Transparent"
+                BorderBrush="{SolidColorBrush Red}"
+                Click="Button_Click"
+                Content="Open Popup"
+                Tag="{SolidColorBrush Color=Aqua}">
 
-                    <toolkit:BrushPropertyAnimation
-                        Play="{Binding Play}"
-                        Property="{x:Static Button.BackgroundProperty}"
-                        From="DeepSkyBlue"
-                        To="LightGray"
-                        Duration="0:0:01" />
+                <toolkit:Interaction.Animations>
 
-                    <toolkit:ThicknessPropertyAnimation
-                        Play="{Binding Play}"
-                        Property="{x:Static Button.MarginProperty}"
-                        From="0,0,0,0"
-                        To="100"
-                        Duration="0:0:01" />
+                    <AnimationCollection>
 
-                    <toolkit:SlideXAnimation
-                        Play="{Binding Play}"
-                        SlideMode="Left"
-                        To="0"
-                        Duration="0:0:01" />
-                    <toolkit:SlideYAnimation
-                        Play="{Binding Play}"
-                        SlideMode="Top"
-                        From="200"
-                        To="0"
-                        Duration="0:0:01" />
-                </AnimationCollection>
 
-            </toolkit:Interaction.Animations>
-        </Button>
-    </AdornerDecorator>
+                        <toolkit:ThicknessPropertyAnimation
+                            Play="{Binding Play}"
+                            Property="{x:Static Button.BorderThicknessProperty}"
+                            From="1"
+                            To="0"
+                            Duration="0:0:01" />
 
+                        <toolkit:BrushPropertyAnimation
+                            Play="{Binding Play}"
+                            Property="{x:Static Button.BackgroundProperty}"
+                            From="DeepSkyBlue"
+                            To="LightGray"
+                            Duration="0:0:01" />
+
+                        <toolkit:ThicknessPropertyAnimation
+                            Play="{Binding Play}"
+                            Property="{x:Static Button.MarginProperty}"
+                            From="0,0,0,0"
+                            To="100"
+                            Duration="0:0:01" />
+
+                        <toolkit:SlideXAnimation
+                            Play="{Binding Play}"
+                            SlideMode="Left"
+                            To="0"
+                            Duration="0:0:01" />
+                        <toolkit:SlideYAnimation
+                            Play="{Binding Play}"
+                            SlideMode="Top"
+                            From="200"
+                            To="0"
+                            Duration="0:0:01" />
+                    </AnimationCollection>
+
+                </toolkit:Interaction.Animations>
+            </Button>
+        </AdornerDecorator>
+
+    </Grid>
 
 </Window>

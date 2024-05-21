@@ -10,6 +10,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Toolkits;
 using Toolkits.Controls;
+using Toolkits.Wpf;
 
 namespace WPF_UI_TEST;
 
@@ -29,17 +30,17 @@ public partial class MainWindow : Window
 
     public double Angle { get; set; }
 
-    private void Button_Click(object sender, RoutedEventArgs e)
+    private async void Button_Click(object sender, RoutedEventArgs e)
     {
         // Angle = 90;
 
         Play = true;
         Play = false;
-        //PopupManager popupManager = new PopupManager();
+        PopupManager popupManager = new PopupManager();
 
-        //for (int i = 0; i < 5; i++)
-        //{
-        //    var resu = await popupManager.PopupAsync(() => new PopupView());
-        //}
+        for (int i = 0; i < 5; i++)
+        {
+            var resu = await popupManager.PopupAsync(() => new PopupView());
+        }
     }
 }

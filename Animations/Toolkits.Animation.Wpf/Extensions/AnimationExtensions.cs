@@ -110,6 +110,8 @@ public static class AnimationExtensions
                 return;
             }
 
+            var removeCallback = false;
+
             foreach (var completeInfo in completeInfos)
             {
                 if (completeInfo is null || completeInfo.Callback is null)
@@ -117,15 +119,18 @@ public static class AnimationExtensions
                     continue;
                 }
 
-                if (completeInfo.AutoRelease)
-                {
-                    await clockGroup.Dispatcher.InvokeAsync(() =>
-                    {
-                        storyboard.Completed -= Storyboard_Completed;
-                    });
-                }
-
                 completeInfo.Callback();
+
+                removeCallback |= completeInfo.AutoRelease;
+            }
+
+            if (removeCallback)
+            {
+                await clockGroup.Dispatcher.InvokeAsync(async () =>
+                {
+                    await Task.Delay(300);
+                    storyboard.Completed -= Storyboard_Completed;
+                });
             }
         }
     }

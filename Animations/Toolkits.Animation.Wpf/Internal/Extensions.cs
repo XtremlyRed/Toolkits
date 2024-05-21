@@ -80,6 +80,8 @@ internal class Extensions
     record AnimationInfo(WeakReference UIElementRef, DependencyProperty Property, Animation Animation) : IAnimationInfo
     {
         private MethodInfo? Method;
+        WeakReference animationReference;
+        WeakReference ownerReference;
 
         //private PropertyInfo? PropertyInfo;
         //private bool isPlayed;
@@ -97,7 +99,18 @@ internal class Extensions
                 return;
             }
 
-            AnimationTimeline animation = Animation.CreateAnimation(element, out object? propertyOwner);
+            if (
+                animationReference is null
+                || animationReference.Target is not AnimationTimeline animation
+                || ownerReference is null
+                || ownerReference.Target is not object propertyOwner
+            )
+            {
+                animation = Animation.CreateAnimation(element, out propertyOwner);
+
+                animationReference = new WeakReference(animation);
+                ownerReference = new WeakReference(propertyOwner);
+            }
 
             //if (isPlayed && Property is not null)
             //{

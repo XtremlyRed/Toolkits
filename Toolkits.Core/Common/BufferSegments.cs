@@ -88,25 +88,23 @@ public class BufferSegments<T> : IDisposable
     /// <param name="readLength">Length of the read.</param>
     /// <returns></returns>
     /// <exception cref="ArgumentOutOfRangeException">readLength</exception>
-    public T[] Read(int readLength)
+    public void Read(T[] buffer, int offset, int length)
     {
         _ = isDisposed ? throw new ObjectDisposedException(nameof(BufferSegments<T>)) : 0;
 
-        T[] buffer = new T[readLength];
-
         GetReadSegment();
 
-        if (readSegment.ReadRemainLength > readLength)
+        if (readSegment.ValidReadLength > length)
         {
-            readSegment.Read(buffer, 0, readLength);
+            readSegment.Read(buffer, 0, length);
         }
         else
         {
-            int readLengthTemp = readLength;
+            int readLengthTemp = length;
             int readedLength = 0;
-            while (readSegment.ReadRemainLength < readLengthTemp)
+            while (readSegment.ValidReadLength < readLengthTemp)
             {
-                int readSegmentLength = readSegment.ReadRemainLength;
+                int readSegmentLength = readSegment.ValidReadLength;
 
                 readSegment.Read(buffer, readedLength, readSegmentLength);
 
@@ -122,9 +120,7 @@ public class BufferSegments<T> : IDisposable
             }
         }
 
-        Interlocked.Add(ref count, -readLength);
-
-        return buffer;
+        Interlocked.Add(ref count, -length);
     }
 
     /// <summary>
@@ -133,15 +129,13 @@ public class BufferSegments<T> : IDisposable
     /// <param name="readLength">Length of the read.</param>
     /// <returns></returns>
     /// <exception cref="ArgumentOutOfRangeException">readLength</exception>
-    public async Task<T[]> ReadAsync(int readLength)
+    public async Task ReadAsync(T[] buffer, int offset, int readLength)
     {
         _ = isDisposed ? throw new ObjectDisposedException(nameof(BufferSegments<T>)) : 0;
 
-        T[] buffer = new T[readLength];
-
         await GetReadSegmentAsync();
 
-        if (readSegment.ReadRemainLength > readLength)
+        if (readSegment.ValidReadLength > readLength)
         {
             readSegment.Read(buffer, 0, readLength);
         }
@@ -149,9 +143,9 @@ public class BufferSegments<T> : IDisposable
         {
             int readLengthTemp = readLength;
             int readedLength = 0;
-            while (readSegment.ReadRemainLength < readLengthTemp)
+            while (readSegment.ValidReadLength < readLengthTemp)
             {
-                int readSegmentLength = readSegment.ReadRemainLength;
+                int readSegmentLength = readSegment.ValidReadLength;
 
                 readSegment.Read(buffer, readedLength, readSegmentLength);
 
@@ -168,8 +162,6 @@ public class BufferSegments<T> : IDisposable
         }
 
         Interlocked.Add(ref count, -readLength);
-
-        return buffer;
     }
 
     /// <summary>
@@ -187,7 +179,7 @@ public class BufferSegments<T> : IDisposable
 
         GetWriteSegment();
 
-        if (writeSegment.WriteRemainLength > length)
+        if (writeSegment.ValidWriteLength > length)
         {
             writeSegment.Write(buffer, offset, length);
         }
@@ -195,9 +187,9 @@ public class BufferSegments<T> : IDisposable
         {
             int writeLength = length;
 
-            while (writeSegment.WriteRemainLength < writeLength)
+            while (writeSegment.ValidWriteLength < writeLength)
             {
-                int writeSegmentLength = writeSegment.WriteRemainLength;
+                int writeSegmentLength = writeSegment.ValidWriteLength;
                 writeSegment.Write(buffer, offset, writeSegmentLength);
                 offset += writeSegmentLength;
 
@@ -219,26 +211,29 @@ public class BufferSegments<T> : IDisposable
 
     private void GetWriteSegment()
     {
-        if (writeSegment is not null && writeSegment.WriteRemainLength > 0)
+        if (writeSegment is not null && writeSegment.ValidWriteLength > 0)
         {
             return;
         }
 
-        Segment segment = recycleSegments.Count > 0 ? recycleSegments.Dequeue() : new Segment(segmentCapacity);
+        writeSegment = recycleSegments.Count > 0 ? recycleSegments.Dequeue() : new Segment(segmentCapacity);
 
-        segments.Enqueue(writeSegment = segment);
+        segments.Enqueue(writeSegment);
     }
 
     private void GetReadSegment()
     {
-        if (readSegment is not null && readSegment.ReadRemainLength > 0)
+        if (readSegment is not null && readSegment.ReadCompleted == false)
         {
+            if (readSegment.ValidReadLength == 0)
+            {
+                awaiter.Wait();
+            }
+
             return;
         }
 
-        Segment? innerSegment = default!;
-
-        if (segments.Count == 0)
+        while (segments.Count == 0)
         {
             awaiter.Wait();
         }
@@ -249,17 +244,22 @@ public class BufferSegments<T> : IDisposable
             recycleSegments.Enqueue(readSegment);
         }
 
-        readSegment = innerSegment;
+        readSegment = segments.Dequeue();
     }
 
     private async Task GetReadSegmentAsync()
     {
-        if (readSegment is not null && readSegment.ReadRemainLength > 0)
+        if (readSegment is not null && readSegment.ReadCompleted == false)
         {
+            if (readSegment.ValidReadLength == 0)
+            {
+                await awaiter.WaitAsync();
+            }
+
             return;
         }
 
-        if (segments.Count == 0)
+        while (segments.Count == 0)
         {
             await awaiter.WaitAsync();
         }
@@ -275,41 +275,49 @@ public class BufferSegments<T> : IDisposable
 
     private class Segment
     {
-        public readonly int Capacity;
-        public T[] buffers;
-        public int ReadOffset;
-        public int WriteOffset;
-        public int ReadRemainLength;
-        public int WriteRemainLength;
-        public int Count;
+        T[] buffers;
+        int ReadOffset;
+        int WriteOffset;
+
+        public bool ReadCompleted;
+        public bool WriteCompleted;
+
+        public int ValidReadLength;
+        public int ValidWriteLength;
 
         public Segment(int capacity)
         {
-            Capacity = WriteRemainLength = capacity;
+            ValidWriteLength = capacity;
             buffers = new T[capacity];
         }
 
         public void Clear()
         {
-            Count = 0;
-            WriteOffset = ReadOffset = 0;
-            WriteRemainLength = ReadRemainLength = Capacity;
+            ValidReadLength = 0;
+            WriteOffset = 0;
+            ReadOffset = 0;
+            ValidWriteLength = buffers.Length;
         }
 
         public void Write(T[] buffer, int offset, int length)
         {
             Array.ConstrainedCopy(buffer, offset, buffers, WriteOffset, length);
+
             WriteOffset += length;
-            Count += length;
-            WriteRemainLength = Capacity - Count;
-            ReadRemainLength += length;
+            ValidWriteLength -= length;
+            ValidReadLength += length;
+
+            WriteCompleted = buffers.Length == WriteOffset;
         }
 
         public void Read(T[] buffer, int offset, int length)
         {
             Array.ConstrainedCopy(buffers, ReadOffset, buffer, offset, length);
+
             ReadOffset += length;
-            ReadRemainLength -= length;
+            ValidReadLength -= length;
+
+            ReadCompleted = ReadOffset == buffers.Length;
         }
     }
 }
