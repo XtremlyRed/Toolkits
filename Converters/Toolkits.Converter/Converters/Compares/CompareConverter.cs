@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -41,7 +42,7 @@ public class CompareConverter :
     BindableObject,
 #endif
 
-    IValueConverter
+        IValueConverter
 {
     /// <summary>
     /// Gets or sets the matched value .
@@ -244,13 +245,7 @@ public class CompareConverter :
             return condiction ? Matched : Unmatched;
         }
 
-#if _WPF_
-
-        return Binding.DoNothing;
-
-#endif
-
-        return default!;
+        throw new InvalidOperationException($"invalid data type,must be:{typeof(IComparable)}");
     }
 
     /// <summary>

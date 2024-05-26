@@ -29,10 +29,10 @@ namespace Toolkits.Maui;
 #endif
 
 /// <summary>
-/// a class of <see cref="BooleanConverter"/>
+/// a class of <see cref="NullConverter"/>
 /// </summary>
 /// <seealso cref="IValueConverter" />
-public class BooleanConverter :
+public class NullConverter :
 #if ___WPF___
     DependencyObject,
 #endif
@@ -82,7 +82,7 @@ public class BooleanConverter :
     private static readonly DependencyProperty TrueProperty = DependencyProperty.Register(
         "True",
         typeof(object),
-        typeof(BooleanConverter),
+        typeof(NullConverter),
         new PropertyMetadata(true)
     );
 
@@ -92,7 +92,7 @@ public class BooleanConverter :
     private static readonly DependencyProperty FalseProperty = DependencyProperty.Register(
         "False",
         typeof(object),
-        typeof(BooleanConverter),
+        typeof(NullConverter),
         new PropertyMetadata(false)
     );
 #endif
@@ -105,7 +105,7 @@ public class BooleanConverter :
     private static readonly BindableProperty TrueProperty = BindableProperty.Create(
         "True",
         typeof(object),
-        typeof(BooleanConverter),
+        typeof(NullConverter),
         (object)true,
         BindingMode.Default,
         null,
@@ -119,7 +119,7 @@ public class BooleanConverter :
     private static readonly BindableProperty FalseProperty = BindableProperty.Create(
         "False",
         typeof(object),
-        typeof(BooleanConverter),
+        typeof(NullConverter),
         (object)false,
         BindingMode.Default,
         null,
@@ -133,7 +133,7 @@ public class BooleanConverter :
     /// <summary>
     /// The true property
     /// </summary>
-    private static readonly AvaloniaProperty TrueProperty = AvaloniaProperty.Register<BooleanConverter, object>(
+    private static readonly AvaloniaProperty TrueProperty = AvaloniaProperty.Register<NullConverter, object>(
         "True",
         true!,
         false,
@@ -143,7 +143,7 @@ public class BooleanConverter :
     /// <summary>
     /// The false property
     /// </summary>
-    private static readonly AvaloniaProperty FalseProperty = AvaloniaProperty.Register<BooleanConverter, object>(
+    private static readonly AvaloniaProperty FalseProperty = AvaloniaProperty.Register<NullConverter, object>(
         "False",
         false!,
         false,
@@ -161,11 +161,7 @@ public class BooleanConverter :
     /// <returns></returns>
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        return value is not bool boolValue
-            ? throw new ArgumentException($"current value type is not {typeof(bool)}")
-            : boolValue
-                ? True
-                : False;
+        return value is null ? True : False;
     }
 
     /// <summary>
@@ -178,10 +174,6 @@ public class BooleanConverter :
     /// <returns></returns>
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        return value == True
-            ? TrueObject
-            : value == False
-                ? FalseObject
-                : throw new ArgumentException($"current value is not {True} or {False}");
+        throw new NotSupportedException();
     }
 }

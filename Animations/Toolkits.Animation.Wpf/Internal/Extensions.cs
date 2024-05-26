@@ -77,11 +77,14 @@ internal class Extensions
         SetHasRegistered(animation, true);
     }
 
+    /// <summary>
+    ///
+    /// </summary>
     record AnimationInfo(WeakReference UIElementRef, DependencyProperty Property, Animation Animation) : IAnimationInfo
     {
         private MethodInfo? Method;
-        WeakReference animationReference;
-        WeakReference ownerReference;
+        WeakReference? animationReference;
+        WeakReference? ownerReference;
 
         //private PropertyInfo? PropertyInfo;
         //private bool isPlayed;

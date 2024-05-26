@@ -9,18 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-#if ___WPF___
 namespace Toolkits.Wpf;
-
-#endif
-#if ___AVALONIA___
-namespace Toolkits.Avalonia;
-
-#endif
-#if ___MAUI___
-namespace Toolkits.Maui;
-
-#endif
 
 /// <summary>
 /// a class of <see cref="BooleanToVisibilityReverseConverter"/>

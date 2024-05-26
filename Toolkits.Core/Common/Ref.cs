@@ -11,6 +11,9 @@ public sealed class Ref<T>
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private T? value;
 
+    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+    private int interlocked;
+
     /// <summary>
     /// current value.
     /// </summary>
@@ -18,9 +21,14 @@ public sealed class Ref<T>
     {
         get
         {
-            lock (this)
+            try
             {
+                while (Interlocked.CompareExchange(ref interlocked, 1, 0) == 1) { }
                 return value!;
+            }
+            finally
+            {
+                Interlocked.Exchange(ref interlocked, 0);
             }
         }
     }
@@ -31,10 +39,11 @@ public sealed class Ref<T>
     /// <param name="newValue">The new value.</param>
     public void Swap(T newValue)
     {
-        lock (this)
-        {
-            value = newValue;
-        }
+        while (Interlocked.CompareExchange(ref interlocked, 1, 0) == 1) { }
+
+        value = newValue;
+
+        Interlocked.Exchange(ref interlocked, 0);
     }
 
     /// <summary>

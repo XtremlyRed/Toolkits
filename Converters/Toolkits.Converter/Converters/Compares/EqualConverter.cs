@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 #if ___WPF___
 using System.Windows;
@@ -29,10 +30,10 @@ namespace Toolkits.Maui;
 #endif
 
 /// <summary>
-/// a class of <see cref="BooleanConverter"/>
+/// a class of <see cref="EqualConverter"/>
 /// </summary>
 /// <seealso cref="IValueConverter" />
-public class BooleanConverter :
+public class EqualConverter :
 #if ___WPF___
     DependencyObject,
 #endif
@@ -74,6 +75,18 @@ public class BooleanConverter :
         set => SetValue(FalseProperty, value);
     }
 
+    /// <summary>
+    /// Gets or sets the input.
+    /// </summary>
+    /// <value>
+    /// The input.
+    /// </value>
+    public IComparable Input
+    {
+        get => (IComparable)GetValue(InputProperty)!;
+        set => SetValue(InputProperty, value);
+    }
+
 #if ___WPF___
 
     /// <summary>
@@ -82,7 +95,7 @@ public class BooleanConverter :
     private static readonly DependencyProperty TrueProperty = DependencyProperty.Register(
         "True",
         typeof(object),
-        typeof(BooleanConverter),
+        typeof(EqualConverter),
         new PropertyMetadata(true)
     );
 
@@ -92,8 +105,15 @@ public class BooleanConverter :
     private static readonly DependencyProperty FalseProperty = DependencyProperty.Register(
         "False",
         typeof(object),
-        typeof(BooleanConverter),
+        typeof(EqualConverter),
         new PropertyMetadata(false)
+    );
+
+    private static readonly DependencyProperty InputProperty = DependencyProperty.Register(
+        "Input",
+        typeof(IComparable),
+        typeof(EqualConverter),
+        new PropertyMetadata(null)
     );
 #endif
 
@@ -105,7 +125,7 @@ public class BooleanConverter :
     private static readonly BindableProperty TrueProperty = BindableProperty.Create(
         "True",
         typeof(object),
-        typeof(BooleanConverter),
+        typeof(EqualConverter),
         (object)true,
         BindingMode.Default,
         null,
@@ -119,13 +139,28 @@ public class BooleanConverter :
     private static readonly BindableProperty FalseProperty = BindableProperty.Create(
         "False",
         typeof(object),
-        typeof(BooleanConverter),
+        typeof(EqualConverter),
         (object)false,
         BindingMode.Default,
         null,
         (s, n, o) => { },
         null
     );
+
+    /// <summary>
+    /// The input property
+    /// </summary>
+    private static readonly BindableProperty InputProperty = BindableProperty.Create(
+        "Input",
+        typeof(IComparable),
+        typeof(EqualConverter),
+        (object)null!,
+        BindingMode.Default,
+        null,
+        (s, n, o) => { },
+        null
+    );
+
 #endif
 
 #if ___AVALONIA___
@@ -133,7 +168,7 @@ public class BooleanConverter :
     /// <summary>
     /// The true property
     /// </summary>
-    private static readonly AvaloniaProperty TrueProperty = AvaloniaProperty.Register<BooleanConverter, object>(
+    private static readonly AvaloniaProperty TrueProperty = AvaloniaProperty.Register<EqualConverter, object>(
         "True",
         true!,
         false,
@@ -143,9 +178,19 @@ public class BooleanConverter :
     /// <summary>
     /// The false property
     /// </summary>
-    private static readonly AvaloniaProperty FalseProperty = AvaloniaProperty.Register<BooleanConverter, object>(
+    private static readonly AvaloniaProperty FalseProperty = AvaloniaProperty.Register<EqualConverter, object>(
         "False",
         false!,
+        false,
+        BindingMode.OneWay
+    );
+
+    /// <summary>
+    /// The input property
+    /// </summary>
+    private static readonly AvaloniaProperty InputProperty = AvaloniaProperty.Register<EqualConverter, IComparable>(
+        "Input",
+        null!,
         false,
         BindingMode.OneWay
     );
@@ -161,11 +206,14 @@ public class BooleanConverter :
     /// <returns></returns>
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        return value is not bool boolValue
-            ? throw new ArgumentException($"current value type is not {typeof(bool)}")
-            : boolValue
-                ? True
-                : False;
+        if (value is IComparable cValue)
+        {
+            bool condiction = CompareConverter.Match(cValue, Input, CompareMode.Equal);
+
+            return condiction ? True : False;
+        }
+
+        throw new InvalidOperationException($"invalid data type,must be:{typeof(IComparable)}");
     }
 
     /// <summary>
@@ -178,10 +226,6 @@ public class BooleanConverter :
     /// <returns></returns>
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        return value == True
-            ? TrueObject
-            : value == False
-                ? FalseObject
-                : throw new ArgumentException($"current value is not {True} or {False}");
+        throw new NotSupportedException();
     }
 }

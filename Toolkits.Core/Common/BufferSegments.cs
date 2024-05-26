@@ -83,11 +83,12 @@ public class BufferSegments<T> : IDisposable
     }
 
     /// <summary>
-    /// Reads the specified read length.
+    /// Reads the specified buffer.
     /// </summary>
-    /// <param name="readLength">Length of the read.</param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentOutOfRangeException">readLength</exception>
+    /// <param name="buffer">The buffer.</param>
+    /// <param name="offset">The offset.</param>
+    /// <param name="length">The length.</param>
+    /// <exception cref="ObjectDisposedException">T</exception>
     public void Read(T[] buffer, int offset, int length)
     {
         _ = isDisposed ? throw new ObjectDisposedException(nameof(BufferSegments<T>)) : 0;
@@ -124,11 +125,12 @@ public class BufferSegments<T> : IDisposable
     }
 
     /// <summary>
-    /// Reads the specified read length.
+    /// Reads the asynchronous.
     /// </summary>
+    /// <param name="buffer">The buffer.</param>
+    /// <param name="offset">The offset.</param>
     /// <param name="readLength">Length of the read.</param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentOutOfRangeException">readLength</exception>
+    /// <exception cref="ObjectDisposedException">T</exception>
     public async Task ReadAsync(T[] buffer, int offset, int readLength)
     {
         _ = isDisposed ? throw new ObjectDisposedException(nameof(BufferSegments<T>)) : 0;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 #if ___WPF___
 using System.Windows;
 using System.Windows.Data;
+using Toolkits.Core;
 #endif
 #if ___AVALONIA___
 using global::Avalonia;
@@ -29,10 +31,10 @@ namespace Toolkits.Maui;
 #endif
 
 /// <summary>
-/// a class of <see cref="BooleanConverter"/>
+/// a class of <see cref="NullConverter"/>
 /// </summary>
 /// <seealso cref="IValueConverter" />
-public class BooleanConverter :
+public class NullOrEmptyConverter :
 #if ___WPF___
     DependencyObject,
 #endif
@@ -82,7 +84,7 @@ public class BooleanConverter :
     private static readonly DependencyProperty TrueProperty = DependencyProperty.Register(
         "True",
         typeof(object),
-        typeof(BooleanConverter),
+        typeof(NullOrEmptyConverter),
         new PropertyMetadata(true)
     );
 
@@ -92,7 +94,7 @@ public class BooleanConverter :
     private static readonly DependencyProperty FalseProperty = DependencyProperty.Register(
         "False",
         typeof(object),
-        typeof(BooleanConverter),
+        typeof(NullOrEmptyConverter),
         new PropertyMetadata(false)
     );
 #endif
@@ -105,7 +107,7 @@ public class BooleanConverter :
     private static readonly BindableProperty TrueProperty = BindableProperty.Create(
         "True",
         typeof(object),
-        typeof(BooleanConverter),
+        typeof(NullOrEmptyConverter),
         (object)true,
         BindingMode.Default,
         null,
@@ -119,7 +121,7 @@ public class BooleanConverter :
     private static readonly BindableProperty FalseProperty = BindableProperty.Create(
         "False",
         typeof(object),
-        typeof(BooleanConverter),
+        typeof(NullOrEmptyConverter),
         (object)false,
         BindingMode.Default,
         null,
@@ -133,7 +135,7 @@ public class BooleanConverter :
     /// <summary>
     /// The true property
     /// </summary>
-    private static readonly AvaloniaProperty TrueProperty = AvaloniaProperty.Register<BooleanConverter, object>(
+    private static readonly AvaloniaProperty TrueProperty = AvaloniaProperty.Register<NullOrEmptyConverter, object>(
         "True",
         true!,
         false,
@@ -143,7 +145,7 @@ public class BooleanConverter :
     /// <summary>
     /// The false property
     /// </summary>
-    private static readonly AvaloniaProperty FalseProperty = AvaloniaProperty.Register<BooleanConverter, object>(
+    private static readonly AvaloniaProperty FalseProperty = AvaloniaProperty.Register<NullOrEmptyConverter, object>(
         "False",
         false!,
         false,
@@ -161,11 +163,17 @@ public class BooleanConverter :
     /// <returns></returns>
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        return value is not bool boolValue
-            ? throw new ArgumentException($"current value type is not {typeof(bool)}")
-            : boolValue
-                ? True
-                : False;
+        if (value is IEnumerable objects)
+        {
+            foreach (var _ in objects)
+            {
+                return True;
+            }
+
+            return False;
+        }
+
+        throw new InvalidOperationException($"invalid data type,must be:{typeof(IEnumerable)}");
     }
 
     /// <summary>
@@ -178,10 +186,6 @@ public class BooleanConverter :
     /// <returns></returns>
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        return value == True
-            ? TrueObject
-            : value == False
-                ? FalseObject
-                : throw new ArgumentException($"current value is not {True} or {False}");
+        throw new NotSupportedException();
     }
 }
