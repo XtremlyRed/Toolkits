@@ -31,18 +31,14 @@
 	<Import Project="..\Controls\Toolkits.Controls.Wpf\Toolkits.Controls.Wpf.projitems" Label="Shared" />
 
 
-	<Import Project="$(SolutionDir)\GlobalCompileSettings.Targets" />
-
 
 	<ItemGroup>
 	  <None Remove="FodyWeavers.xml" />
 	  <None Remove="FodyWeavers.xsd" />
 	</ItemGroup>
 
+	<Import Project="$(SolutionDir)\GlobalCompileSettings.Targets" />
 
-	<ItemGroup>
-	  <ProjectReference Include="..\Toolkits.Core\Toolkits.Core.csproj" />
-	</ItemGroup>
 
 
 </Project>

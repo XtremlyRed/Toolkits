@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Toolkits.Core.UI;
+namespace Toolkits.Wpf;
 
 /// <summary>
 /// a class of <see cref="IPopupManager"/>

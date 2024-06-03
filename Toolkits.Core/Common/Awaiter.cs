@@ -16,9 +16,6 @@ namespace Toolkits.Core;
 public class Awaiter : IDisposable
 {
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    private object syncRoot = new();
-
-    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private SemaphoreSlim semaphoreSlim;
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -57,13 +54,10 @@ public class Awaiter : IDisposable
     {
         _ = isDisposabled ? throw new ObjectDisposedException(nameof(Awaiter)) : 0;
 
-        lock (syncRoot)
+        if (currentCounter < maxCount)
         {
-            if (currentCounter < maxCount)
-            {
-                Interlocked.Increment(ref currentCounter);
-                semaphoreSlim.Release();
-            }
+            Interlocked.Increment(ref currentCounter);
+            semaphoreSlim.Release();
         }
     }
 
@@ -75,13 +69,10 @@ public class Awaiter : IDisposable
     {
         _ = isDisposabled ? throw new ObjectDisposedException(nameof(Awaiter)) : 0;
 
-        lock (syncRoot)
+        while (currentCounter < maxCount)
         {
-            while (currentCounter < maxCount)
-            {
-                Interlocked.Increment(ref currentCounter);
-                semaphoreSlim.Release();
-            }
+            Interlocked.Increment(ref currentCounter);
+            semaphoreSlim.Release();
         }
     }
 
@@ -126,7 +117,6 @@ public class Awaiter : IDisposable
 
             semaphoreSlim?.Dispose();
             semaphoreSlim = null!;
-            syncRoot = null!;
             currentCounter = 0;
             maxCount = 0;
         }

@@ -10,11 +10,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)CompositeConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\Base\TrueFalseConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BooleanConverters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\Booleans\BooleanConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\Booleans\BooleanReverseConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\Booleans\BooleanToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\Booleans\BooleanToVisibilityReverseConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\Compares\NotEqualConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\Compares\EqualConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\Compares\CompareConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\EnumerableConverters.cs" />

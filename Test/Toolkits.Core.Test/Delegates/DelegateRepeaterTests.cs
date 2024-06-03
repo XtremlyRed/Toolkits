@@ -17,7 +17,7 @@ public class DelegateRepeaterTests
     [TestCleanup]
     public void TearDown()
     {
-        _delegateRepeater = null;
+        _delegateRepeater = null!;
     }
 
     [Test]
@@ -40,7 +40,7 @@ public class DelegateRepeaterTests
     public void Unregister_WithInvalidToken_ThrowsArgumentNullException()
     {
         // Arrange
-        string token = null;
+        string token = null!;
 
         // Act & Assert
         Assert.ThrowsException<ArgumentNullException>(() => _delegateRepeater.Unregister(token));
@@ -161,7 +161,7 @@ public class DelegateRepeaterTests
     public void Subscribe_WithInvalidToken_ThrowsArgumentNullException()
     {
         // Arrange
-        string token = null;
+        string token = null!;
         Action subscribeDelegate = () => { };
 
         // Act & Assert
@@ -173,7 +173,7 @@ public class DelegateRepeaterTests
     {
         // Arrange
         string token = "testToken";
-        Action subscribeDelegate = null;
+        Action subscribeDelegate = null!;
 
         // Act & Assert
         Assert.ThrowsException<ArgumentNullException>(() => _delegateRepeater.Subscribe(token, subscribeDelegate));

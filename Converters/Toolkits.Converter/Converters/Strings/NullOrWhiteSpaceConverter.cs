@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 #if ___WPF___
 using System.Windows;
 using System.Windows.Data;
-using Toolkits.Core;
+using Toolkits.Wpf;
 #endif
 #if ___AVALONIA___
 using global::Avalonia;

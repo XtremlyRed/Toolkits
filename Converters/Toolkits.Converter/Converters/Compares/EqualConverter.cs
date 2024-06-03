@@ -210,7 +210,7 @@ public class EqualConverter :
         {
             bool condiction = CompareConverter.Match(cValue, Input, CompareMode.Equal);
 
-            return condiction ? True : False;
+            return condiction ? True : (False ?? value);
         }
 
         throw new InvalidOperationException($"invalid data type,must be:{typeof(IComparable)}");

@@ -1,325 +1,250 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Toolkits.Core;
-
-/// <summary>
-/// a class of <see cref="BufferSegments{T}"/>
-/// </summary>
-/// <typeparam name="T"></typeparam>
-[DebuggerDisplay("{Count}")]
-public class BufferSegments<T> : IDisposable
-{
-    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    private int segmentCapacity;
-
-    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    private Segment readSegment = default!;
-
-    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    private Segment writeSegment = default!;
-
-    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    private Awaiter awaiter = new Awaiter(0);
-
-    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    private Queue<Segment> segments;
-
-    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    private Queue<Segment> recycleSegments;
-
-    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    private int count;
-
-    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    private bool isDisposed;
-
-    /// <summary>
-    /// buffer count.
-    /// </summary>
-    public int Count => count;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="BufferSegments{T}"/> class.
-    /// </summary>
-    /// <param name="bufferSize">Size of the buffer.</param>
-    /// <param name="segmentCapacity">The segment capacity.</param>
-    /// <exception cref="ArgumentOutOfRangeException">
-    /// bufferSize
-    /// or
-    /// segmentCapacity
-    /// </exception>
-    public BufferSegments(int bufferSize = 1024, int segmentCapacity = 1024)
-    {
-        _ = bufferSize <= 0 ? throw new ArgumentOutOfRangeException(nameof(bufferSize)) : 0;
-        _ = segmentCapacity <= 0 ? throw new ArgumentOutOfRangeException(nameof(segmentCapacity)) : 0;
-        segments = new Queue<Segment>(bufferSize);
-        recycleSegments = new Queue<Segment>();
-        this.segmentCapacity = segmentCapacity;
-    }
-
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    void IDisposable.Dispose()
-    {
-        isDisposed = true;
-
-        awaiter?.Dispose();
-        awaiter = null!;
-
-        segments?.Clear();
-        segments = null!;
-
-        count = default!;
-
-        segmentCapacity = default!;
-
-        readSegment = default!;
-        writeSegment = default!;
-    }
-
-    /// <summary>
-    /// Reads the specified buffer.
-    /// </summary>
-    /// <param name="buffer">The buffer.</param>
-    /// <param name="offset">The offset.</param>
-    /// <param name="length">The length.</param>
-    /// <exception cref="ObjectDisposedException">T</exception>
-    public void Read(T[] buffer, int offset, int length)
-    {
-        _ = isDisposed ? throw new ObjectDisposedException(nameof(BufferSegments<T>)) : 0;
-
-        GetReadSegment();
-
-        if (readSegment.ValidReadLength > length)
-        {
-            readSegment.Read(buffer, 0, length);
-        }
-        else
-        {
-            int readLengthTemp = length;
-            int readedLength = 0;
-            while (readSegment.ValidReadLength < readLengthTemp)
-            {
-                int readSegmentLength = readSegment.ValidReadLength;
-
-                readSegment.Read(buffer, readedLength, readSegmentLength);
-
-                readedLength += readSegmentLength;
-                readLengthTemp -= readSegmentLength;
-
-                GetReadSegment();
-            }
-
-            if (readLengthTemp > 0)
-            {
-                readSegment.Read(buffer, readedLength, readLengthTemp);
-            }
-        }
-
-        Interlocked.Add(ref count, -length);
-    }
-
-    /// <summary>
-    /// Reads the asynchronous.
-    /// </summary>
-    /// <param name="buffer">The buffer.</param>
-    /// <param name="offset">The offset.</param>
-    /// <param name="readLength">Length of the read.</param>
-    /// <exception cref="ObjectDisposedException">T</exception>
-    public async Task ReadAsync(T[] buffer, int offset, int readLength)
-    {
-        _ = isDisposed ? throw new ObjectDisposedException(nameof(BufferSegments<T>)) : 0;
-
-        await GetReadSegmentAsync();
-
-        if (readSegment.ValidReadLength > readLength)
-        {
-            readSegment.Read(buffer, 0, readLength);
-        }
-        else
-        {
-            int readLengthTemp = readLength;
-            int readedLength = 0;
-            while (readSegment.ValidReadLength < readLengthTemp)
-            {
-                int readSegmentLength = readSegment.ValidReadLength;
-
-                readSegment.Read(buffer, readedLength, readSegmentLength);
-
-                readedLength += readSegmentLength;
-                readLengthTemp -= readSegmentLength;
-
-                await GetReadSegmentAsync();
-            }
-
-            if (readLengthTemp > 0)
-            {
-                readSegment.Read(buffer, readedLength, readLengthTemp);
-            }
-        }
-
-        Interlocked.Add(ref count, -readLength);
-    }
-
-    /// <summary>
-    /// Writes the specified buffer.
-    /// </summary>
-    /// <param name="buffer">The buffer.</param>
-    /// <param name="offset">The offset.</param>
-    /// <param name="length">The length.</param>
-    /// <exception cref="ArgumentNullException">buffer</exception>
-    public void Write(T[] buffer, int offset, int length)
-    {
-        _ = isDisposed ? throw new ObjectDisposedException(nameof(BufferSegments<T>)) : 0;
-
-        _ = buffer ?? throw new ArgumentNullException(nameof(buffer));
-
-        GetWriteSegment();
-
-        if (writeSegment.ValidWriteLength > length)
-        {
-            writeSegment.Write(buffer, offset, length);
-        }
-        else
-        {
-            int writeLength = length;
-
-            while (writeSegment.ValidWriteLength < writeLength)
-            {
-                int writeSegmentLength = writeSegment.ValidWriteLength;
-                writeSegment.Write(buffer, offset, writeSegmentLength);
-                offset += writeSegmentLength;
-
-                writeLength -= writeSegmentLength;
-
-                GetWriteSegment();
-            }
-
-            if (writeLength > 0)
-            {
-                writeSegment.Write(buffer, offset, writeLength);
-            }
-        }
-
-        Interlocked.Add(ref count, length);
-
-        awaiter.Release();
-    }
-
-    private void GetWriteSegment()
-    {
-        if (writeSegment is not null && writeSegment.ValidWriteLength > 0)
-        {
-            return;
-        }
-
-        writeSegment = recycleSegments.Count > 0 ? recycleSegments.Dequeue() : new Segment(segmentCapacity);
-
-        segments.Enqueue(writeSegment);
-    }
-
-    private void GetReadSegment()
-    {
-        if (readSegment is not null && readSegment.ReadCompleted == false)
-        {
-            if (readSegment.ValidReadLength == 0)
-            {
-                awaiter.Wait();
-            }
-
-            return;
-        }
-
-        while (segments.Count == 0)
-        {
-            awaiter.Wait();
-        }
-
-        if (readSegment is not null)
-        {
-            readSegment.Clear();
-            recycleSegments.Enqueue(readSegment);
-        }
-
-        readSegment = segments.Dequeue();
-    }
-
-    private async Task GetReadSegmentAsync()
-    {
-        if (readSegment is not null && readSegment.ReadCompleted == false)
-        {
-            if (readSegment.ValidReadLength == 0)
-            {
-                await awaiter.WaitAsync();
-            }
-
-            return;
-        }
-
-        while (segments.Count == 0)
-        {
-            await awaiter.WaitAsync();
-        }
-
-        if (readSegment is not null)
-        {
-            readSegment.Clear();
-            recycleSegments.Enqueue(readSegment);
-        }
-
-        readSegment = segments.Dequeue();
-    }
-
-    private class Segment
-    {
-        T[] buffers;
-        int ReadOffset;
-        int WriteOffset;
-
-        public bool ReadCompleted;
-        public bool WriteCompleted;
-
-        public int ValidReadLength;
-        public int ValidWriteLength;
-
-        public Segment(int capacity)
-        {
-            ValidWriteLength = capacity;
-            buffers = new T[capacity];
-        }
-
-        public void Clear()
-        {
-            ValidReadLength = 0;
-            WriteOffset = 0;
-            ReadOffset = 0;
-            ValidWriteLength = buffers.Length;
-        }
-
-        public void Write(T[] buffer, int offset, int length)
-        {
-            Array.ConstrainedCopy(buffer, offset, buffers, WriteOffset, length);
-
-            WriteOffset += length;
-            ValidWriteLength -= length;
-            ValidReadLength += length;
-
-            WriteCompleted = buffers.Length == WriteOffset;
-        }
-
-        public void Read(T[] buffer, int offset, int length)
-        {
-            Array.ConstrainedCopy(buffers, ReadOffset, buffer, offset, length);
-
-            ReadOffset += length;
-            ValidReadLength -= length;
-
-            ReadCompleted = ReadOffset == buffers.Length;
-        }
-    }
-}
+﻿//using System.Diagnostics;
+
+//namespace Toolkits.Core;
+
+///// <summary>
+///// a class of <see cref="BufferSegments{T}"/>
+///// </summary>
+///// <typeparam name="T"></typeparam>
+//[DebuggerDisplay("{Count}")]
+//public class BufferSegments<T>
+//{
+//    private readonly InnerQueue segments = new InnerQueue();
+//    int bufferCapacity = 1024; int segmentCapacity = 1024;
+//    /// <summary>
+//    /// Gets the count.
+//    /// </summary>
+//    public int Count => segments.Sum(i => i.Count);
+
+//    /// <summary>
+//    /// segments reader.
+//    /// </summary>
+//    private ISegmentReader<T> Reader { get; }
+
+//    /// <summary>
+//    /// segments writer.
+//    /// </summary>
+//    private ISegmentWriter<T> Writer { get; }
+
+//    /// <summary>
+//    /// Initializes a new instance of the <see cref="BufferSegments{T}"/> class.
+//    /// </summary>
+//    public BufferSegments(int bufferCapacity=64,int segmentCapacity = 1024)
+//    {
+//        this.bufferCapacity = bufferCapacity;
+//        this.segmentCapacity = segmentCapacity;
+//        Reader = new SegmentReader(this);
+//        Writer = new SegmentWriter(this);
+//    }
+
+//    private class SegmentReader : ISegmentReader<T>
+//    {
+//        private readonly BufferSegments<T> bufferSegments;
+
+//        public SegmentReader(BufferSegments<T> bufferSegments)
+//        {
+//            this.bufferSegments = bufferSegments;
+//        }
+
+//        public int Count => bufferSegments.Count;
+
+//        public Task ReadAsync(T[] buffer, int offset, int length)
+//        {
+//            throw new NotImplementedException();
+//        }
+
+//        public async Task  WaitToReadAsync()
+//        {
+//            if (bufferSegments.segments.Count == 0)
+//            {
+//                await
+//            }
+//        }
+//    }
+
+//    private class SegmentWriter : ISegmentWriter<T>
+//    {
+//        private readonly BufferSegments<T> bufferSegments;
+
+//        public SegmentWriter(BufferSegments<T> bufferSegments)
+//        {
+//            this.bufferSegments = bufferSegments;
+//        }
+
+//        public int Count => bufferSegments.Count;
+
+//        public async Task  WaitToWriteAsync()
+//        {
+//            if(bufferSegments.segments.Count == bufferSegments.bufferCapacity)
+//            {
+//                await bufferSegments.segments.DequeueWaitAsync();
+//            }
+
+//        }
+
+//        public Task WriteAsync(T[] buffer, int offset, int length)
+//        {
+//            throw new NotImplementedException();
+//        }
+//    }
+
+//    private class Segment
+//    {
+//        private readonly T[] buffers;
+//        private int readOffset;
+//        private int writeOffset;
+//        private int readRemain;
+//        private int writeRemain;
+
+//        public int Count => writeOffset - readOffset;
+
+//        public bool ReadCompleted => readOffset == buffers.Length;
+//        public bool WriteCompleted => writeOffset == buffers.Length;
+
+//        public Segment(int capacity)
+//        {
+//            buffers = new T[capacity];
+//            writeOffset = 0;
+//            readOffset = 0;
+//            readRemain = 0;
+//            writeRemain = buffers.Length;
+//        }
+
+//        public void Clear()
+//        {
+//            writeOffset = 0;
+//            readOffset = 0;
+//            readRemain = 0;
+//            writeRemain = buffers.Length;
+//        }
+
+//        public int Write(T[] buffer, int offset, int length)
+//        {
+//            int canWrite = length - writeRemain;
+
+//            if (canWrite <= 0)
+//            {
+//                Array.ConstrainedCopy(buffer, offset, buffers, writeOffset, length);
+
+//                _ = Interlocked.Add(ref writeOffset, length);
+//                _ = Interlocked.Add(ref readRemain, length);
+//                _ = Interlocked.Add(ref writeRemain, -length);
+
+//                return 0;
+//            }
+
+//            Array.ConstrainedCopy(buffer, offset, buffers, writeOffset, canWrite);
+
+//            _ = Interlocked.Add(ref writeOffset, writeRemain);
+//            _ = Interlocked.Add(ref readRemain, writeRemain);
+//            _ = Interlocked.Add(ref writeRemain, -writeRemain);
+
+//            return canWrite;
+//        }
+
+//        public int Read(T[] buffer, int offset, int length)
+//        {
+//            int canRead = length - readRemain;
+
+//            if (canRead <= 0)
+//            {
+//                Array.ConstrainedCopy(buffers, readOffset, buffer, offset, length);
+//                _ = Interlocked.Add(ref readOffset, length);
+//                _ = Interlocked.Add(ref readRemain, -length);
+//                return 0;
+//            }
+
+//            Array.ConstrainedCopy(buffers, readOffset, buffer, offset, readRemain);
+//            _ = Interlocked.Add(ref readOffset, readRemain);
+//            _ = Interlocked.Add(ref readRemain, -readRemain);
+
+//            return canRead;
+//        }
+//    }
+
+
+//    private class InnerQueue : Queue<Segment>
+//    {
+//        private readonly Awaiter enqueueWaiter = new Awaiter(0, 1);
+//        private readonly Awaiter dnqueueWaiter = new Awaiter(0, 1);
+
+//        public new Segment Dequeue()
+//        {
+//            Segment item = base.Dequeue();
+//            dnqueueWaiter.Release();
+//            return item;
+//        }
+//        public new void Enqueue(Segment item)
+//        {
+//            base.Enqueue(item);
+
+//            enqueueWaiter.Release();
+//        }
+
+//        public async Task DequeueWaitAsync()
+//        {
+//            await dnqueueWaiter.WaitAsync();
+//        }
+
+//        public async Task EnqueueWaitAsync()
+//        {
+//            await enqueueWaiter.WaitAsync();
+//        }
+
+//    }
+
+//}
+
+///// <summary>
+///// a <see langword="interface"/> of <see cref="ISegmentReader{T}"/>
+///// </summary>
+///// <typeparam name="T"></typeparam>
+//public interface ISegmentReader<T>
+//{
+//    /// <summary>
+//    /// buffer count.
+//    /// </summary>
+//    int Count { get; }
+
+//    /// <summary>
+//    /// Waits to read asynchronous.
+//    /// </summary>
+//    /// <returns></returns>
+//    Task  WaitToReadAsync();
+
+//    /// <summary>
+//    /// Reads the asynchronous.
+//    /// </summary>
+//    /// <param name="buffer">The buffer.</param>
+//    /// <param name="offset">The offset.</param>
+//    /// <param name="length">The length.</param>
+//    /// <returns></returns>
+//    Task ReadAsync(T[] buffer, int offset, int length);
+//}
+
+///// <summary>
+///// a <see langword="interface"/> of <see cref="ISegmentWriter{T}"/>
+///// </summary>
+///// <typeparam name="T"></typeparam>
+//public interface ISegmentWriter<T>
+//{
+//    /// <summary>
+//    /// buffer count.
+//    /// </summary>
+//    int Count { get; }
+
+//    /// <summary>
+//    /// Waits to write asynchronous.
+//    /// </summary>
+//    /// <returns></returns>
+//    Task  WaitToWriteAsync();
+
+//    /// <summary>
+//    /// Writes the asynchronous.
+//    /// </summary>
+//    /// <param name="buffer">The buffer.</param>
+//    /// <param name="offset">The offset.</param>
+//    /// <param name="length">The length.</param>
+//    /// <returns></returns>
+//    Task WriteAsync(T[] buffer, int offset, int length);
+//}

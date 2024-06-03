@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Media;
-using Toolkits.Core;
 using Toolkits.Wpf;
 using ColorConverter = System.Windows.Media.ColorConverter;
 

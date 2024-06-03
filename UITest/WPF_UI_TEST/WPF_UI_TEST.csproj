@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+	  <LangVersion>11</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Toolkits.Core\Toolkits.Core.csproj" />
     <ProjectReference Include="..\..\Toolkits.Wpf\Toolkits.Wpf.csproj" />
   </ItemGroup>
 

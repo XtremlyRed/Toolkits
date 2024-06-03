@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
-using Toolkits.Core;
 using Toolkits.Wpf;
 
 namespace Toolkits.Controls.Assist;

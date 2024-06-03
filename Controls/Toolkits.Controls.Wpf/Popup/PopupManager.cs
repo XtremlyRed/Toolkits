@@ -6,8 +6,7 @@ using System.Windows.Media;
 using Toolkits.Controls;
 using Toolkits.Controls.Assist;
 using Toolkits.Controls.PopupView;
-using Toolkits.Core;
-using Toolkits.Core.UI;
+using Toolkits.Wpf;
 
 namespace Toolkits.Wpf;
 

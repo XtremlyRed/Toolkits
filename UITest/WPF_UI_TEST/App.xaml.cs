@@ -1,7 +1,9 @@
 ﻿using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.Windows;
 using Toolkits.Core;
+using Toolkits.Wpf;
 
 namespace WPF_UI_TEST;
 
@@ -18,36 +20,50 @@ public partial class App : Application
 
     private void test()
     {
-        BufferSegments<byte> bufferSegments = new BufferSegments<byte>(30, 10);
+        var ss = Disposable.Use(true, i => Debug.WriteLine(i));
 
-        ThreadPool.QueueUserWorkItem(async o =>
-        {
-            var index = 0;
+        using var _ = ss.Shadow();
 
-            while (true)
-            {
-                index++;
+        Disposable
+            .Interval(TimeSpan.FromSeconds(1))
+            .Counter(5)
+            .Subscribe(
+                (index) =>
+                {
+                    Debug.WriteLine(index);
+                }
+            );
 
-                var buffer = BitConverter.GetBytes(index);
+        //BufferSegments<byte> bufferSegments = new BufferSegments<byte>(30, 10);
 
-                bufferSegments.Write(buffer, 0, buffer.Length);
+        //ThreadPool.QueueUserWorkItem(async o =>
+        //{
+        //    var index = 0;
 
-                await Task.Delay(5);
-            }
-        });
+        //    while (true)
+        //    {
+        //        index++;
 
-        ThreadPool.QueueUserWorkItem(o =>
-        {
-            var buffer = new byte[4];
+        //        var buffer = BitConverter.GetBytes(index);
 
-            while (true)
-            {
-                bufferSegments.Read(buffer, 0, buffer.Length);
+        //        bufferSegments.Write(buffer, 0, buffer.Length);
 
-                var result = BitConverter.ToInt32(buffer, 0);
+        //        await Task.Delay(5);
+        //    }
+        //});
 
-                Console.WriteLine(result);
-            }
-        });
+        //ThreadPool.QueueUserWorkItem(o =>
+        //{
+        //    var buffer = new byte[4];
+
+        //    while (true)
+        //    {
+        //        bufferSegments.Read(buffer, 0, buffer.Length);
+
+        //        var result = BitConverter.ToInt32(buffer, 0);
+
+        //        Console.WriteLine(result);
+        //    }
+        //});
     }
 }

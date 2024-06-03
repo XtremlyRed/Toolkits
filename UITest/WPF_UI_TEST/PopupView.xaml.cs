@@ -12,8 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Toolkits.Core;
-using Toolkits.Core.UI;
+using Toolkits.Wpf;
 
 namespace WPF_UI_TEST
 {

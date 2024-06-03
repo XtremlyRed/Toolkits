@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 
-namespace Toolkits.Core;
+namespace Toolkits.Wpf;
 
 /// <summary>
 /// a class of <see cref="Parameters"/>

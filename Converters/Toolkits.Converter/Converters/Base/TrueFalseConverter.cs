@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -9,7 +8,6 @@ using System.Threading.Tasks;
 #if ___WPF___
 using System.Windows;
 using System.Windows.Data;
-using Toolkits.Wpf;
 #endif
 #if ___AVALONIA___
 using global::Avalonia;
@@ -31,10 +29,10 @@ namespace Toolkits.Maui;
 #endif
 
 /// <summary>
-/// a class of <see cref="NullConverter"/>
+/// a class of <see cref="TrueFalseConverter"/>
 /// </summary>
 /// <seealso cref="IValueConverter" />
-public class NullOrEmptyConverter :
+public abstract class TrueFalseConverter :
 #if ___WPF___
     DependencyObject,
 #endif
@@ -84,7 +82,7 @@ public class NullOrEmptyConverter :
     private static readonly DependencyProperty TrueProperty = DependencyProperty.Register(
         "True",
         typeof(object),
-        typeof(NullOrEmptyConverter),
+        typeof(TrueFalseConverter),
         new PropertyMetadata(true)
     );
 
@@ -94,7 +92,7 @@ public class NullOrEmptyConverter :
     private static readonly DependencyProperty FalseProperty = DependencyProperty.Register(
         "False",
         typeof(object),
-        typeof(NullOrEmptyConverter),
+        typeof(TrueFalseConverter),
         new PropertyMetadata(false)
     );
 #endif
@@ -107,7 +105,7 @@ public class NullOrEmptyConverter :
     private static readonly BindableProperty TrueProperty = BindableProperty.Create(
         "True",
         typeof(object),
-        typeof(NullOrEmptyConverter),
+        typeof(TrueFalseConverter),
         (object)true,
         BindingMode.Default,
         null,
@@ -121,7 +119,7 @@ public class NullOrEmptyConverter :
     private static readonly BindableProperty FalseProperty = BindableProperty.Create(
         "False",
         typeof(object),
-        typeof(NullOrEmptyConverter),
+        typeof(TrueFalseConverter),
         (object)false,
         BindingMode.Default,
         null,
@@ -135,7 +133,7 @@ public class NullOrEmptyConverter :
     /// <summary>
     /// The true property
     /// </summary>
-    private static readonly AvaloniaProperty TrueProperty = AvaloniaProperty.Register<NullOrEmptyConverter, object>(
+    private static readonly AvaloniaProperty TrueProperty = AvaloniaProperty.Register<TrueFalseConverter, object>(
         "True",
         true!,
         false,
@@ -145,7 +143,7 @@ public class NullOrEmptyConverter :
     /// <summary>
     /// The false property
     /// </summary>
-    private static readonly AvaloniaProperty FalseProperty = AvaloniaProperty.Register<NullOrEmptyConverter, object>(
+    private static readonly AvaloniaProperty FalseProperty = AvaloniaProperty.Register<TrueFalseConverter, object>(
         "False",
         false!,
         false,
@@ -161,19 +159,11 @@ public class NullOrEmptyConverter :
     /// <param name="parameter">The parameter.</param>
     /// <param name="culture">The culture.</param>
     /// <returns></returns>
-    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    protected abstract object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture);
+
+    object? IValueConverter.Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if (value is IEnumerable objects)
-        {
-            foreach (var _ in objects)
-            {
-                return True;
-            }
-
-            return False;
-        }
-
-        throw new InvalidOperationException($"invalid data type,must be:{typeof(IEnumerable)}");
+        return Convert(value, targetType, parameter, culture);
     }
 
     /// <summary>
@@ -184,8 +174,13 @@ public class NullOrEmptyConverter :
     /// <param name="parameter">The parameter.</param>
     /// <param name="culture">The culture.</param>
     /// <returns></returns>
-    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+    protected virtual object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         throw new NotSupportedException();
+    }
+
+    object? IValueConverter.ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        return ConvertBack(value, targetType, parameter, culture);
     }
 }
