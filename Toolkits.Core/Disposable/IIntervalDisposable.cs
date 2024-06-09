@@ -84,6 +84,12 @@ public class IntervalDisposable : IIntervalDisposable
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private int indexer;
 
+    /// <summary>
+    /// callback counter
+    /// </summary>
+    /// <param name="counter"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     public IIntervalDisposable Counter(int counter)
     {
         if (counter <= 0)
@@ -94,6 +100,12 @@ public class IntervalDisposable : IIntervalDisposable
         return this;
     }
 
+    /// <summary>
+    /// callback inveral
+    /// </summary>
+    /// <param name="timeSpan"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     public IIntervalDisposable Interval(TimeSpan timeSpan)
     {
         if (timeSpan <= TimeSpan.Zero)
@@ -104,6 +116,11 @@ public class IntervalDisposable : IIntervalDisposable
         return this;
     }
 
+    /// <summary>
+    /// subscribe callback
+    /// </summary>
+    /// <param name="callback"></param>
+    /// <returns></returns>
     public IDisposable Subscribe(Action<int> callback)
     {
         this.callback = callback;
@@ -115,6 +132,12 @@ public class IntervalDisposable : IIntervalDisposable
         return this;
     }
 
+    /// <summary>
+    /// subscribe callback
+    /// </summary>
+    /// <param name="callback"></param>
+    /// <param name="errorCallback"></param>
+    /// <returns></returns>
     public IDisposable Subscribe(Action<int> callback, Action<Exception, IDisposable> errorCallback)
     {
         this.callback = callback;
@@ -126,6 +149,13 @@ public class IntervalDisposable : IIntervalDisposable
         return this;
     }
 
+    /// <summary>
+    /// subscribe callback
+    /// </summary>
+    /// <param name="callback"></param>
+    /// <param name="errorCallback"></param>
+    /// <param name="completedCallback"></param>
+    /// <returns></returns>
     public IDisposable Subscribe(Action<int> callback, Action<Exception, IDisposable> errorCallback, Action<IDisposable> completedCallback)
     {
         this.callback = callback;
@@ -166,6 +196,9 @@ public class IntervalDisposable : IIntervalDisposable
         }
     }
 
+    /// <summary>
+    /// dispose object
+    /// </summary>
     public void Dispose()
     {
         if (isDisposed)

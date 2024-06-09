@@ -41,9 +41,10 @@ public static class Disposable
     }
 
     /// <summary>
-    /// Uses the true.
+    /// use <see langword="bool"/>
     /// </summary>
-    /// <param name="callback">The callback.</param>
+    /// <param name="beginValue"></param>
+    /// <param name="callback"></param>
     /// <returns></returns>
     public static IShadowDisposable Use(bool beginValue, Action<bool> callback)
     {

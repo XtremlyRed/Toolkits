@@ -25,7 +25,7 @@ namespace Toolkits.Core.Tests
         {
             // Arrange
             object from = "invalid";
-            string expected = default;
+            string expected = default!;
 
             // Act
             bool result = TypeConverterExtensions.TryConvertTo(from, out string outValue);
@@ -53,7 +53,7 @@ namespace Toolkits.Core.Tests
         public void ConvertTo_InvalidConversion_ThrowsInvalidCastException()
         {
             // Arrange
-            object from = null;
+            object from = null!;
 
             // Act & Assert
             Assert.ThrowsException<InvalidCastException>(() => TypeConverterExtensions.ConvertTo<int>(from));
@@ -96,7 +96,7 @@ namespace Toolkits.Core.Tests
         public void CreateConverter_NullTypeConverter_ThrowsArgumentNullException()
         {
             // Arrange
-            Func<string, int> typeConverter = null;
+            Func<string, int> typeConverter = null!;
 
             // Act & Assert
             Assert.ThrowsException<ArgumentNullException>(() => TypeConverterExtensions.CreateConverter<string, int>(typeConverter));
@@ -126,7 +126,7 @@ namespace Toolkits.Core.Tests
             var converterBuilder = TypeConverterExtensions.CreateConverter<string, int>(typeConverter);
 
             // Assert
-            Assert.ThrowsException<ArgumentNullException>(() => converterBuilder.ReverseConverter(null));
+            Assert.ThrowsException<ArgumentNullException>(() => converterBuilder.ReverseConverter(null!));
         }
     }
 }

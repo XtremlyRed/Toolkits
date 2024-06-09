@@ -101,6 +101,98 @@ public class Awaiter : IDisposable
     }
 
     /// <summary>
+    /// Waits this instance.
+    /// </summary>
+    /// <exception cref="System.ObjectDisposedException">Awaiter</exception>
+    public bool Wait(int millisecondsTimeout, CancellationToken cancellationToken = default)
+    {
+        _ = isDisposabled ? throw new ObjectDisposedException(nameof(Awaiter)) : 0;
+        _ = millisecondsTimeout <= 0 ? throw new ArgumentOutOfRangeException(nameof(millisecondsTimeout)) : 0;
+        try
+        {
+            Interlocked.Decrement(ref currentCounter);
+            var result = semaphoreSlim.Wait(millisecondsTimeout, cancellationToken);
+            if (result == false)
+            {
+                Interlocked.Increment(ref currentCounter);
+            }
+
+            return result;
+        }
+        catch (OperationCanceledException)
+        {
+            Interlocked.Increment(ref currentCounter);
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Waits the asynchronous.
+    /// </summary>
+    /// <exception cref="System.ObjectDisposedException">Awaiter</exception>
+    public async Task<bool> WaitAsync(int millisecondsTimeout, CancellationToken cancellationToken = default)
+    {
+        _ = isDisposabled ? throw new ObjectDisposedException(nameof(Awaiter)) : 0;
+        _ = millisecondsTimeout <= 0 ? throw new ArgumentOutOfRangeException(nameof(millisecondsTimeout)) : 0;
+        try
+        {
+            Interlocked.Decrement(ref currentCounter);
+            var result = await semaphoreSlim.WaitAsync(millisecondsTimeout, cancellationToken);
+            if (result == false)
+            {
+                Interlocked.Increment(ref currentCounter);
+            }
+
+            return result;
+        }
+        catch (OperationCanceledException)
+        {
+            Interlocked.Increment(ref currentCounter);
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Waits this instance.
+    /// </summary>
+    /// <exception cref="System.ObjectDisposedException">Awaiter</exception>
+    public void Wait(CancellationToken cancellationToken)
+    {
+        _ = isDisposabled ? throw new ObjectDisposedException(nameof(Awaiter)) : 0;
+
+        try
+        {
+            Interlocked.Decrement(ref currentCounter);
+
+            semaphoreSlim.Wait(cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            Interlocked.Increment(ref currentCounter);
+        }
+    }
+
+    /// <summary>
+    /// Waits the asynchronous.
+    /// </summary>
+    /// <exception cref="System.ObjectDisposedException">Awaiter</exception>
+    public async Task WaitAsync(CancellationToken cancellationToken)
+    {
+        _ = isDisposabled ? throw new ObjectDisposedException(nameof(Awaiter)) : 0;
+
+        try
+        {
+            Interlocked.Decrement(ref currentCounter);
+
+            await semaphoreSlim.WaitAsync(cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            Interlocked.Increment(ref currentCounter);
+        }
+    }
+
+    /// <summary>
     /// dispose
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]

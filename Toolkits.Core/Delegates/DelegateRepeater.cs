@@ -33,25 +33,16 @@ public class DelegateRepeater : IDelegateRepeater
     {
         _ = unregisterToken ?? throw new ArgumentNullException(nameof(unregisterToken));
 
-        using var ig = subscribMaps.GetEnumerator();
+        var current = subscribMaps.FirstOrDefault(i => i.Key == unregisterToken);
 
-        while (ig.MoveNext())
+        if (current.Key is null || current.Value is null)
         {
-            var current = ig.Current;
-
-            if (current.Key is null || current.Key != unregisterToken)
-            {
-                continue;
-            }
-
-            ig.Dispose();
-
-            subscribMaps.TryRemove(current.Key, out var item);
-
-            item?.Dispose();
-
             return;
         }
+
+        subscribMaps.TryRemove(current.Key, out var item);
+
+        item?.Dispose();
     }
 
     /// <summary>

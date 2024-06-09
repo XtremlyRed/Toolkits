@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>aa0b9887-2575-4434-8fb9-776e8eb6867a</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Toolkits.Converter</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Base\TrueFalseConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Base\TrueFalseOrNullConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Base\ValueConverterBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Booleans\BooleanConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Booleans\BooleanReverseConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Booleans\BooleanToVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Booleans\BooleanToVisibilityReverseConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Compares\CompareConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Compares\EqualConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Compares\GreaterThanConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Compares\GreaterThanOrEqualConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Compares\LessThanConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Compares\LessThanOrEqualConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Compares\NotEqualConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CompositeConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enums\EnumConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enums\EnumDescriptionConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enums\EnumDisplayNameConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Medias\BrushStringConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Medias\ColorStringConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Medias\MediaConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Objects\LengthConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Objects\NotNullConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Objects\NotNullOrEmptyConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Objects\NotNullOrWhiteSpaceConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Objects\NullConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Objects\NullOrEmptyConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Objects\NullOrWhiteSpaceConverter.cs" />
+  </ItemGroup>
+</Project>

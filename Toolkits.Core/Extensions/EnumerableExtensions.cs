@@ -224,8 +224,6 @@ public static class EnumerableExtensions
 
             index++;
         }
-
-        yield break;
     }
 
     /// <summary>
@@ -570,9 +568,6 @@ public static class EnumerableExtensions
             return;
         }
 
-        lock (source)
-        {
-            while (source.TryTake(out _)) { }
-        }
+        while (source.TryTake(out _)) { }
     }
 }

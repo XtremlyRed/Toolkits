@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34707.107
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Converters", "Converters", "{00B3E6E8-252F-4225-AD65-8E24B4F90715}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".solutionItems", ".solutionItems", "{3AB576FC-BD0B-4FB1-B1B3-5EDE0C27FE1D}"
 	ProjectSection(SolutionItems) = preProject
 		.csharpierrc.json = .csharpierrc.json
@@ -15,17 +13,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".solutionItems", ".solution
 		Toolkits.snk = Toolkits.snk
 	EndProjectSection
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Toolkits.Converter", "Converters\Toolkits.Converter\Toolkits.Converter.shproj", "{EBD17EC9-7F1E-49A7-9B6D-2AAA571247FA}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toolkits.Core", "Toolkits.Core\Toolkits.Core.csproj", "{4EB17102-D750-45A9-AEE4-3633451BE843}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Animations", "Animations", "{840FBAE9-24D8-410A-8E2C-E5FF6745CA76}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UITest", "UITest", "{FB038E2A-7B85-4752-B815-F06EE2664F70}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPF_UI_TEST", "UITest\WPF_UI_TEST\WPF_UI_TEST.csproj", "{80131B04-37BF-41C7-AAA4-F2BB910F0181}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Controls", "Controls", "{226D7634-E2E0-4DA9-AB1C-923F31189CD2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toolkits.Configuration", "Toolkits.Configuration\Toolkits.Configuration.csproj", "{6404110A-4F48-4A9F-B5C1-1F69D0700EAC}"
 EndProject
@@ -37,15 +29,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Toolkits", "Toolkits", "{0A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toolkits.Wpf", "Toolkits.Wpf\Toolkits.Wpf.csproj", "{23BE97C9-A85E-40AD-B8A2-46D3B516B036}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Toolkits.Animation.Wpf", "Animations\Toolkits.Animation.Wpf\Toolkits.Animation.Wpf.shproj", "{DA661D69-1FD0-437A-ADE8-168DAE8E2C51}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Toolkits.Controls.Wpf", "Controls\Toolkits.Controls.Wpf\Toolkits.Controls.Wpf.shproj", "{CF416B22-8CB1-4DD6-86F0-C40B2F383403}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toolkits.MAUI", "Toolkits.MAUI\Toolkits.MAUI.csproj", "{00F07564-9EE3-45FF-8624-AE1E7B73D751}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toolkits.Avalonia", "Toolkits.Avalonia\Toolkits.Avalonia.csproj", "{5696F77D-E502-4FF7-B112-F1622A1D3AF0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toolkits.Core.Test", "Test\Toolkits.Core.Test\Toolkits.Core.Test.csproj", "{B24949AE-A218-4804-A6F5-D641F8546D3B}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Toolkits.Converter", "Toolkits.Converter\Toolkits.Converter.shproj", "{AA0B9887-2575-4434-8FB9-776E8EB6867A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -90,27 +80,21 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{EBD17EC9-7F1E-49A7-9B6D-2AAA571247FA} = {00B3E6E8-252F-4225-AD65-8E24B4F90715}
 		{80131B04-37BF-41C7-AAA4-F2BB910F0181} = {FB038E2A-7B85-4752-B815-F06EE2664F70}
 		{413B064D-48DF-4673-B941-6C35ACB4918A} = {18F28F93-6579-4346-81AF-40948D90BBE8}
 		{23BE97C9-A85E-40AD-B8A2-46D3B516B036} = {0AD35685-EFED-4B4A-98AD-544EE001A0C8}
-		{DA661D69-1FD0-437A-ADE8-168DAE8E2C51} = {840FBAE9-24D8-410A-8E2C-E5FF6745CA76}
-		{CF416B22-8CB1-4DD6-86F0-C40B2F383403} = {226D7634-E2E0-4DA9-AB1C-923F31189CD2}
 		{00F07564-9EE3-45FF-8624-AE1E7B73D751} = {0AD35685-EFED-4B4A-98AD-544EE001A0C8}
 		{5696F77D-E502-4FF7-B112-F1622A1D3AF0} = {0AD35685-EFED-4B4A-98AD-544EE001A0C8}
 		{B24949AE-A218-4804-A6F5-D641F8546D3B} = {18F28F93-6579-4346-81AF-40948D90BBE8}
+		{AA0B9887-2575-4434-8FB9-776E8EB6867A} = {0AD35685-EFED-4B4A-98AD-544EE001A0C8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B45F90B8-3B2E-4915-8430-B929DFB383FC}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Converters\Toolkits.Converter\Toolkits.Converter.projitems*{00f07564-9ee3-45ff-8624-ae1e7b73d751}*SharedItemsImports = 5
-		Animations\Toolkits.Animation.Wpf\Toolkits.Animation.Wpf.projitems*{23be97c9-a85e-40ad-b8a2-46d3b516b036}*SharedItemsImports = 5
-		Controls\Toolkits.Controls.Wpf\Toolkits.Controls.Wpf.projitems*{23be97c9-a85e-40ad-b8a2-46d3b516b036}*SharedItemsImports = 5
-		Converters\Toolkits.Converter\Toolkits.Converter.projitems*{23be97c9-a85e-40ad-b8a2-46d3b516b036}*SharedItemsImports = 5
-		Converters\Toolkits.Converter\Toolkits.Converter.projitems*{5696f77d-e502-4ff7-b112-f1622a1d3af0}*SharedItemsImports = 5
-		Controls\Toolkits.Controls.Wpf\Toolkits.Controls.Wpf.projitems*{cf416b22-8cb1-4dd6-86f0-c40b2f383403}*SharedItemsImports = 13
-		Animations\Toolkits.Animation.Wpf\Toolkits.Animation.Wpf.projitems*{da661d69-1fd0-437a-ade8-168dae8e2c51}*SharedItemsImports = 13
-		Converters\Toolkits.Converter\Toolkits.Converter.projitems*{ebd17ec9-7f1e-49a7-9b6d-2aaa571247fa}*SharedItemsImports = 13
+		Toolkits.Converter\Toolkits.Converter.projitems*{00f07564-9ee3-45ff-8624-ae1e7b73d751}*SharedItemsImports = 5
+		Toolkits.Converter\Toolkits.Converter.projitems*{23be97c9-a85e-40ad-b8a2-46d3b516b036}*SharedItemsImports = 5
+		Toolkits.Converter\Toolkits.Converter.projitems*{5696f77d-e502-4ff7-b112-f1622a1d3af0}*SharedItemsImports = 5
+		Toolkits.Converter\Toolkits.Converter.projitems*{aa0b9887-2575-4434-8fb9-776e8eb6867a}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal

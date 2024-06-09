@@ -14,6 +14,12 @@
 		<Description>avalonia converters</Description>
 		<DefineConstants>$(DefineConstants);___AVALONIA___</DefineConstants>
 	</PropertyGroup>
+	<ItemGroup>
+	  <AvaloniaXaml Remove="Converters\**" />
+	  <Compile Remove="Converters\**" />
+	  <EmbeddedResource Remove="Converters\**" />
+	  <None Remove="Converters\**" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Avalonia" Version="11.0.10" />
@@ -21,9 +27,9 @@
 		<!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
 		<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.10" />
 	</ItemGroup>
-	<Import Project="..\Converters\Toolkits.Converter\Toolkits.Converter.projitems" Label="Shared" />
 
-
+	<Import Project="..\Toolkits.Converter\Toolkits.Converter.projitems" Label="Shared" />
+ 
 	<Import Project="$(SolutionDir)\GlobalCompileSettings.Targets" />
 
 

@@ -9,7 +9,7 @@ public class EnumerableExtensionsTests
     [Test]
     public void IsNullOrEmpty_Should_Return_True_When_Source_Is_Null()
     {
-        IEnumerable<int> source = null;
+        IEnumerable<int> source = null!;
         bool result = source.IsNullOrEmpty();
         Assert.IsTrue(result);
     }
@@ -33,7 +33,7 @@ public class EnumerableExtensionsTests
     [Test]
     public void IsNotNullOrEmpty_Should_Return_False_When_Source_Is_Null()
     {
-        IEnumerable<int> source = null;
+        IEnumerable<int> source = null!;
         bool result = source.IsNotNullOrEmpty();
         Assert.IsFalse(result);
     }
@@ -57,7 +57,7 @@ public class EnumerableExtensionsTests
     [Test]
     public void IsNullOrEmpty_Generic_Should_Return_True_When_Source_Is_Null()
     {
-        IEnumerable<int> source = null;
+        IEnumerable<int> source = null!;
         bool result = source.IsNullOrEmpty<int>();
         Assert.IsTrue(result);
     }
@@ -81,7 +81,7 @@ public class EnumerableExtensionsTests
     [Test]
     public void IsNotNullOrEmpty_Generic_Should_Return_False_When_Source_Is_Null()
     {
-        IEnumerable<int> source = null;
+        IEnumerable<int> source = null!;
         bool result = source.IsNotNullOrEmpty<int>();
         Assert.IsFalse(result);
     }

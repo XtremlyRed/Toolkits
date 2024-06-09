@@ -15,9 +15,9 @@
 
 	<PropertyGroup>
 		
-		<Version>1.2.3.2</Version>
-		<AssemblyVersion>1.2.3</AssemblyVersion>
-		<FileVersion>1.2.3</FileVersion>
+		<Version>1.2.5</Version>
+		<AssemblyVersion>1.2.5</AssemblyVersion>
+		<FileVersion>1.2.5</FileVersion>
 		<LangVersion>11.0</LangVersion>
 		<PackageProjectUrl>https://github.com/xtremlyred/Toolkits</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/xtremlyred/Toolkits</RepositoryUrl>

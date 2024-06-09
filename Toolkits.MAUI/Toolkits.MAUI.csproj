@@ -26,14 +26,27 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <AndroidResource Remove="Converters\**" />
+	  <Compile Remove="Converters\**" />
+	  <EmbeddedResource Remove="Converters\**" />
+	  <MauiCss Remove="Converters\**" />
+	  <MauiXaml Remove="Converters\**" />
+	  <None Remove="Converters\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.14" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.14" />
 	</ItemGroup>
 
-	<Import Project="..\Converters\Toolkits.Converter\Toolkits.Converter.projitems" Label="Shared" />
+	<Import Project="..\Toolkits.Converter\Toolkits.Converter.projitems" Label="Shared" />
+ 
 
 	<Import Project="$(SolutionDir)\GlobalCompileSettings.Targets" />
 
+	<PropertyGroup>
+		<SignAssembly>False</SignAssembly> 
+	</PropertyGroup>
 
 </Project>
 

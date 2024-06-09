@@ -21,21 +21,33 @@
 		<Description>wpf converters,animation,controls</Description>
 	</PropertyGroup>
 
+	<ItemGroup>
+	  <Compile Remove="Converters\**" />
+	  <EmbeddedResource Remove="Converters\**" />
+	  <None Remove="Converters\**" />
+	  <Page Remove="Converters\**" />
+	</ItemGroup>
 
-	<Import Project="..\Converters\Toolkits.Converter\Toolkits.Converter.projitems" Label="Shared" />
-
-
-	<Import Project="..\Animations\Toolkits.Animation.Wpf\Toolkits.Animation.Wpf.projitems" Label="Shared" />
-
-
-	<Import Project="..\Controls\Toolkits.Controls.Wpf\Toolkits.Controls.Wpf.projitems" Label="Shared" />
-
-
-
+ 
 	<ItemGroup>
 	  <None Remove="FodyWeavers.xml" />
 	  <None Remove="FodyWeavers.xsd" />
 	</ItemGroup>
+
+
+
+	<ItemGroup>
+	  <Compile Update="Controls\Popup\PopupView\MessageView.xaml.cs">
+	    <DependentUpon>MessageView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Controls\Popup\PopupView\ToastView.xaml.cs">
+	    <DependentUpon>ToastView.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+
+
+	<Import Project="..\Toolkits.Converter\Toolkits.Converter.projitems" Label="Shared" />
 
 	<Import Project="$(SolutionDir)\GlobalCompileSettings.Targets" />
 

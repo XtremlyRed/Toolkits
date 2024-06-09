@@ -6,7 +6,7 @@ namespace Toolkits.Core.Tests.Delegates;
 [TestClass]
 public class DelegateRepeaterTests
 {
-    private DelegateRepeater _delegateRepeater;
+    private DelegateRepeater _delegateRepeater = default!;
 
     [TestInitialize]
     public void Setup()
