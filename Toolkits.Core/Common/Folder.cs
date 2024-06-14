@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using System.Diagnostics;
 
+#pragma warning disable CA2211
+
 namespace Toolkits.Core;
 
 /// <summary>

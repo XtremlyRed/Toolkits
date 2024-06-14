@@ -70,10 +70,10 @@ public static class Converters
     /// <summary>
     /// <see cref="object"/> <see langword="null"/> to <see cref="bool"/> converter
     /// </summary>
-    public static NullConverter Null = new NullConverter() { True = true, False = false };
+    public static NullConverter Null = new() { True = true, False = false };
 
     /// <summary>
     /// <see cref="object"/> not <see langword="null"/> to <see cref="bool"/> converter
     /// </summary>
-    public static NotNullConverter NotNull = new NotNullConverter() { True = true, False = false };
+    public static NotNullConverter NotNull = new() { True = true, False = false };
 }

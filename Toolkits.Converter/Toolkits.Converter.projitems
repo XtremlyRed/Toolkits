@@ -14,8 +14,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Base\ValueConverterBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Booleans\BooleanConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Booleans\BooleanReverseConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Booleans\BooleanToVisibilityConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Booleans\BooleanToVisibilityReverseConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Compares\CompareConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Compares\EqualConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Compares\GreaterThanConverter.cs" />
@@ -38,5 +36,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Objects\NullConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Objects\NullOrEmptyConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Objects\NullOrWhiteSpaceConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Ranges\ByteRangeConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Ranges\RangeConverter.cs" />
   </ItemGroup>
 </Project>

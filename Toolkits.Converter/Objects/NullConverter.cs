@@ -1,5 +1,7 @@
 ﻿using System.Globalization;
-
+#if ___WPF___
+using System.Windows;
+#endif
 namespace Toolkits.Converter;
 
 /// <summary>
@@ -31,3 +33,23 @@ public class NullConverter : TrueFalseConverter<object>
         return value!;
     }
 }
+
+#if ___WPF___ || ___MAUI___
+
+/// <summary>
+/// a class of <see cref="NullToVisitilityConverter"/>
+/// </summary>
+/// <seealso cref="CompareConverter" />
+public class NullToVisitilityConverter : NullConverter
+{
+    /// <summary>
+    /// create a new instance of <see cref="EqualConverter"/>
+    /// </summary>
+    public NullToVisitilityConverter()
+    {
+        True = Visibility.Visible;
+        False = Visibility.Collapsed;
+    }
+}
+
+#endif

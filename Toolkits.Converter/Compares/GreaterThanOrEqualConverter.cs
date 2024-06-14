@@ -1,4 +1,6 @@
-﻿namespace Toolkits.Converter;
+﻿using System.Windows;
+
+namespace Toolkits.Converter;
 
 /// <summary>
 /// a class of <see cref="GreaterThanOrEqualConverter"/>

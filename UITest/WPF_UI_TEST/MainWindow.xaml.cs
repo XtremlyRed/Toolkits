@@ -40,7 +40,8 @@ public partial class MainWindow : Window
 
         for (int i = 0; i < 5; i++)
         {
-            var resu = await popupManager.PopupAsync(() => new PopupView());
+            await popupManager.ShowAsync("这个是一个测试的消息", "提示", "ok", "cancel");
+            //var resu = await popupManager.PopupAsync(() => new PopupView());
         }
     }
 }
