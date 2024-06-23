@@ -14,27 +14,26 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Toolkits.Wpf;
 
-namespace WPF_UI_TEST
+namespace WPF_UI_TEST;
+
+/// <summary>
+/// PopupView.xaml 的交互逻辑
+/// </summary>
+public partial class PopupView : UserControl, IPopupAware
 {
-    /// <summary>
-    /// PopupView.xaml 的交互逻辑
-    /// </summary>
-    public partial class PopupView : UserControl, IPopupAware
+    public PopupView()
     {
-        public PopupView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+    }
 
-        public event RequestCloseEventHandler? RequestCloseEvent;
+    public event RequestCloseEventHandler? RequestCloseEvent;
 
-        public void OnPopupClosed() { }
+    public void OnPopupClosed() { }
 
-        public void OnPopupOpened(Parameters? parameters) { }
+    public void OnPopupOpened(IPopupParameters? parameters) { }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            RequestCloseEvent?.Invoke(this, EventArgs.Empty);
-        }
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
+        RequestCloseEvent?.Invoke(this, EventArgs.Empty);
     }
 }

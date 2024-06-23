@@ -55,4 +55,14 @@ public static class Disposable
 
         return new ShadowDisposable(use);
     }
+
+    /// <summary>
+    /// time span elapsed
+    /// </summary>
+    /// <param name="callback"></param>
+    /// <returns></returns>
+    public static IElapsedDisposable Elapsed(Action<TimeSpan> callback)
+    {
+        return new ElapsedDisposable(callback);
+    }
 }

@@ -13,7 +13,7 @@ namespace Toolkits.Wpf.Internal;
 /// </summary>
 /// <seealso cref="System.IDisposable" />
 [EditorBrowsable(EditorBrowsableState.Never)]
-internal class AsyncLocker : IDisposable
+internal class Awaiter : IDisposable
 {
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private object syncRoot = new();
@@ -28,11 +28,11 @@ internal class AsyncLocker : IDisposable
     private bool isDisposabled;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="AsyncLocker"/> class.
+    /// Initializes a new instance of the <see cref="Awaiter"/> class.
     /// </summary>
     /// <param name="initialCount">The initial count.</param>
     /// <param name="maxCount">The maximum count.</param>
-    public AsyncLocker(int initialCount, int maxCount)
+    public Awaiter(int initialCount, int maxCount)
     {
         semaphoreSlim = new(initialCount, maxCount);
     }
@@ -40,10 +40,10 @@ internal class AsyncLocker : IDisposable
     /// <summary>
     /// Releases this instance.
     /// </summary>
-    /// <exception cref="System.ObjectDisposedException">AsyncLocker</exception>
+    /// <exception cref="System.ObjectDisposedException">Awaiter</exception>
     public void Release()
     {
-        _ = isDisposabled ? throw new ObjectDisposedException(nameof(AsyncLocker)) : 0;
+        _ = isDisposabled ? throw new ObjectDisposedException(nameof(Awaiter)) : 0;
 
         lock (syncRoot)
         {
@@ -58,10 +58,10 @@ internal class AsyncLocker : IDisposable
     /// <summary>
     /// Waits this instance.
     /// </summary>
-    /// <exception cref="System.ObjectDisposedException">AsyncLocker</exception>
+    /// <exception cref="System.ObjectDisposedException">Awaiter</exception>
     public void Wait()
     {
-        _ = isDisposabled ? throw new ObjectDisposedException(nameof(AsyncLocker)) : 0;
+        _ = isDisposabled ? throw new ObjectDisposedException(nameof(Awaiter)) : 0;
 
         Interlocked.Increment(ref currentCounter);
         semaphoreSlim.Wait();
@@ -70,10 +70,10 @@ internal class AsyncLocker : IDisposable
     /// <summary>
     /// Waits the asynchronous.
     /// </summary>
-    /// <exception cref="System.ObjectDisposedException">AsyncLocker</exception>
+    /// <exception cref="System.ObjectDisposedException">Awaiter</exception>
     public async Task WaitAsync()
     {
-        _ = isDisposabled ? throw new ObjectDisposedException(nameof(AsyncLocker)) : 0;
+        _ = isDisposabled ? throw new ObjectDisposedException(nameof(Awaiter)) : 0;
 
         Interlocked.Increment(ref currentCounter);
         await semaphoreSlim.WaitAsync();

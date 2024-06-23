@@ -13,6 +13,7 @@ internal class ThemeDataContext : INotifyPropertyChanged
     Brush? borderBrush;
     Brush? background;
     Brush? foreground;
+    Brush? maskBrush;
     Brush? operationAreaBrush;
 
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -26,11 +27,17 @@ internal class ThemeDataContext : INotifyPropertyChanged
         }
     }
 
+    public Brush? MaskBrush
+    {
+        get => maskBrush;
+        set => SetProperty(ref maskBrush, value);
+    }
     public Brush? BorderBrush
     {
         get => borderBrush;
         set => SetProperty(ref borderBrush, value);
     }
+
     public Brush? Background
     {
         get => background;
@@ -80,5 +87,9 @@ internal class ThemeDataContext : INotifyPropertyChanged
         OperationAreaBrush = isDarkTheme
             ? new SolidColorBrush((Color)ColorConverter.ConvertFromString("#444444"))
             : new SolidColorBrush((Color)ColorConverter.ConvertFromString("#eaeaea"));
+
+        MaskBrush = isDarkTheme
+            ? new SolidColorBrush((Color)ColorConverter.ConvertFromString("#40ffffff"))
+            : new SolidColorBrush((Color)ColorConverter.ConvertFromString("#40000000"));
     }
 }

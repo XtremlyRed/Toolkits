@@ -7,7 +7,7 @@ namespace Toolkits.Controls.Assist;
 
 internal static class PopupAdornerAssist
 {
-    internal static Action SetContent(this PopupAdorner popupAdorner, int contentIndex, object popupView, Parameters? parameters = null)
+    internal static Action SetContent(this PopupAdorner popupAdorner, int contentIndex, object popupView, PopupParameters? parameters = null)
     {
         var popupContent = popupView as FrameworkElement;
 

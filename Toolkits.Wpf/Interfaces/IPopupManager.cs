@@ -72,36 +72,40 @@ public interface IPopupManager
     /// <summary>
     /// popup view with <paramref name="parameters"/> from  main container
     /// when using, there must be a popup container with the PopupManager.IsMainContainerProperty attribute set to true
+    /// view or view's data context must be inherit from <see cref="IPopupAware"/>
     /// </summary>
     /// <param name="view">view</param>
     /// <param name="parameters">parameters</param>
     /// <returns></returns>d
-    Task<object> PopupAsync(object view, Parameters? parameters = null);
+    Task<object> PopupAsync(object view, PopupParameters? parameters = null);
 
     /// <summary>
     /// popup view with <paramref name="parameters"/> from  main container
     /// when using, there must be a popup container with the PopupManager.IsMainContainerProperty attribute set to true
+    /// view or view's data context must be inherit from <see cref="IPopupAware"/>
     /// </summary>
     /// <param name="viewCreator">view creator</param>
     /// <param name="parameters">parameters</param>
     /// <returns></returns>
-    Task<object> PopupAsync(Func<object> viewCreator, Parameters? parameters = null);
+    Task<object> PopupAsync(Func<object> viewCreator, PopupParameters? parameters = null);
 
     /// <summary>
     /// popup view with <paramref name="parameters"/> from <paramref name="containerName"/>
+    /// view or view's data context must be inherit from <see cref="IPopupAware"/>
     /// </summary>
     /// <param name="containerName">popup <paramref name="containerName"/></param>
     /// <param name="view">view</param>
     /// <param name="parameters">parameters</param>
     /// <returns></returns>
-    Task<object> PopupAsyncIn(string containerName, object view, Parameters? parameters = null);
+    Task<object> PopupAsyncIn(string containerName, object view, PopupParameters? parameters = null);
 
     /// <summary>
     /// popup view with <paramref name="parameters"/> from <paramref name="containerName"/>
+    /// view or view's data context must be inherit from <see cref="IPopupAware"/>
     /// </summary>
     /// <param name="containerName">popup <paramref name="containerName"/></param>
     /// <param name="viewCreator">view creator</param>
     /// <param name="parameters">parameters</param>
     /// <returns></returns>
-    Task<object> PopupAsyncIn(string containerName, Func<object> viewCreator, Parameters? parameters = null);
+    Task<object> PopupAsyncIn(string containerName, Func<object> viewCreator, PopupParameters? parameters = null);
 }

@@ -17,7 +17,7 @@ internal partial class ToastView : PopupToastViewBase
     public ToastView()
     {
         InitializeComponent();
-        DataContext = ThemeDataContext.themeDataContext;
+        //DataContext = ThemeDataContext.themeDataContext;
     }
 
     /// <summary>

@@ -1,12 +1,14 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using Toolkits.Controls;
 using Toolkits.Controls.Assist;
 using Toolkits.Controls.PopupView;
 using Toolkits.Wpf;
+using ColorConverter = System.Windows.Media.ColorConverter;
 
 namespace Toolkits.Wpf;
 
@@ -125,7 +127,7 @@ public class PopupManager : IPopupManager
     /// <param name="view">view</param>
     /// <param name="parameters">parameters</param>
     /// <returns></returns>
-    public async Task<object> PopupAsync(object view, Parameters? parameters = null)
+    public async Task<object> PopupAsync(object view, PopupParameters? parameters = null)
     {
         return await PopupAsync(() => view, parameters);
     }
@@ -138,7 +140,7 @@ public class PopupManager : IPopupManager
     /// <param name="viewCreator">view creator</param>
     /// <param name="parameters">parameters</param>
     /// <returns></returns>
-    public async Task<object> PopupAsync(Func<object> viewCreator, Parameters? parameters = null)
+    public async Task<object> PopupAsync(Func<object> viewCreator, PopupParameters? parameters = null)
     {
         PopupContainerCheck(true, out var adornerDecorator);
 
@@ -158,7 +160,7 @@ public class PopupManager : IPopupManager
     /// <param name="view">view</param>
     /// <param name="parameters">parameters</param>
     /// <returns></returns>
-    public async Task<object> PopupAsyncIn(string containerName, object view, Parameters? parameters = null)
+    public async Task<object> PopupAsyncIn(string containerName, object view, PopupParameters? parameters = null)
     {
         return await PopupAsyncIn(containerName, () => view, parameters);
     }
@@ -172,7 +174,7 @@ public class PopupManager : IPopupManager
     /// <param name="viewCreator">view creator</param>
     /// <param name="parameters">parameters</param>
     /// <returns></returns>
-    public async Task<object> PopupAsyncIn(string containerName, Func<object> viewCreator, Parameters? parameters = null)
+    public async Task<object> PopupAsyncIn(string containerName, Func<object> viewCreator, PopupParameters? parameters = null)
     {
         PopupContainerCheck(containerName, out var adornerDecorator);
 
@@ -348,39 +350,6 @@ public class PopupManager : IPopupManager
 
     #endregion
 
-    #region MaskBrush
-
-    /// <summary>
-    /// get mask maskBrush of popup container
-    /// </summary>
-    /// <param name="element"></param>
-    /// <returns></returns>
-    public static Brush GetMaskBrush(AdornerDecorator element)
-    {
-        return (Brush)element.GetValue(MaskBrushProperty);
-    }
-
-    /// <summary>
-    /// set mask maskBrush of popup container
-    /// </summary>
-    /// <param name="element"></param>
-    /// <param name="maskBrush"></param>
-    public static void SetMaskBrush(AdornerDecorator element, Brush maskBrush)
-    {
-        element.SetValue(MaskBrushProperty, maskBrush);
-    }
-
-    /// <summary>
-    /// mask maskBrush of popup container
-    /// </summary>
-    public static readonly DependencyProperty MaskBrushProperty = DependencyProperty.RegisterAttached(
-        "MaskBrush",
-        typeof(Brush),
-        typeof(PopupManager),
-        new PropertyMetadata(new BrushConverter().ConvertFromString("#40000000"))
-    );
-
-    #endregion
 
     #region IsMainContainer
 
@@ -596,14 +565,192 @@ public class PopupManager : IPopupManager
     #region   theme
 
 
+
     /// <summary>
-    /// Determines whether [is dark theme] [the specified is dark theme].
+    /// get mask maskBrush of popup container
     /// </summary>
-    /// <param name="isDarkTheme">if set to <c>true</c> [is dark theme].</param>
-    public static void MdifyPopupTheme(bool isDarkTheme)
+    /// <param name="adornerDecorator"></param>
+    /// <returns></returns>
+    public static Brush GetMaskBrush(AdornerDecorator adornerDecorator)
     {
-        ThemeDataContext.themeDataContext.ChangedTheme(isDarkTheme);
+        return (Brush)adornerDecorator.GetValue(MaskBrushProperty);
     }
+
+    /// <summary>
+    /// set mask maskBrush of popup container
+    /// </summary>
+    /// <param name="adornerDecorator"></param>
+    /// <param name="maskBrush"></param>
+    public static void SetMaskBrush(AdornerDecorator adornerDecorator, Brush maskBrush)
+    {
+        adornerDecorator.SetValue(MaskBrushProperty, maskBrush);
+    }
+
+    /// <summary>
+    /// mask maskBrush of popup container
+    /// </summary>
+    public static readonly DependencyProperty MaskBrushProperty = DependencyProperty.RegisterAttached(
+        "MaskBrush",
+        typeof(Brush),
+        typeof(PopupManager),
+        new PropertyMetadata(
+            new BrushConverter().ConvertFromString("#40000000"),
+            (s, e) =>
+            {
+                ThemeDataContext.themeDataContext.MaskBrush = e.NewValue as Brush;
+            }
+        )
+    );
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="adornerDecorator"></param>
+    /// <returns></returns>
+    public static Brush GetForeground(AdornerDecorator adornerDecorator)
+    {
+        return (Brush)adornerDecorator.GetValue(ForegroundProperty);
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="adornerDecorator"></param>
+    /// <param name="value"></param>
+    public static void SetForeground(AdornerDecorator adornerDecorator, Brush value)
+    {
+        adornerDecorator.SetValue(ForegroundProperty, value);
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    public static readonly DependencyProperty ForegroundProperty = DependencyProperty.RegisterAttached(
+        "Foreground",
+        typeof(Brush),
+        typeof(PopupManager),
+        new PropertyMetadata(
+            new BrushConverter().ConvertFromString("#000000"),
+            (s, e) =>
+            {
+                ThemeDataContext.themeDataContext.Foreground = e.NewValue as Brush;
+            }
+        )
+    );
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="adornerDecorator"></param>
+    /// <returns></returns>
+    public static Brush GetBackground(AdornerDecorator adornerDecorator)
+    {
+        return (Brush)adornerDecorator.GetValue(BackgroundProperty);
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="adornerDecorator"></param>
+    /// <param name="value"></param>
+    public static void SetBackground(AdornerDecorator adornerDecorator, Brush value)
+    {
+        adornerDecorator.SetValue(BackgroundProperty, value);
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    public static readonly DependencyProperty BackgroundProperty = DependencyProperty.RegisterAttached(
+        "Background",
+        typeof(Brush),
+        typeof(PopupManager),
+        new PropertyMetadata(
+            new BrushConverter().ConvertFromString("#fafafa"),
+            (s, e) =>
+            {
+                ThemeDataContext.themeDataContext.Background = e.NewValue as Brush;
+            }
+        )
+    );
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="adornerDecorator"></param>
+    /// <returns></returns>
+    public static Brush GetBorderBrush(AdornerDecorator adornerDecorator)
+    {
+        return (Brush)adornerDecorator.GetValue(BorderBrushProperty);
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="adornerDecorator"></param>
+    /// <param name="value"></param>
+    public static void SetBorderBrush(AdornerDecorator adornerDecorator, Brush value)
+    {
+        adornerDecorator.SetValue(BorderBrushProperty, value);
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    public static readonly DependencyProperty BorderBrushProperty = DependencyProperty.RegisterAttached(
+        "BorderBrush",
+        typeof(Brush),
+        typeof(PopupManager),
+        new PropertyMetadata(
+            new BrushConverter().ConvertFromString("#8f8f8f"),
+            (s, e) =>
+            {
+                ThemeDataContext.themeDataContext.BorderBrush = e.NewValue as Brush;
+            }
+        )
+    );
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="adornerDecorator"></param>
+    /// <returns></returns>
+    public static Brush GetOperationAreaBrush(AdornerDecorator adornerDecorator)
+    {
+        return (Brush)adornerDecorator.GetValue(OperationAreaBrushProperty);
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="adornerDecorator"></param>
+    /// <param name="value"></param>
+    public static void SetOperationAreaBrush(AdornerDecorator adornerDecorator, Brush value)
+    {
+        adornerDecorator.SetValue(OperationAreaBrushProperty, value);
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    public static readonly DependencyProperty OperationAreaBrushProperty = DependencyProperty.RegisterAttached(
+        "OperationAreaBrush",
+        typeof(Brush),
+        typeof(PopupManager),
+        new PropertyMetadata(
+            new BrushConverter().ConvertFromString("#eaeaea"),
+            (s, e) =>
+            {
+                ThemeDataContext.themeDataContext.OperationAreaBrush = e.NewValue as Brush;
+            }
+        )
+    );
+
+    //internal static readonly SolidColorBrush DefaultForeground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#000000"));
+    //internal static readonly SolidColorBrush DefaultBackground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#fafafa"));
+    //internal static readonly SolidColorBrush DefaultBorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#8f8f8f"));
+    //internal static readonly SolidColorBrush DefaultOperationAreaBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#eaeaea"));
+
 
     /// <summary>
     /// Sets the theme brush.
@@ -624,9 +771,8 @@ public class PopupManager : IPopupManager
         typeof(PopupManager),
         new PropertyMetadata(
             null,
-            (s, e) =>
-            {
-                ThemeDataContext.themeDataContext.ChangedTheme(e.NewValue as PopupTheme);
+            (s, e) => {
+                //   ThemeDataContext.themeDataContext.ChangedTheme(e.NewValue as PopupTheme);
             }
         )
     );

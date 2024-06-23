@@ -26,8 +26,8 @@ internal class PopupAdorner : Adorner
     internal readonly PopupMessageViewBase? messageView;
 
     internal readonly bool[] shown = new[] { false, false, false };
-    internal readonly AsyncLocker[] DisplaysemaphoreSlims = new[] { new AsyncLocker(10, 10), new AsyncLocker(1, 1), new AsyncLocker(1, 1) };
-    internal readonly AsyncLocker[] InteropsemaphoreSlims = new[] { new AsyncLocker(0, 1), new AsyncLocker(0, 1), new AsyncLocker(0, 1) };
+    internal readonly Awaiter[] DisplaysemaphoreSlims = new[] { new Awaiter(10, 10), new Awaiter(1, 1), new Awaiter(1, 1) };
+    internal readonly Awaiter[] InteropsemaphoreSlims = new[] { new Awaiter(0, 1), new Awaiter(0, 1), new Awaiter(0, 1) };
     internal readonly System.Reflection.ConstructorInfo? toastContainerTypeConstructor;
 
     internal object? contentResult;

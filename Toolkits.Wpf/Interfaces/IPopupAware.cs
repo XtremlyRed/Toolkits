@@ -24,7 +24,7 @@ public interface IPopupAware
     /// on popup opened
     /// </summary>
     /// <param name="parameters"></param>
-    void OnPopupOpened(Parameters? parameters);
+    void OnPopupOpened(IPopupParameters? parameters);
 
     /// <summary>
     /// request close popup

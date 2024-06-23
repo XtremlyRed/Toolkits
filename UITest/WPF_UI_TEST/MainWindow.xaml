@@ -23,15 +23,17 @@
 
     </Window.Resources>
 
-    <Grid  GridExtensions.RowDefinitions="">
+    <Grid GridExtensions.RowDefinitions="">
 
 
         <AdornerDecorator
+            toolkit:PopupManager.Background="Beige"
+            toolkit:PopupManager.BorderBrush="Red"
             toolkit:PopupManager.ContainerName="MainPopupContainer"
+            toolkit:PopupManager.Foreground="Green"
             toolkit:PopupManager.IsMainContainer="True"
-            toolkit:PopupManager.MaskBrush="{SolidColorBrush Color=Brown,
-                                                             Opacity=0.5}"
-            toolkit:PopupManager.PopupTheme="{StaticResource DefaultThemeBrush}">
+            toolkit:PopupManager.MaskBrush="{SolidColorBrush Color=Brown}"
+            toolkit:PopupManager.OperationAreaBrush="LightCoral">
 
 
             <Button

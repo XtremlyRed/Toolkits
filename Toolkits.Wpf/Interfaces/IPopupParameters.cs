@@ -6,10 +6,42 @@ using System.Diagnostics;
 namespace Toolkits.Wpf;
 
 /// <summary>
-/// a class of <see cref="Parameters"/>
+/// a <see langword="interface"/> of <see cref="IPopupParameters"/>
+/// </summary>
+public interface IPopupParameters
+{
+    /// <summary>
+    /// get value from <see cref="IPopupParameters"/>
+    /// </summary>
+    /// <typeparam name="Target"></typeparam>
+    /// <param name="parameterKey"></param>
+    /// <returns></returns>
+    Target GetValue<Target>(string parameterKey);
+
+    /// <summary>
+    ///  set value into <see cref="IPopupParameters"/>
+    /// </summary>
+    /// <typeparam name="Target"></typeparam>
+    /// <param name="parameterKey"></param>
+    /// <param name="parameterValue"></param>
+    /// <returns></returns>
+    IPopupParameters SetValue<Target>(string parameterKey, Target parameterValue);
+
+    /// <summary>
+    /// try get value from <see cref="IPopupParameters"/>
+    /// </summary>
+    /// <typeparam name="Target"></typeparam>
+    /// <param name="parameterKey"></param>
+    /// <param name="parameterValue"></param>
+    /// <returns></returns>
+    bool TryGetValue<Target>(string parameterKey, out Target? parameterValue);
+}
+
+/// <summary>
+/// a class of <see cref="PopupParameters"/>
 /// </summary>
 [EditorBrowsable(EditorBrowsableState.Never)]
-public class Parameters : IDisposable
+public class PopupParameters : IDisposable, IPopupParameters
 {
     [EditorBrowsable(EditorBrowsableState.Never), DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private Dictionary<string, object?> parametersStorage = new();
@@ -18,58 +50,46 @@ public class Parameters : IDisposable
     {
         parametersStorage?.Clear();
         parametersStorage = null!;
-
         GC.SuppressFinalize(this);
     }
 
     /// <summary>
-    /// set value into <see cref="Parameters"/>
+    /// set value into <see cref="IPopupParameters"/>
     /// </summary>
     /// <param name="parameterKey">parameterKey</param>
     /// <param name="parameterValue">parameterValue</param>
     /// <returns></returns>
     /// <exception cref="ArgumentException"></exception>
-    public Parameters SetValue(string parameterKey, object? parameterValue)
+    public IPopupParameters SetValue<Target>(string parameterKey, Target parameterValue)
     {
         if (string.IsNullOrWhiteSpace(parameterKey))
         {
             throw new ArgumentException($"invalid {nameof(parameterKey)}");
         }
-
         parametersStorage[parameterKey] = parameterValue;
-
         return this;
     }
 
     /// <summary>
-    /// get value from <see cref="Parameters"/>
+    /// get value from <see cref="IPopupParameters"/>
     /// </summary>
     /// <typeparam name="Target"></typeparam>
     /// <param name="parameterKey">parameterKey</param>
     /// <param name="parameterValue">parameterValue</param>
     /// <returns></returns>
     /// <exception cref="ArgumentException"></exception>
-    public Parameters GetValue<Target>(string parameterKey, out Target? parameterValue)
+    public Target GetValue<Target>(string parameterKey)
     {
         if (string.IsNullOrWhiteSpace(parameterKey))
         {
             throw new ArgumentException($"invalid {nameof(parameterKey)}");
         }
 
-        if (parametersStorage.TryGetValue(parameterKey, out object? value))
-        {
-            if (value is Target target)
-            {
-                parameterValue = target;
-                return this;
-            }
-        }
-        parameterValue = default;
-        return this;
+        return (Target)parametersStorage[parameterKey]!;
     }
 
     /// <summary>
-    /// try get value from <see cref="Parameters"/>
+    /// try get value from <see cref="PopupParameters"/>
     /// </summary>
     /// <typeparam name="Target"></typeparam>
     /// <param name="parameterKey">parameterKey</param>

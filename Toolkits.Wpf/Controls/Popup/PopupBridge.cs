@@ -16,22 +16,22 @@ namespace Toolkits.Controls.Assist;
 internal class PopupBridge
 {
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    internal AsyncLocker? messageSemaphoreSlim;
+    internal Awaiter? messageSemaphoreSlim;
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    internal AsyncLocker? contentSemaphoreSlim;
+    internal Awaiter? contentSemaphoreSlim;
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    internal AsyncLocker? messageCloseSemaphoreSlim;
+    internal Awaiter? messageCloseSemaphoreSlim;
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    internal AsyncLocker? contentCloseSemaphoreSlim;
+    internal Awaiter? contentCloseSemaphoreSlim;
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    internal AsyncLocker? visualSemaphoreSlim;
+    internal Awaiter? visualSemaphoreSlim;
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    internal AsyncLocker? visualAnimationSemaphoreSlim;
+    internal Awaiter? visualAnimationSemaphoreSlim;
     public AdornerLayer? AdornerLayer { get; set; }
 
     public PopupAdorner? PopupAdornet { get; set; }
@@ -136,7 +136,7 @@ internal class PopupBridge
 
     internal void Init()
     {
-        visualAnimationSemaphoreSlim = new AsyncLocker(0, 1);
+        visualAnimationSemaphoreSlim = new Awaiter(0, 1);
         visualSemaphoreSlim = new(1, 1);
         messageSemaphoreSlim = new(1, 1);
         contentSemaphoreSlim = new(1, 1);

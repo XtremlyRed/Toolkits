@@ -45,7 +45,7 @@ internal static class PopupManagerAssist
         });
     }
 
-    internal static async Task<object> InnerContentPopup(UIElement uIElement, object popupContent, Parameters? parameters = null)
+    internal static async Task<object> InnerContentPopup(UIElement uIElement, object popupContent, PopupParameters? parameters = null)
     {
         return await await uIElement.Dispatcher.InvokeAsync(async () =>
         {

@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:general="clr-namespace:Toolkits.Wpf"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pv="clr-namespace:Toolkits.Controls.PopupView"
     d:DesignHeight="450"
     d:DesignWidth="800"
     x:ClassModifier="internal"
@@ -36,7 +37,7 @@
         <Border
             Grid.Row="0"
             Grid.RowSpan="2"
-            Background="{Binding Background}"
+            Background="{Binding Path=Background, Source={x:Static pv:ThemeDataContext.themeDataContext}}"
             CornerRadius="5,5,0,0"
             SnapsToDevicePixels="True" />
 
@@ -45,7 +46,7 @@
             Margin="20,18,0,0"
             FontSize="17"
             FontWeight="Black"
-            Foreground="{Binding Foreground}"
+            Foreground="{Binding Path=Foreground, Source={x:Static pv:ThemeDataContext.themeDataContext}}"
             Style="{x:Null}"
             Text="" />
 
@@ -69,7 +70,7 @@
                     ContextMenu="{x:Null}"
                     Cursor="Arrow"
                     FontSize="13"
-                    Foreground="{Binding Foreground}"
+                    Foreground="{Binding Path=Foreground, Source={x:Static pv:ThemeDataContext.themeDataContext}}"
                     IsReadOnly="True"
                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
                     Style="{x:Null}"
@@ -82,7 +83,7 @@
 
         <Border
             Grid.Row="2"
-            Background="{Binding OperationAreaBrush}"
+            Background="{Binding Path=OperationAreaBrush, Source={x:Static pv:ThemeDataContext.themeDataContext}}"
             BorderBrush="{x:Null}"
             BorderThickness="0"
             CornerRadius="0,0,5,5"
@@ -156,23 +157,23 @@
                     <DataTemplate>
                         <Button
                             Height="28"
-                            MinWidth="120"
-                            MaxWidth="150"
+                            MinWidth="100"
+                            MaxWidth="120"
                             Margin="5,0"
                             Padding="10,0"
                             HorizontalContentAlignment="Center"
                             VerticalContentAlignment="Center"
-                            Background="{Binding DataContext.Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=1, AncestorType=ItemsControl}}"
-                            BorderBrush="{x:Null}"
-                            BorderThickness="0"
+                            Background="{Binding Path=Background, Source={x:Static pv:ThemeDataContext.themeDataContext}}"
+                            BorderBrush="Transparent"
+                            BorderThickness="1"
                             Click="Click"
                             Content="{Binding}"
                             Cursor="Hand"
-                            Foreground="{Binding DataContext.Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=1, AncestorType=ItemsControl}}"
+                            Foreground="{Binding Path=Foreground, Source={x:Static pv:ThemeDataContext.themeDataContext}}"
                             Loaded="Button_Loaded"
                             Opacity="1"
                             Style="{StaticResource _BtnKey}" />
-
+                        <!--  BorderBrush="{Binding Path=BorderBrush, Source={x:Static pv:ThemeDataContext.themeDataContext}}"  -->
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
@@ -187,7 +188,7 @@
             RadiusX="5"
             RadiusY="5"
             SnapsToDevicePixels="True"
-            Stroke="{Binding BorderBrush}"
+            Stroke="{Binding Path=BorderBrush, Source={x:Static pv:ThemeDataContext.themeDataContext}}"
             StrokeThickness="1" />
     </Grid>
 

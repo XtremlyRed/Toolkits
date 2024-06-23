@@ -18,7 +18,7 @@ internal partial class MessageView : PopupMessageViewBase
     internal MessageView()
     {
         InitializeComponent();
-        DataContext = ThemeDataContext.themeDataContext;
+        //DataContext = ThemeDataContext.themeDataContext;
     }
 
     /// <summary>
@@ -37,22 +37,29 @@ internal partial class MessageView : PopupMessageViewBase
 
     private void Button_Loaded(object sender, RoutedEventArgs e)
     {
-        if (sender is not Button btn || isLoaded == false)
+        if (sender is not Button btn)
         {
             return;
         }
 
-        isLoaded = false;
+        if (isLoaded)
+        {
+            isLoaded = false;
 
-        Container.MinWidth = Application.Current?.MainWindow.Width / 3d ?? 400d;
+            Container.MinWidth = Application.Current?.MainWindow.Width / 2.5d ?? 400d;
 
-        Container.MaxWidth = Application.Current?.MainWindow.Width / 3d * 2d ?? 600d;
+            Container.MaxWidth = Application.Current?.MainWindow.Width / 3d * 2d ?? 600d;
+        }
 
         if ((btn.Content as string)! == buttonContents![0])
         {
             btn.Foreground = System.Windows.Media.Brushes.White;
             btn.Background = SystemParameters.WindowGlassBrush;
             btn.Focus();
+        }
+        else if ((btn.Content as string)! != buttonContents![0])
+        {
+            /// btn.BorderBrush = SystemParameters.WindowGlassBrush;
         }
     }
 
